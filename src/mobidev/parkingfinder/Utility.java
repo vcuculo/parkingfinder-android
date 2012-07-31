@@ -1,13 +1,18 @@
-package mobidev.parkfinder;
+package mobidev.parkingfinder;
 
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+import com.google.android.maps.GeoPoint;
+import com.google.android.maps.MapController;
+import com.google.android.maps.MapView;
+
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
+import android.location.Location;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
@@ -53,5 +58,18 @@ public class Utility {
 				.setPositiveButton("Ok", positiveAction)
 				.setNegativeButton("Cancel", negativeAction);
 		builder.show();
+	}
+	
+	public static GeoPoint location2geopoint(Location loc) {
+		return new GeoPoint((int) (loc.getLatitude() * 1E6),
+				(int) (loc.getLongitude() * 1E6));
+	}
+
+	public static void centerMap(Location loc, MapView mapview) {
+		MapController mapc = mapview.getController();
+		GeoPoint gp = location2geopoint(loc);
+		mapview.invalidate();
+		mapc.animateTo(gp);
+		mapc.setZoom(18);
 	}
 }

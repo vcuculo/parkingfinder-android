@@ -1,5 +1,6 @@
-package mobidev.parkfinder;
+package mobidev.parkingfinder;
 
+import mobidev.parkingfinder.R;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -9,7 +10,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageButton;
 
-public class ParkFinderActivity extends Activity {
+public class ParkingFinderActivity extends Activity {
 
 	ImageButton searchButton, releaseButton;
 
@@ -24,8 +25,8 @@ public class ParkFinderActivity extends Activity {
 		searchButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Intent i = new Intent(ParkFinderActivity.this,
-						SearchParkActivity.class);
+				Intent i = new Intent(ParkingFinderActivity.this,
+						SearchParkingActivity.class);
 				startActivity(i);
 			}
 		});
@@ -33,8 +34,8 @@ public class ParkFinderActivity extends Activity {
 		releaseButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Intent i = new Intent(ParkFinderActivity.this,
-						SearchParkActivity.class);
+				Intent i = new Intent(ParkingFinderActivity.this,
+						SearchParkingActivity.class);
 				startActivity(i);
 			}
 		});
@@ -48,7 +49,7 @@ public class ParkFinderActivity extends Activity {
 			DialogInterface.OnClickListener positive = new DialogInterface.OnClickListener() {
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
-					ParkFinderActivity.this.startActivity(new Intent(
+					ParkingFinderActivity.this.startActivity(new Intent(
 							Settings.ACTION_WIRELESS_SETTINGS));
 				}
 			};
@@ -56,7 +57,7 @@ public class ParkFinderActivity extends Activity {
 			DialogInterface.OnClickListener negative = new DialogInterface.OnClickListener() {
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
-					ParkFinderActivity.this.finish();
+					ParkingFinderActivity.this.finish();
 				}
 			};
 
