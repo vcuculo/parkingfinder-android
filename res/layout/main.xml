@@ -2,36 +2,47 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:gravity="center"
-    android:orientation="vertical" >
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:background="@color/gray" >
 
-    <TextView
-        android:id="@+id/searchText"
+	<ImageView  android:id="@+id/logoImage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/searchPark"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:src="@drawable/logo"
+        android:layout_marginTop="20dip"
+        android:layout_marginBottom="70dip"
+	    />
 
-    <ImageButton
+    <Button
         android:id="@+id/searchButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:contentDescription="@string/searchPark"
-        android:layout_marginBottom="50dip"
-        android:src="@drawable/ic_launcher" />
+        android:layout_marginBottom="15dip"
+      	android:text="@string/searchPark"
+      	android:background="@drawable/buttonsearch"
+      	android:textColor="@color/white"
+      	android:textSize="24dip"
+      	android:textStyle="bold"
+      	android:padding="10dip"
+      	android:minWidth="210dip"
+      	android:alpha="0.5" />
 
-    <TextView
-        android:id="@+id/releaseText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/releasePark"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+   
 
-    <ImageButton
+    <Button
         android:id="@+id/releaseButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:contentDescription="@string/releasePark"
-        android:src="@drawable/ic_launcher" />
+        android:text="@string/releasePark"
+        android:background="@drawable/buttonrelease"
+      	android:textColor="@color/white"
+      	android:textSize="24dip"
+      	android:textStyle="bold"
+      	android:padding="10dip"
+      	android:minWidth="210dip"
+      	android:alpha="0.5" />
 
 </LinearLayout>
