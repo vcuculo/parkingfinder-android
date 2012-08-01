@@ -10,8 +10,8 @@
         android:angle="270"
         android:centerColor="@color/green"
         android:endColor="@color/greenPressed"
-        android:startColor="@color/green" />
+        android:startColor="@color/green"
+         />
     
     <corners android:radius="5dp" />
-
 </shape>

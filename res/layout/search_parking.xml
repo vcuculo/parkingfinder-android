@@ -13,15 +13,23 @@
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true" >
+        android:layout_alignParentBottom="true"
+        android:gravity="center_horizontal" >
 
         <Button
             android:id="@+id/parkButton"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_below="@+id/mapview"
-            android:text="@string/parkHere" >
+            android:text="@string/parkHere"
+            android:textSize="18dip"
+            android:textColor="@color/white"
+            android:background="@drawable/buttonsearch"
+            android:padding="10dip"
+            android:layout_margin="10dip"
+            android:layout_marginBottom="10dip"
+            android:alpha="0.7" >
         </Button>
     </RelativeLayout>
 
