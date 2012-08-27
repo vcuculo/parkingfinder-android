@@ -2,7 +2,7 @@
 <resources>
 
     <string name="hello">Hello World, ParkFinderActivity!</string>
-    <string name="app_name">ParkFinder</string>
+    <string name="app_name">GeoParking</string>
     <string name="searchPark">Need parking</string>
     <string name="releasePark">Release parking</string>
     <string name="connectionRequired">This application requires network access. Please, enable mobile network or Wi-Fi.</string>

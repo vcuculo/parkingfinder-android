@@ -30,7 +30,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-             android:paddingTop="70dip"
+             android:paddingTop="30dip"
              >
           <Button
             android:id="@+id/searchButton"

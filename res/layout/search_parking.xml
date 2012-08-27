@@ -13,23 +13,41 @@
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         android:gravity="center_horizontal" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:background="@color/greenBarTransparent"
+            android:gravity="left"
+            android:orientation="horizontal"
+            android:padding="5dip" >
+
+            <ImageView
+                android:id="@+id/logoImage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="7dip"
+                android:layout_marginTop="7dip"
+                android:src="@drawable/logo" />
+        </LinearLayout>
 
         <Button
             android:id="@+id/parkButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
             android:layout_below="@+id/mapview"
-            android:text="@string/parkHere"
-            android:textSize="18dip"
-            android:textColor="@color/white"
+            android:layout_marginBottom="5dip"
+            android:layout_marginLeft="10dip"
+            android:layout_marginRight="10dip"
+            android:alpha="0.7"
             android:background="@drawable/buttonsearch"
             android:padding="10dip"
-            android:layout_margin="10dip"
-            android:layout_marginBottom="10dip"
-            android:alpha="0.7" >
+            android:text="@string/parkHere"
+            android:textColor="@color/white"
+            android:textSize="18dip" >
         </Button>
     </RelativeLayout>
 

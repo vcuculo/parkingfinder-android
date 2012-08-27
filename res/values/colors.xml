@@ -2,6 +2,8 @@
 <resources>
     <color name="red">#DDD81616</color>
     <color name="redPressed">#700808</color>
+    <color name="greenBar">#56A316</color>
+    <color name="greenBarTransparent">#DD56A316</color>
     <color name="green">#DD07AC16</color>
     <color name="greenPressed">#07590E</color>
     <color name="white">#FFFFFF</color>
