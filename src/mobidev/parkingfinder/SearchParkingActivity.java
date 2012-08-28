@@ -6,6 +6,10 @@ import com.google.android.maps.MapActivity;
 import com.google.android.maps.MapView;
 import com.google.android.maps.MyLocationOverlay;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.app.DialogFragment;
+import android.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.DialogInterface.OnClickListener;
@@ -14,15 +18,28 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
 
-public class SearchParkingActivity extends MapActivity {
+public class SearchParkingActivity extends MapActivity implements android.view.View.OnClickListener{
+	
+	static final int DIALOG_OCCUPIED=0;
 	
 	private MapView mapView;
+	private ImageView centerPosition;
+	private Button occupyButton;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.search_parking);
+		
+		centerPosition=(ImageView) findViewById(R.id.centerButtonImage);
+		occupyButton=(Button) findViewById(R.id.parkButton);
+		
+		centerPosition.setOnClickListener(this);
+		occupyButton.setOnClickListener(this);
 		
 		mapView = (MapView) findViewById(R.id.mapview);
 		MyLocationOverlay myLocationOverlay = new MyLocationOverlay(this, mapView);
@@ -106,4 +123,39 @@ public class SearchParkingActivity extends MapActivity {
 		Utility.showDialog("GPS disabled", getString(R.string.gpsDisabled),
 				this, positive, negative);
 	}
+	
+
+
+	@Override
+	public void onClick(View v) {
+	
+		if(v.getId()==R.id.parkButton){
+			showDialog(DIALOG_OCCUPIED);
+
+		}
+	}
+	
+
+	protected Dialog onCreateDialog(int id) {
+	    Dialog dialog;
+	    switch(id) {
+	    case DIALOG_OCCUPIED:
+	    	AlertDialog.Builder builder = new AlertDialog.Builder(this);
+			// Codice di creazione del dialog
+			builder.setMessage(R.string.occupiedParking);
+			builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+				
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					finish();
+				}
+			});
+			return builder.create();
+	    default:
+	        dialog = null;
+	    }
+	    return dialog;
+	}	
+
+
 }

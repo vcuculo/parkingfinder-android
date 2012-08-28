@@ -5,7 +5,7 @@
     android:gravity="center_horizontal"
     android:orientation="vertical" >
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:background="@color/greenBar"
@@ -20,8 +20,10 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="7dip"
             android:layout_marginTop="7dip"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="5dip"
             android:src="@drawable/logo" />
-    </LinearLayout>
+    </RelativeLayout>
 
     <ScrollView
         android:layout_width="fill_parent"

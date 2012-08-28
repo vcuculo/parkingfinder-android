@@ -15,11 +15,12 @@
         android:layout_height="wrap_content"
         android:gravity="center_horizontal" >
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:background="@color/greenBarTransparent"
+            android:baselineAligned="true"
             android:gravity="left"
             android:orientation="horizontal"
             android:padding="5dip" >
@@ -30,8 +31,21 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="7dip"
                 android:layout_marginTop="7dip"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="5dip"
                 android:src="@drawable/logo" />
-        </LinearLayout>
+
+            <ImageView
+                android:id="@+id/centerButtonImage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="7dip"
+                android:layout_marginTop="7dip"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="5dip"
+                android:src="@drawable/centerbutton" />
+
+        </RelativeLayout>
 
         <Button
             android:id="@+id/parkButton"
