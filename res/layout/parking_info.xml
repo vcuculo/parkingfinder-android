@@ -57,11 +57,12 @@
         android:id="@+id/cancelButton"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/saveButton"
+        android:layout_alignBaseline="@+id/saveButton"
         android:layout_alignParentRight="true"
-        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/parkingTypeSpinner"
         android:layout_marginBottom="10dp"
         android:layout_marginRight="10dp"
+        android:layout_marginTop="70dp"
         android:text="@string/cancel" />
 
     <TextView
@@ -69,17 +70,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/longitudeLabel"
-        android:layout_marginLeft="10dp"
-        android:layout_toRightOf="@+id/latitudeLabel"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="10dp"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <TextView
         android:id="@+id/longitudeValue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
         android:layout_below="@+id/latitudeValue"
-        android:layout_marginLeft="10dp"
-        android:layout_toRightOf="@+id/longitudeLabel"
+        android:layout_marginRight="10dp"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
 </RelativeLayout>
