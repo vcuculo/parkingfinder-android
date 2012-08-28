@@ -155,7 +155,6 @@ public class SearchParkingActivity extends MapActivity implements
 			dialog = new Dialog(this);
 			dialog.setContentView(R.layout.occupieddialog);
 			dialog.setTitle(R.string.titleOccupiedDilaog);
-			dialog.setCancelable(false);
 			TextView text = (TextView) dialog.findViewById(R.id.text);
 			text.setText(R.string.occupiedParking);
 

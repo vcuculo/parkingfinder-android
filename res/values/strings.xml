@@ -10,4 +10,12 @@
     <string name="parkHere">Park here</string>
     <string name="occupiedParking">OCCUPIED PARKING</string>
     <string name="titleOccupiedDilaog">PARKING STATE</string>
+    <string name="type_gratis">Gratis</string>
+    <string name="type_fee">Fee</string>
+    <string name="type_time">Time</string>
+    <string name="type_residents">Residents</string>
+    <string name="type_disabled">Disabled</string>
+    <string name="type_notPrevent">Not Prevent</string>
+    <string name="comment">Insert a note</string>
+    <string name="topology">Park Type</string>
 </resources>
