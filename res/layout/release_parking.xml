@@ -17,12 +17,12 @@
 
         <ImageButton
             android:id="@+id/parkButton"
-            android:contentDescription="@string/searchPark"
+            android:contentDescription="@string/releasePark"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_below="@+id/mapview"
-            android:src="@drawable/green_arrow_down">
+            android:src="@drawable/orange_arrow_up">
         </ImageButton>
     </RelativeLayout>
 

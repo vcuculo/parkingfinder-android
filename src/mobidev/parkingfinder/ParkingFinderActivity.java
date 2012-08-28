@@ -35,7 +35,7 @@ public class ParkingFinderActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				Intent i = new Intent(ParkingFinderActivity.this,
-						SearchParkingActivity.class);
+						ReleaseParkingActivity.class);
 				startActivity(i);
 			}
 		});

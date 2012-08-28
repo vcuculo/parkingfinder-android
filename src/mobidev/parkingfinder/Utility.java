@@ -3,10 +3,12 @@ package mobidev.parkingfinder;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.List;
 
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapController;
 import com.google.android.maps.MapView;
+import com.google.android.maps.Overlay;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -59,7 +61,7 @@ public class Utility {
 				.setNegativeButton("Cancel", negativeAction);
 		builder.show();
 	}
-	
+
 	public static GeoPoint location2geopoint(Location loc) {
 		return new GeoPoint((int) (loc.getLatitude() * 1E6),
 				(int) (loc.getLongitude() * 1E6));
@@ -69,7 +71,16 @@ public class Utility {
 		MapController mapc = mapview.getController();
 		GeoPoint gp = location2geopoint(loc);
 		mapview.invalidate();
-		mapc.animateTo(gp);
-		mapc.setZoom(18);
+
+		List<Overlay> overlays = mapview.getOverlays();
+
+		if (overlays.size() > 1) { //mostrare la mia posizione e quella dell'auto
+			MyItemizedOverlay itemizedOverlay = (MyItemizedOverlay) overlays.get(1);
+			mapc.animateTo(itemizedOverlay.getItem(0).getPoint());
+			mapc.setZoom(17);
+		} else {
+			mapc.animateTo(gp);
+			mapc.setZoom(18);
+		}
 	}
 }
