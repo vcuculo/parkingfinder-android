@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/release_dialog"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#736767"
+    android:gravity="top"
+    android:minWidth="280dip"
+    android:orientation="vertical"
+    android:padding="10dip" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:gravity="center_horizontal"
+        android:orientation="vertical" >
+
+        <ScrollView
+            android:id="@+id/scroll"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <RadioGroup
+                android:id="@+id/radioGroup1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingRight="10dip" >
+
+                <RadioButton
+                    android:id="@+id/radioGratis"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:text="@string/type_gratis" />
+
+                <RadioButton
+                    android:id="@+id/radioFee"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignRight="@id/radioGratis"
+                    android:text="@string/type_fee" />
+
+                <RadioButton
+                    android:id="@+id/radioTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/radioGratis"
+                    android:text="@string/type_time" />
+
+                <RadioButton
+                    android:id="@+id/radioResidents"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@id/radioFee"
+                    android:text="@string/type_residents" />
+
+                <RadioButton
+                    android:id="@+id/radioDisabled"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/radioTime"
+                    android:text="@string/type_disabled" />
+
+                <RadioButton
+                    android:id="@+id/radioNotPrevent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@id/radioResidents"
+                    android:text="@string/type_notPrevent" />
+            </RadioGroup>
+        </ScrollView>
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:gravity="left"
+        android:hint="@string/comment"
+        android:minLines="2"
+        android:minWidth="100dip"
+        android:paddingBottom="20dip"
+        android:paddingLeft="50dip"
+        android:paddingRight="10dip"
+        android:paddingTop="10dip"
+        android:layout_marginLeft="200dip"
+        android:textSize="18dip" />
+
+    <Button
+        android:id="@+id/positiveButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/text"
+        android:paddingLeft="10dip"
+        android:paddingRight="10dip"
+        android:layout_marginLeft="200dip"
+        android:paddingTop="10dip"
+        android:minWidth="100dip"
+        android:text="OK" />
+
+</RelativeLayout>
