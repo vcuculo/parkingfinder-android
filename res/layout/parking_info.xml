@@ -3,27 +3,83 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent" >
 
-    <com.google.android.maps.MapView
-        android:id="@+id/mapview"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:apiKey="@string/googleMapsDebugKey"
-        android:clickable="true" />
-
-    <RelativeLayout
-        android:layout_width="fill_parent"
+    <TextView
+        android:id="@+id/latitudeLabel"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true" >
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="10dp"
+        android:text="@string/latitude"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 
-        <ImageButton
-            android:id="@+id/parkButton"
-            android:contentDescription="@string/searchPark"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_below="@+id/mapview"
-            android:src="@drawable/green_arrow_down">
-        </ImageButton>
-    </RelativeLayout>
+    <TextView
+        android:id="@+id/longitudeLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/latitudeLabel"
+        android:layout_marginLeft="10dp"
+        android:text="@string/longitude"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/parkingTypeLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/longitudeLabel"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:text="@string/parkingType"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <Spinner
+        android:id="@+id/parkingTypeSpinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/parkingTypeLabel"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="10dp"
+        android:entries="@array/parkingTypes" />
+
+    <Button
+        android:id="@+id/saveButton"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/parkingTypeSpinner"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="70dp"
+        android:text="@string/save" />
+
+    <Button
+        android:id="@+id/cancelButton"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/saveButton"
+        android:layout_alignParentRight="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="10dp"
+        android:layout_marginRight="10dp"
+        android:text="@string/cancel" />
+
+    <TextView
+        android:id="@+id/latitudeValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/longitudeLabel"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@+id/latitudeLabel"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/longitudeValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/latitudeValue"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@+id/longitudeLabel"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 
 </RelativeLayout>

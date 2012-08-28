@@ -31,11 +31,16 @@ import android.widget.ImageButton;
 public class ReleaseParkingActivity extends MapActivity {
 	private final static String MY_PREFERENCES = "MyPref";
 	private final static String ID_KEY = "parkingId";
+	private final static String TYPE_KEY = "parkingType";
 	private final static String LAT_KEY = "latitude";
 	private final static String LON_KEY = "longitude";
 
 	private MapView mapView;
 	private ImageButton releaseButton;
+	private int parkingId;
+	private int latitude;
+	private int longitude;
+	private int type;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -43,7 +48,7 @@ public class ReleaseParkingActivity extends MapActivity {
 		setContentView(R.layout.release_parking);
 
 		releaseButton = (ImageButton) findViewById(R.id.parkButton);
-		
+
 		releaseButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -51,7 +56,7 @@ public class ReleaseParkingActivity extends MapActivity {
 				showReleaseDialog();
 			}
 		});
-		
+
 		mapView = (MapView) findViewById(R.id.mapview);
 
 		MyLocationOverlay myLocationOverlay = new MyLocationOverlay(this,
@@ -84,6 +89,7 @@ public class ReleaseParkingActivity extends MapActivity {
 				Context.MODE_PRIVATE);
 		SharedPreferences.Editor editor = prefs.edit();
 		editor.putInt(ID_KEY, 0);
+		editor.putInt(TYPE_KEY, 3);
 		editor.putInt(LAT_KEY,
 				(int) (lastKnownLocation.getLatitude() * 1E6) + 10000);
 		editor.putInt(LON_KEY,
@@ -91,11 +97,12 @@ public class ReleaseParkingActivity extends MapActivity {
 
 		editor.commit();
 
-		int parkingId = prefs.getInt(ID_KEY, -1);
+		parkingId = prefs.getInt(ID_KEY, -1);
 
 		if (parkingId > -1) { // abbiamo un parcheggio memorizzato
-			int latitude = prefs.getInt(LAT_KEY, -1);
-			int longitude = prefs.getInt(LON_KEY, -1);
+			latitude = prefs.getInt(LAT_KEY, -1);
+			longitude = prefs.getInt(LON_KEY, -1);
+			type = prefs.getInt(TYPE_KEY, -1);
 
 			Drawable drawable = this.getResources().getDrawable(
 					R.drawable.car_icon);
@@ -164,13 +171,18 @@ public class ReleaseParkingActivity extends MapActivity {
 		Utility.showDialog("GPS disabled", getString(R.string.gpsDisabled),
 				this, positive, negative);
 	}
-	
+
 	private void showReleaseDialog() {
 		OnClickListener positive = new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				Intent i = new Intent(ReleaseParkingActivity.this,
 						ParkingInfoActivity.class);
+				i.putExtra("parkingId", parkingId);
+				i.putExtra("latitude", latitude);
+				i.putExtra("longitude", longitude);
+				i.putExtra("type", type);
+
 				startActivity(i);
 			}
 		};
@@ -182,19 +194,20 @@ public class ReleaseParkingActivity extends MapActivity {
 			}
 		};
 
-		Utility.showDialog("Freeing a parking",
+		Utility.showDialog(getString(R.string.freeingParking),
 				getString(R.string.addParkInformation), this, positive,
 				negative);
 	}
-	
-	private void removeParkingInfo(){
+
+	private void removeParkingInfo() {
 		SharedPreferences prefs = getSharedPreferences(MY_PREFERENCES,
 				Context.MODE_PRIVATE);
 		SharedPreferences.Editor editor = prefs.edit();
 		editor.remove(ID_KEY);
 		editor.remove(LAT_KEY);
 		editor.remove(LON_KEY);
+		editor.remove(TYPE_KEY);
 		editor.commit();
 	}
-	
+
 }

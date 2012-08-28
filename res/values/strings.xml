@@ -9,5 +9,19 @@
     <string name="gpsDisabled">GPS is disabled in your device. For a better experience we suggest to enable it.</string>
     <string name="parkHere">Park here</string>
     <string name="addParkInformation">Would you insert information about the parking you\'ve just freed?</string>
+    <string name="parkingInfo">Parking Info</string>
+    <string name="latitude">Latitude:</string>
+    <string name="longitude">Longitude:</string>
+    <string name="parkingType">Type:</string>
+    <string-array name="parkingTypes">
+        <item >Free</item>
+        <item >Toll</item>
+        <item >Timed</item>
+        <item >For Disabled</item>
+        <item >Residents</item>
+    </string-array>
+        <string name="save">Save</string>
+        <string name="cancel">Cancel</string>
+        <string name="freeingParking">Freeing a Parking</string>
     
 </resources>

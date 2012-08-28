@@ -10,6 +10,7 @@ import com.google.android.maps.MapController;
 import com.google.android.maps.MapView;
 import com.google.android.maps.Overlay;
 
+import android.R.string;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -58,7 +59,7 @@ public class Utility {
 		AlertDialog.Builder builder = new AlertDialog.Builder(c);
 		builder.setMessage(message).setTitle(title)
 				.setPositiveButton("Ok", positiveAction)
-				.setNegativeButton("Cancel", negativeAction);
+				.setNegativeButton(R.string.cancel, negativeAction);
 		builder.show();
 	}
 
