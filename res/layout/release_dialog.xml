@@ -1,109 +1,109 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/release_dialog"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    android:minWidth="280dip"
     android:background="#736767"
     android:gravity="top"
     android:orientation="vertical"
     android:padding="10dip" >
-   <ScrollView
-        android:id="@+id/scroll"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" >
+
+
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
-            android:orientation="vertical" >
-    <RadioGroup
-        android:id="@+id/radioGroup1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingRight="10dip"
-        android:orientation="horizontal" >
+            android:orientation="vertical"
+            android:layout_alignParentTop="true" >
 
-  <RadioGroup
-        android:id="@+id/radioGroup2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingRight="10dip" >
-                <RadioButton
-                    android:id="@+id/radioGratis"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/type_gratis" />
+   <ScrollView
+        android:id="@+id/scroll"
+        android:layout_width="match_parent"
+        android:layout_height="200dip" >
+        
+            <RadioGroup
+                android:id="@+id/radioGroup1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingRight="10dip" >
 
-                <RadioButton
-                    android:id="@+id/radioFee"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:text="@string/type_fee" />
+               
 
-                <RadioButton
-                    android:id="@+id/radioTime"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignBottom="@id/radioGratis"
-                    android:text="@string/type_time" />
-</RadioGroup>
-  <RadioGroup
-        android:id="@+id/radioGroup3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingRight="10dip" >
-                <RadioButton
-                    android:id="@+id/radioResidents"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignBottom="@id/radioFee"
-                    android:text="@string/type_residents" />
+                    <RadioButton
+                        android:id="@+id/radioGratis"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:text="@string/type_gratis" />
 
-                <RadioButton
-                    android:id="@+id/radioDisabled"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignBottom="@id/radioTime"
-                    android:text="@string/type_disabled" />
+                    <RadioButton
+                        android:id="@+id/radioFee"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignRight="@id/radioGratis"
+                        android:text="@string/type_fee" />
 
-                <RadioButton
-                    android:id="@+id/radioNotPrevent"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignBottom="@id/radioResidents"
-                    android:text="@string/type_notPrevent" />
-</RadioGroup>
+                    <RadioButton
+                        android:id="@+id/radioTime"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/radioGratis"
+                        android:text="@string/type_time" />
 
-    </RadioGroup>
+                    <RadioButton
+                        android:id="@+id/radioResidents"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_below="@id/radioFee"
+                        android:text="@string/type_residents" />
 
- 
+                    <RadioButton
+                        android:id="@+id/radioDisabled"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/radioTime"
+                        android:text="@string/type_disabled" />
 
-            <EditText
+                    <RadioButton
+                        android:id="@+id/radioNotPrevent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_below="@id/radioResidents"
+                        android:text="@string/type_notPrevent" />
+                
+            </RadioGroup>
+</ScrollView>
+           
+        </LinearLayout>
+ <EditText
                 android:id="@+id/text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:minWidth="300dip"
+                android:gravity="left"
                 android:hint="@string/comment"
+                android:minLines="2"
                 android:paddingBottom="20dip"
                 android:paddingLeft="10dip"
                 android:paddingRight="10dip"
                 android:paddingTop="10dip"
-                android:textSize="14dip"
-                android:minLines="2"
-                android:gravity="left" />
+                android:textSize="18dip"
+                android:layout_above="@id/positiveButton" />   
 
-    <Button
+            <Button
                 android:id="@+id/positiveButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingLeft="10dip"
                 android:paddingRight="10dip"
                 android:paddingTop="10dip"
-                android:text="OK"
-                 />
-        </LinearLayout>
-    </ScrollView>
-     
-        
-</LinearLayout>
+                android:text="OK" 
+                android:layout_alignParentBottom="true"
+                />
+
+</RelativeLayout>
