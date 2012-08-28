@@ -24,25 +24,24 @@ import com.google.android.maps.MapActivity;
 import com.google.android.maps.MapView;
 import com.google.android.maps.MyLocationOverlay;
 
-public class SearchParkingActivity extends MapActivity implements
+public class ReleaseParkingActivity extends MapActivity implements
 		android.view.View.OnClickListener {
 
 	static final int DIALOG_OCCUPIED = 0;
 
 	private MapView mapView;
 	private ImageView centerPosition;
-	private Button occupyButton;
+	private Button releaseButton;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.search_parking);
+		setContentView(R.layout.release_parking);
 
 		centerPosition = (ImageView) findViewById(R.id.centerButtonImage);
-		occupyButton = (Button) findViewById(R.id.parkButton);
-
+		releaseButton = (Button) findViewById(R.id.releaseButton);
 		centerPosition.setOnClickListener(this);
-		occupyButton.setOnClickListener(this);
+		releaseButton.setOnClickListener(this);
 
 		mapView = (MapView) findViewById(R.id.mapview);
 		MyLocationOverlay myLocationOverlay = new MyLocationOverlay(this,
@@ -90,7 +89,7 @@ public class SearchParkingActivity extends MapActivity implements
 		OnClickListener positive = new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
-				SearchParkingActivity.this.startActivity(new Intent(
+				ReleaseParkingActivity.this.startActivity(new Intent(
 						Settings.ACTION_WIRELESS_SETTINGS));
 			}
 		};
@@ -98,7 +97,7 @@ public class SearchParkingActivity extends MapActivity implements
 		OnClickListener negative = new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
-				SearchParkingActivity.this.finish();
+				ReleaseParkingActivity.this.finish();
 			}
 		};
 
@@ -111,7 +110,7 @@ public class SearchParkingActivity extends MapActivity implements
 		OnClickListener positive = new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
-				SearchParkingActivity.this
+				ReleaseParkingActivity.this
 						.startActivity(new Intent(
 								android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS));
 			}
@@ -169,5 +168,4 @@ public class SearchParkingActivity extends MapActivity implements
 		}
 		return dialog;
 	}
-
 }

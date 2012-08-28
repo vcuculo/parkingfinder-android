@@ -11,8 +11,11 @@ import android.widget.Button;
 
 public class ParkingFinderActivity extends Activity {
 
+	static final int MODE_SEARCH=0;
+	static final int MODE_RELEASE=1;
+	
 	Button searchButton, releaseButton;
-
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -33,9 +36,22 @@ public class ParkingFinderActivity extends Activity {
 		releaseButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Intent i = new Intent(ParkingFinderActivity.this,
-						SearchParkingActivity.class);
-				startActivity(i);
+				int id=v.getId();
+				Intent i ;
+				switch (id) {
+				case R.id.searchButton:
+					i = new Intent(ParkingFinderActivity.this,
+							SearchParkingActivity.class);
+					startActivity(i);
+					break;
+				case R.id.releaseButton:
+					i= new Intent(ParkingFinderActivity.this,
+							ReleaseParkingActivity.class);
+					startActivity(i);
+				default:
+					break;
+				}
+				
 			}
 		});
 	}

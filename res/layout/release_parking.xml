@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+    <com.google.android.maps.MapView
+        android:id="@+id/mapview"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:apiKey="@string/googleMapsDebugKey"
+        android:clickable="true" />
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal" >
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:background="@color/greenBarTransparent"
+            android:baselineAligned="true"
+            android:gravity="left"
+            android:orientation="horizontal"
+            android:padding="5dip" >
+
+            <ImageView
+                android:id="@+id/logoImage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="7dip"
+                android:layout_marginTop="7dip"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="5dip"
+                android:src="@drawable/logo" />
+
+            <ImageView
+                android:id="@+id/centerButtonImage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="7dip"
+                android:layout_marginTop="7dip"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="5dip"
+                android:src="@drawable/centerbutton" />
+
+        </RelativeLayout>
+
+        <Button
+            android:id="@+id/releaseButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_below="@+id/mapview"
+            android:layout_marginBottom="5dip"
+            android:layout_marginLeft="10dip"
+            android:layout_marginRight="10dip"
+            android:alpha="0.7"
+            android:background="@drawable/buttonrelease"
+            android:padding="10dip"
+            android:text="@string/releasePark"
+            android:textColor="@color/white"
+            android:textSize="18dip" >
+        </Button>
+    </RelativeLayout>
+
+</RelativeLayout>
