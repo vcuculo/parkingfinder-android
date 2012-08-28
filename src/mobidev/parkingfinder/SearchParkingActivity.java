@@ -1,26 +1,26 @@
 package mobidev.parkingfinder;
 
-import mobidev.parkingfinder.R;
-
-import com.google.android.maps.MapActivity;
-import com.google.android.maps.MapView;
-import com.google.android.maps.MyLocationOverlay;
-
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.DialogFragment;
-import android.app.FragmentTransaction;
+import android.app.AlertDialog.Builder;
+import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.DialogInterface.OnClickListener;
+import android.content.Intent;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+
+import com.google.android.maps.MapActivity;
+import com.google.android.maps.MapView;
+import com.google.android.maps.MyLocationOverlay;
 
 public class SearchParkingActivity extends MapActivity implements android.view.View.OnClickListener{
 	
@@ -128,20 +128,43 @@ public class SearchParkingActivity extends MapActivity implements android.view.V
 
 	@Override
 	public void onClick(View v) {
+	int id=v.getId();
+	switch (id) {
+	case R.id.parkButton:
+		showDialog(DIALOG_OCCUPIED);
+		break;
+	case R.id.positiveButton:
+		finish();
+		break;
+	default:
+		break;
+	}
 	
-		if(v.getId()==R.id.parkButton){
-			showDialog(DIALOG_OCCUPIED);
-
-		}
 	}
 	
 
 	protected Dialog onCreateDialog(int id) {
 	    Dialog dialog;
+	    AlertDialog.Builder builder;
+	    AlertDialog alertDialog;
 	    switch(id) {
 	    case DIALOG_OCCUPIED:
-	    	AlertDialog.Builder builder = new AlertDialog.Builder(this);
+	    	/*Context mContext = getApplicationContext();
+	    	LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(LAYOUT_INFLATER_SERVICE);
+	    	View layout = inflater.inflate(R.layout.occupieddialog,
+                    (ViewGroup) findViewById(R.id.occupied_dialog));
+
+	    	Button positive = (Button) layout.findViewById(R.id.positiveButton);
+	    	positive.setOnClickListener(this);
+	    	
+	    	builder=new AlertDialog.Builder(mContext);
+	    	builder.setView(layout);
+	    	alertDialog=builder.create();
+	    	return alertDialog;
+	    */
+	    builder = new AlertDialog.Builder(this);
 			// Codice di creazione del dialog
+	    	builder.setTitle(R.string.titleOccupiedDilaog);
 			builder.setMessage(R.string.occupiedParking);
 			builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 				
@@ -151,11 +174,14 @@ public class SearchParkingActivity extends MapActivity implements android.view.V
 				}
 			});
 			return builder.create();
+	   
 	    default:
 	        dialog = null;
 	    }
 	    return dialog;
 	}	
+	   
+	}
 
+	
 
-}

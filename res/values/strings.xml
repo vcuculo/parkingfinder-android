@@ -8,5 +8,6 @@
     <string name="connectionRequired">This application requires network access. Please, enable mobile network or Wi-Fi.</string>
     <string name="gpsDisabled">GPS is disabled in your device. For a better experience we suggest to enable it.</string>
     <string name="parkHere">Park here</string>
-    <string name="occupiedParking">Occupied parking</string>
+    <string name="occupiedParking">OCCUPIED PARKING</string>
+    <string name="titleOccupiedDilaog">PARKING STATE</string>
 </resources>
