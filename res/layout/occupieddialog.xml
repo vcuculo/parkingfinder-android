@@ -4,21 +4,25 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical"
-    android:gravity="center"
-    
-    android:padding="10dp" >
+    android:gravity="top"
+    >
 
     <TextView
         android:id="@+id/text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="#FFF"
-        android:text="@string/occupiedParking" />
+        android:textColor="@color/green"
+        android:textSize="24dip"
+        android:paddingLeft="10dip"
+        android:paddingRight="10dip"
+        android:paddingBottom="20dip" />
 
     <Button
         android:id="@+id/positiveButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="OK" />
+        android:padding="10dip"
+        android:text="OK"
+         />
 
 </LinearLayout>

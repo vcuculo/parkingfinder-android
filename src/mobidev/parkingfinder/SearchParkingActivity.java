@@ -17,6 +17,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.maps.MapActivity;
 import com.google.android.maps.MapView;
@@ -149,31 +151,21 @@ public class SearchParkingActivity extends MapActivity implements android.view.V
 	    AlertDialog alertDialog;
 	    switch(id) {
 	    case DIALOG_OCCUPIED:
-	    	/*Context mContext = getApplicationContext();
-	    	LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(LAYOUT_INFLATER_SERVICE);
-	    	View layout = inflater.inflate(R.layout.occupieddialog,
-                    (ViewGroup) findViewById(R.id.occupied_dialog));
+	dialog=new Dialog(this);
+	dialog.setContentView(R.layout.occupieddialog);
+	dialog.setTitle(R.string.titleOccupiedDilaog);
+	dialog.setCancelable(false);
+	TextView text=(TextView) dialog.findViewById(R.id.text);
+	text.setText(R.string.occupiedParking);
+	
 
-	    	Button positive = (Button) layout.findViewById(R.id.positiveButton);
+	    	Button positive = (Button) dialog.findViewById(R.id.positiveButton);
 	    	positive.setOnClickListener(this);
 	    	
-	    	builder=new AlertDialog.Builder(mContext);
-	    	builder.setView(layout);
-	    	alertDialog=builder.create();
-	    	return alertDialog;
-	    */
-	    builder = new AlertDialog.Builder(this);
-			// Codice di creazione del dialog
-	    	builder.setTitle(R.string.titleOccupiedDilaog);
-			builder.setMessage(R.string.occupiedParking);
-			builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-				
-				@Override
-				public void onClick(DialogInterface dialog, int which) {
-					finish();
-				}
-			});
-			return builder.create();
+	    	
+	    	return dialog;
+	    
+
 	   
 	    default:
 	        dialog = null;
