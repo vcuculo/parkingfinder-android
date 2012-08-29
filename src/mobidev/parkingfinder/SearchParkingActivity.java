@@ -11,16 +11,17 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.DialogInterface.OnClickListener;
-import android.location.Criteria;
-import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 
 public class SearchParkingActivity extends MapActivity {
-	
+
 	private MapView mapView;
 	private ImageButton occupyButton;
 	private final static String MY_PREFERENCES = "MyPref";
@@ -32,7 +33,7 @@ public class SearchParkingActivity extends MapActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.search_parking);
-		
+
 		occupyButton = (ImageButton) findViewById(R.id.parkButton);
 
 		occupyButton.setOnClickListener(new View.OnClickListener() {
@@ -41,48 +42,38 @@ public class SearchParkingActivity extends MapActivity {
 				showConfirmationDialog();
 			}
 		});
-		
+
 		mapView = (MapView) findViewById(R.id.mapview);
 		myLocationOverlay = new MyLocationOverlay(this, mapView);
 		mapView.getOverlays().add(myLocationOverlay);
 		myLocationOverlay.enableMyLocation();
-		
+
 		LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
 
 		PositionController locationListener = new PositionController(mapView);
 
-		Criteria fine = new Criteria();
-		fine.setAccuracy(Criteria.ACCURACY_FINE);
-
 		locationManager.requestLocationUpdates(
-				locationManager.getBestProvider(fine, true), 0, 0,
-				locationListener);
+				LocationManager.NETWORK_PROVIDER, 3000, 0, locationListener);
+		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
+				5000, 0, locationListener);
 
-		Location lastKnownLocation = locationManager
-				.getLastKnownLocation(locationManager.getBestProvider(fine,
-						true));
-
-		if (lastKnownLocation != null)
-			Utility.centerMap(lastKnownLocation, mapView);
-		
 		if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER))
 			showGPSDialog();
-		
 	}
 
 	@Override
 	protected void onResume() {
 		super.onResume();
-		
+
 		if (!Utility.isOnline(this))
 			showConnectionDialog();
 	}
-	
+
 	@Override
 	protected boolean isRouteDisplayed() {
 		return false;
 	}
-	
+
 	private void showConnectionDialog() {
 		OnClickListener positive = new DialogInterface.OnClickListener() {
 			@Override
@@ -124,7 +115,7 @@ public class SearchParkingActivity extends MapActivity {
 		Utility.showDialog("GPS disabled", getString(R.string.gpsDisabled),
 				this, positive, negative);
 	}
-	
+
 	private void showConfirmationDialog() {
 		OnClickListener positive = new DialogInterface.OnClickListener() {
 			@Override
@@ -132,8 +123,10 @@ public class SearchParkingActivity extends MapActivity {
 				SharedPreferences prefs = getSharedPreferences(MY_PREFERENCES,
 						Context.MODE_PRIVATE);
 				SharedPreferences.Editor editor = prefs.edit();
-				editor.putInt(LAT_KEY, myLocationOverlay.getMyLocation().getLatitudeE6());
-				editor.putInt(LON_KEY, myLocationOverlay.getMyLocation().getLongitudeE6());
+				editor.putInt(LAT_KEY, myLocationOverlay.getMyLocation()
+						.getLatitudeE6());
+				editor.putInt(LON_KEY, myLocationOverlay.getMyLocation()
+						.getLongitudeE6());
 				editor.commit();
 				finish();
 			}
@@ -149,5 +142,29 @@ public class SearchParkingActivity extends MapActivity {
 		Utility.showDialog(getString(R.string.occupyingParking),
 				getString(R.string.confirmOccupyParking), this, positive,
 				negative);
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		super.onCreateOptionsMenu(menu);
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.search_menu, menu);
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case R.id.centerMenu:
+			Utility.centerMap(myLocationOverlay.getMyLocation(), mapView);
+			break;
+		case R.id.optionsMenu:
+			// TODO: Options
+			break;
+		case R.id.exitMenu:
+			finish();
+			break;
+		}
+		return false;
 	}
 }

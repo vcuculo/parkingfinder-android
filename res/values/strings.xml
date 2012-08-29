@@ -29,5 +29,10 @@
         <string name="address">Address:</string>
         <string name="occupyingParking">Occupying a Parking</string>
         <string name="confirmOccupyParking">Are you occupying a parking?</string>
+        <string name="centerMenu">Center Map</string>
+        <string name="optionsMenu">Options</string>
+        <string name="exitMenu">Exit</string>
+        <string name="actionDisallowed">Action not allowed</string>
+        <string name="releaseParkingFirst">To search for a new parking, you have to release your current parking first.</string>
     
 </resources>

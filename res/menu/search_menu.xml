@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item android:id="@+id/centerMenu" android:title="@string/centerMenu"></item>
+    <item android:id="@+id/optionsMenu" android:title="@string/optionsMenu"></item>
+    <item android:id="@+id/exitMenu" android:title="@string/exitMenu"></item>
+    
+
+</menu>

@@ -14,8 +14,6 @@ import android.content.Intent;
 import android.content.DialogInterface.OnClickListener;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
-import android.location.Criteria;
-import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.provider.Settings;
@@ -64,19 +62,8 @@ public class ReleaseParkingActivity extends MapActivity {
 
 		PositionController locationListener = new PositionController(mapView);
 
-		Criteria fine = new Criteria();
-		fine.setAccuracy(Criteria.ACCURACY_FINE);
-
-		locationManager.requestLocationUpdates(
-				locationManager.getBestProvider(fine, true), 0, 0,
-				locationListener);
-
-		Location lastKnownLocation = locationManager
-				.getLastKnownLocation(locationManager.getBestProvider(fine,
-						true));
-
-		if (lastKnownLocation != null)
-			Utility.centerMap(lastKnownLocation, mapView);
+        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 3000, 0, locationListener);
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 0, locationListener);
 
 		if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER))
 			showGPSDialog();
@@ -95,7 +82,7 @@ public class ReleaseParkingActivity extends MapActivity {
 		editor.commit();
 		// DEBUG ONLY */
 
-		longitude = prefs.getInt(LON_KEY, -30); // c'è solo oceano
+		longitude = prefs.getInt(LON_KEY, -30); // oceano
 
 		if (longitude != -30) { // abbiamo un parcheggio memorizzato
 			parked = true;

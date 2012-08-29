@@ -10,7 +10,7 @@ public class PositionController implements LocationListener {
 
 	private Location bestPosition;
 	private MapView mapview;
-	private static final int ONE_MINUTE = 60 * 1000;
+	private static final int HALF_MINUTE = 30 * 1000;
 	
 	public PositionController(MapView map) {
 		this.mapview = map;
@@ -44,7 +44,7 @@ public class PositionController implements LocationListener {
 		
 		if (loc.getAccuracy() >= bestPosition.getAccuracy())
 			return true;
-		else if (timedelta > ONE_MINUTE)
+		else if (timedelta > HALF_MINUTE)
 			return true;
 		else
 			return false;

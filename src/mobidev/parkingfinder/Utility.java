@@ -71,9 +71,8 @@ public class Utility {
 				(int) (loc.getLongitude() * 1E6));
 	}
 
-	public static void centerMap(Location loc, MapView mapview) {
+	public static void centerMap(GeoPoint gp , MapView mapview) {
 		MapController mapc = mapview.getController();
-		GeoPoint gp = location2geopoint(loc);
 		mapview.invalidate();
 
 		List<Overlay> overlays = mapview.getOverlays();
@@ -88,6 +87,11 @@ public class Utility {
 			mapc.animateTo(gp);
 			mapc.setZoom(18);
 		}
+	}
+	
+	public static void centerMap(Location loc, MapView mapview) {
+		GeoPoint gp = location2geopoint(loc);
+		centerMap (gp, mapview);
 	}
 
 	public static String getStreetName(Context c, double latitude,
