@@ -8,20 +8,26 @@
     <string name="connectionRequired">This application requires network access. Please, enable mobile network or Wi-Fi.</string>
     <string name="gpsDisabled">GPS is disabled in your device. For a better experience we suggest to enable it.</string>
     <string name="parkHere">Park here</string>
-    <string name="addParkInformation">Would you insert information about the parking you\'ve just freed?</string>
+    <string name="addParkInformation">Would you insert information about the parking you are freeing?</string>
     <string name="parkingInfo">Parking Info</string>
     <string name="latitude">Latitude:</string>
     <string name="longitude">Longitude:</string>
     <string name="parkingType">Type:</string>
     <string-array name="parkingTypes">
-        <item >Free</item>
+        <item>Undefined</item><item >Free</item>
         <item >Toll</item>
         <item >Timed</item>
         <item >For Disabled</item>
         <item >Residents</item>
+        
     </string-array>
         <string name="save">Save</string>
         <string name="cancel">Cancel</string>
         <string name="freeingParking">Freeing a Parking</string>
+        <string name="comments">Comments:</string>
+        <string name="confirmReleaseParking">Are you freeing this parking?</string>
+        <string name="address">Address:</string>
+        <string name="occupyingParking">Occupying a Parking</string>
+        <string name="confirmOccupyParking">Are you occupying a parking?</string>
     
 </resources>

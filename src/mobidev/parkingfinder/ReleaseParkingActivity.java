@@ -1,16 +1,11 @@
 package mobidev.parkingfinder;
 
-import java.util.List;
-
 import mobidev.parkingfinder.R;
 
 import com.google.android.maps.GeoPoint;
-import com.google.android.maps.ItemizedOverlay;
 import com.google.android.maps.MapActivity;
-import com.google.android.maps.MapController;
 import com.google.android.maps.MapView;
 import com.google.android.maps.MyLocationOverlay;
-import com.google.android.maps.Overlay;
 import com.google.android.maps.OverlayItem;
 
 import android.content.Context;
@@ -25,7 +20,6 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 
 public class ReleaseParkingActivity extends MapActivity {
@@ -34,13 +28,16 @@ public class ReleaseParkingActivity extends MapActivity {
 	private final static String TYPE_KEY = "parkingType";
 	private final static String LAT_KEY = "latitude";
 	private final static String LON_KEY = "longitude";
+	private final static int REQUEST_CODE = 2;
 
 	private MapView mapView;
+	private MyLocationOverlay myLocationOverlay;
 	private ImageButton releaseButton;
 	private int parkingId;
 	private int latitude;
 	private int longitude;
 	private int type;
+	private boolean parked = false;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -52,14 +49,13 @@ public class ReleaseParkingActivity extends MapActivity {
 		releaseButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				removeParkingInfo();
-				showReleaseDialog();
+				showConfirmationDialog();
 			}
 		});
 
 		mapView = (MapView) findViewById(R.id.mapview);
 
-		MyLocationOverlay myLocationOverlay = new MyLocationOverlay(this,
+		myLocationOverlay = new MyLocationOverlay(this,
 				mapView);
 		mapView.getOverlays().add(myLocationOverlay);
 		myLocationOverlay.enableMyLocation();
@@ -87,6 +83,8 @@ public class ReleaseParkingActivity extends MapActivity {
 
 		SharedPreferences prefs = getSharedPreferences(MY_PREFERENCES,
 				Context.MODE_PRIVATE);
+		
+		/* DEBUG ONLY
 		SharedPreferences.Editor editor = prefs.edit();
 		editor.putInt(ID_KEY, 0);
 		editor.putInt(TYPE_KEY, 3);
@@ -94,15 +92,16 @@ public class ReleaseParkingActivity extends MapActivity {
 				(int) (lastKnownLocation.getLatitude() * 1E6) + 10000);
 		editor.putInt(LON_KEY,
 				(int) (lastKnownLocation.getLongitude() * 1E6) + 1000);
-
 		editor.commit();
+		// DEBUG ONLY */
 
-		parkingId = prefs.getInt(ID_KEY, -1);
+		longitude = prefs.getInt(LON_KEY, -30); // c'è solo oceano
 
-		if (parkingId > -1) { // abbiamo un parcheggio memorizzato
+		if (longitude != -30) { // abbiamo un parcheggio memorizzato
+			parked = true;
+			parkingId = prefs.getInt(ID_KEY, -1);
 			latitude = prefs.getInt(LAT_KEY, -1);
-			longitude = prefs.getInt(LON_KEY, -1);
-			type = prefs.getInt(TYPE_KEY, -1);
+			type = prefs.getInt(TYPE_KEY, 0);
 
 			Drawable drawable = this.getResources().getDrawable(
 					R.drawable.car_icon);
@@ -142,7 +141,7 @@ public class ReleaseParkingActivity extends MapActivity {
 		OnClickListener negative = new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
-				ReleaseParkingActivity.this.finish();
+				finish();
 			}
 		};
 
@@ -172,25 +171,57 @@ public class ReleaseParkingActivity extends MapActivity {
 				this, positive, negative);
 	}
 
-	private void showReleaseDialog() {
+	private void showConfirmationDialog() {
 		OnClickListener positive = new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
-				Intent i = new Intent(ReleaseParkingActivity.this,
-						ParkingInfoActivity.class);
-				i.putExtra("parkingId", parkingId);
-				i.putExtra("latitude", latitude);
-				i.putExtra("longitude", longitude);
-				i.putExtra("type", type);
-
-				startActivity(i);
+				removeParkingInfo();
+				showReleaseDialog();
 			}
 		};
 
 		OnClickListener negative = new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
-				ReleaseParkingActivity.this.finish();
+				dialog.cancel();
+			}
+		};
+
+		Utility.showDialog(getString(R.string.freeingParking),
+				getString(R.string.confirmReleaseParking), this, positive,
+				negative);
+	}
+
+	private void showReleaseDialog() {
+		OnClickListener positive = new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				Intent i = new Intent(ReleaseParkingActivity.this,
+						ParkingInfoActivity.class);
+				
+				if (parked) { // considero le coordinate dell'auto
+					i.putExtra("parkingId", parkingId);
+					i.putExtra("latitude", latitude);
+					i.putExtra("longitude", longitude);
+					i.putExtra("type", type);
+				}
+				else { // considero le coordinate dell'utente
+					i.putExtra("latitude", myLocationOverlay.getMyLocation().getLatitudeE6());
+					i.putExtra("longitude", myLocationOverlay.getMyLocation().getLongitudeE6());
+				}
+				startActivityForResult(i, REQUEST_CODE);
+			}
+		};
+
+		OnClickListener negative = new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				if (parked)
+					finish();
+				else {
+					// TODO : send latitude/longitude to the server
+					finish();
+				}
 			}
 		};
 
@@ -210,4 +241,17 @@ public class ReleaseParkingActivity extends MapActivity {
 		editor.commit();
 	}
 
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode,
+			Intent intent) {
+		if (requestCode == REQUEST_CODE) {
+			switch (resultCode) {
+			case RESULT_OK:
+				finish();
+				break;
+			}
+		}
+		super.onActivityResult(requestCode, resultCode, intent);
+
+	}
 }

@@ -17,7 +17,7 @@
 
         <ImageButton
             android:id="@+id/parkButton"
-            android:contentDescription="@string/searchPark"
+            android:contentDescription="@string/parkHere"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
