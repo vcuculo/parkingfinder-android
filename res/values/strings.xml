@@ -13,6 +13,10 @@
     <string name="latitude">Latitude:</string>
     <string name="longitude">Longitude:</string>
     <string name="parkingType">Type:</string>
+    <string name="rangeSearch">Range of Search</string>
+    <string name="timeRefresh">Time to Refresh</string>
+    <string name="notifySound">Notify Sound</string>
+    <string name="filterSearch">Filter to Search</string>
     <string-array name="parkingTypes">
         <item>Undefined</item><item >Free</item>
         <item >Toll</item>

@@ -27,7 +27,9 @@ public class SearchParkingActivity extends MapActivity {
 	private final static String MY_PREFERENCES = "MyPref";
 	private final static String LAT_KEY = "latitude";
 	private final static String LON_KEY = "longitude";
+	private final static int REQUEST_CODE = 1;
 	private MyLocationOverlay myLocationOverlay;
+	
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -160,11 +162,26 @@ public class SearchParkingActivity extends MapActivity {
 			break;
 		case R.id.optionsMenu:
 			// TODO: Options
+			Intent i=new Intent(this,OptionSettingsActivity.class);
+			startActivityForResult(i, REQUEST_CODE);
 			break;
 		case R.id.exitMenu:
 			finish();
 			break;
 		}
 		return false;
+	}
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode,
+			Intent intent) {
+		if (requestCode == REQUEST_CODE) {
+			switch (resultCode) {
+			case RESULT_OK:
+				break;
+			}
+		}
+		super.onActivityResult(requestCode, resultCode, intent);
+
 	}
 }
