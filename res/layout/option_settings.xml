@@ -3,102 +3,115 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:minWidth="280dip"
-    android:padding="5dip" >
-
-    <TextView
-        android:id="@+id/labelRange"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/rangeSearch"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
-
-    <SeekBar
-        android:id="@+id/seekBarRange"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="5dip"
-        android:paddingRight="5dip" />
+        android:layout_height="match_parent"
+        android:minWidth="280dip"
+        android:orientation="vertical"
+        android:padding="5dip" >
 
-    <TextView
-        android:id="@+id/labelTime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/timeRefresh"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
 
-    <SeekBar
-        android:id="@+id/seekBarTime"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="5dip"
-        android:paddingRight="5dip" />
+            <TextView
+                android:id="@+id/labelRange"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:text="@string/rangeSearch"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+            <TextView
+                android:id="@+id/textValueRange"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/labelRange"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+        </RelativeLayout>
 
+        <SeekBar
+            android:id="@+id/seekBarRange"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="8dip"
+            android:paddingRight="8dip" />
+ <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
         <TextView
-            android:id="@+id/labelNotify"
+            android:id="@+id/labelTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="@string/timeRefresh"
             android:layout_alignParentLeft="true"
-            android:text="@string/notifySound"
             android:textAppearance="?android:attr/textAppearanceMedium" />
-
-        <ToggleButton
-            android:id="@+id/toggleNotify"
-            android:layout_width="100dip"
+              <TextView
+                android:id="@+id/textValueTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/labelTime"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+</RelativeLayout>
+        <SeekBar
+            android:id="@+id/seekBarTime"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true" />
-    </RelativeLayout>
+            android:paddingLeft="8dip"
+            android:paddingRight="8dip"
+            android:soundEffectsEnabled="true" />
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
 
-        <TextView
-            android:id="@+id/labelFilter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:text="@string/filterSearch"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
-        <ToggleButton
-            android:id="@+id/toggleFilter"
-            android:layout_width="100dip"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true" />
+            <TextView
+                android:id="@+id/labelNotify"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:text="@string/notifySound"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
 
-        <Spinner
-            android:id="@+id/spinnerFilter"
-            android:layout_width="100dip"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/toggleFilter"
-            android:layout_alignParentRight="true"
-            android:entries="@array/parkingTypes" />
-    </RelativeLayout>
+            <ToggleButton
+                android:id="@+id/toggleNotify"
+                android:layout_width="100dip"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true" />
+        </RelativeLayout>
 
-   
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:id="@+id/labelFilter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:text="@string/filterSearch"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <Button
+                android:id="@+id/button1"
+                android:layout_width="100dip"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:text="@string/filter" />
+        </RelativeLayout>
 
         <Button
             android:id="@+id/buttonPositive"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-           
             android:text="OK" />
 
         <Button
             android:id="@+id/buttonCancel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-          
             android:text="@string/cancel" />
+    </LinearLayout>
 
-
-</LinearLayout>
 </ScrollView>
