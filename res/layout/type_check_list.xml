@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/check_list"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    
+        <CheckedTextView
+        android:id="@+id/checkedTextUndefined"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/undefinedPark" />
+        <CheckedTextView
+        android:id="@+id/checkedTextFree"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/freePark" />
+        <CheckedTextView
+        android:id="@+id/checkedTextToll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/tollPark" />
+        <CheckedTextView
+        android:id="@+id/checkedTimed"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/timedPark" />
+        <CheckedTextView
+        android:id="@+id/checkedTextDisabled"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/disabledPark" />
+        <CheckedTextView
+        android:id="@+id/checkedTextResident"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/residentPark" />
+
+
+
+
+</LinearLayout>

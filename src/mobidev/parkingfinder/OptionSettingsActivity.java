@@ -1,21 +1,22 @@
 package mobidev.parkingfinder;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
-import android.graphics.Canvas.EdgeType;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.SeekBar;
-import android.widget.TextView;
 import android.widget.SeekBar.OnSeekBarChangeListener;
+import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
-public class OptionSettingsActivity extends Activity{
+public class OptionSettingsActivity extends Activity implements OnClickListener{
 	private final static String MY_PREFERENCES = "MyPref";
 	static final String PREFERENCE_RANGE="my_range";
 	static final String PREFERENCE_REFRESH="my_refresh";
@@ -25,13 +26,19 @@ public class OptionSettingsActivity extends Activity{
 	private final float MAX_REFRESH_SEEK=(float)4.5;
 	private final int MIN_RANGE_SEEK=200;
 	private final float MIN_REFRESH_SEEK=(float)0.5;
+	
+	private final int FILTER_DIALOG=1;
+	
 	private ToggleButton audioToggleButton;
 	private SeekBar rangeSeekBar, timeSeekBar;
-	private Button saveButton,cancelButton;
+	private Button saveButton,cancelButton,filterButton;
 	private TextView valueRange,valueRefresh;
 	
 	private int currentRange;
-	float currentTime;
+	private float currentTime;
+	private boolean currentAudio;
+	private String currentFilter;
+	
 	private int positionRangeCursor,positionTimeCursor;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -41,32 +48,25 @@ public class OptionSettingsActivity extends Activity{
 				Context.MODE_PRIVATE);
 		currentRange=prefs.getInt(PREFERENCE_RANGE, 300);
 		currentTime=prefs.getFloat(PREFERENCE_REFRESH, 3);
+		currentAudio=prefs.getBoolean(PREFERENCE_AUDIO, true);
 		
 		audioToggleButton=(ToggleButton) findViewById(R.id.toggleNotify);
 		rangeSeekBar=(SeekBar)findViewById(R.id.seekBarRange);
 		timeSeekBar=(SeekBar)findViewById(R.id.seekBarTime);
 		cancelButton = (Button) findViewById(R.id.buttonCancel);
 		saveButton = (Button) findViewById(R.id.buttonPositive);
+		filterButton=(Button) findViewById(R.id.buttonFilter);
 		valueRange=(TextView) findViewById(R.id.textValueRange);
 		valueRange.setText(Integer.toString(currentRange));
 		valueRefresh=(TextView) findViewById(R.id.textValueTime);
 		valueRefresh.setText(Float.toString(currentTime));
-		cancelButton.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				setResult(RESULT_OK);
-				finish();
-			}
-		});
-
-		saveButton.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				// TODO : send info to the server
-				setResult(RESULT_OK);
-				finish();
-			}
-		});
+		cancelButton.setOnClickListener(this);
+		saveButton.setOnClickListener(this);
+		filterButton.setOnClickListener(this);
+		audioToggleButton.setChecked(currentAudio);
+		
+		
+		//seekbar
 		positionRangeCursor=currentRange-MIN_RANGE_SEEK;
 		rangeSeekBar.setMax(MAX_RANGE_SEEK);
 		rangeSeekBar.setProgress(positionRangeCursor);
@@ -121,6 +121,52 @@ public class OptionSettingsActivity extends Activity{
 				valueRefresh.setText(Float.toString(currentTime));
 			}
 		});
+	}
+	
+	@Override
+	public Dialog onCreateDialog(int id){
+		switch (id) {
+		case FILTER_DIALOG:
+			final CharSequence[] items = {"0", "1", "2","3","4","5"};
+
+			AlertDialog.Builder builder = new AlertDialog.Builder(this);
+			builder.setTitle("Check type");
+			builder.setMultiChoiceItems(items, null, new DialogInterface.OnMultiChoiceClickListener() {
+				
+				@Override
+				public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+					// TODO Auto-generated method stub
+					
+				}
+			});
+			AlertDialog alert = builder.create();
+			return alert;
+			
+
+		default:
+			return null;
+	
+		}
+	}
+	@Override
+	public void onClick(View v) {
+		// TODO Auto-generated method stub
+		int id=v.getId();
+		switch (id) {
+		case R.id.saveButton:
+			setResult(RESULT_OK);
+			finish();
+			break;
+		case R.id.cancelButton:
+			setResult(RESULT_OK);
+			finish();
+			break;
+		case R.id.buttonFilter:
+			showDialog(FILTER_DIALOG);
+			break;
+		default:
+			break;
+		}	
 	}
 
 
