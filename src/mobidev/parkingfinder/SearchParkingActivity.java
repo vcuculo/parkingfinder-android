@@ -1,16 +1,25 @@
 package mobidev.parkingfinder;
 
+import java.io.IOException;
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.Date;
+
 import mobidev.parkingfinder.R;
 
+import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapActivity;
 import com.google.android.maps.MapView;
 import com.google.android.maps.MyLocationOverlay;
+import com.google.android.maps.OverlayItem;
 
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.DialogInterface.OnClickListener;
+import android.graphics.drawable.Drawable;
+import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.provider.Settings;
@@ -27,6 +36,8 @@ public class SearchParkingActivity extends MapActivity {
 	private final static String MY_PREFERENCES = "MyPref";
 	private final static String LAT_KEY = "latitude";
 	private final static String LON_KEY = "longitude";
+	private final static String ACC_KEY = "accuracy";
+
 	private MyLocationOverlay myLocationOverlay;
 
 	@Override
@@ -67,6 +78,9 @@ public class SearchParkingActivity extends MapActivity {
 
 		if (!Utility.isOnline(this))
 			showConnectionDialog();
+		else {
+
+		}
 	}
 
 	@Override
@@ -123,10 +137,10 @@ public class SearchParkingActivity extends MapActivity {
 				SharedPreferences prefs = getSharedPreferences(MY_PREFERENCES,
 						Context.MODE_PRIVATE);
 				SharedPreferences.Editor editor = prefs.edit();
-				editor.putInt(LAT_KEY, myLocationOverlay.getMyLocation()
-						.getLatitudeE6());
-				editor.putInt(LON_KEY, myLocationOverlay.getMyLocation()
-						.getLongitudeE6());
+				Location myLocation = myLocationOverlay.getLastFix();
+				editor.putFloat(LAT_KEY, (float) myLocation.getLatitude());
+				editor.putFloat(LON_KEY, (float) myLocation.getLongitude());
+				editor.putFloat(ACC_KEY, myLocation.getAccuracy());
 				editor.commit();
 				finish();
 			}
@@ -167,4 +181,6 @@ public class SearchParkingActivity extends MapActivity {
 		}
 		return false;
 	}
+
+
 }
