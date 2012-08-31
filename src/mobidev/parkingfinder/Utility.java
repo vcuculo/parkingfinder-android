@@ -131,41 +131,11 @@ public class Utility {
 				Context.MODE_PRIVATE);
 
 		float range = prefs.getFloat("range", (float) 10);
-
-		String response;
-		try {
-			response = CommunicationController.sendRequest("searchParking",
-					DataController.marshallParkingRequest(
-							myLocation.getLatitude(),
-							myLocation.getLongitude(), range));
-
-			ArrayList<Parking> parkings;
-
-			try {
-
-				if (!map.getOverlays().isEmpty())
-					map.getOverlays().removeAll(map.getOverlays().subList(1, map.getOverlays().size()));
-
-				/*MyLocationOverlay myLocationOverlay = new MyLocationOverlay(
-						map.getContext(), map);
-				map.getOverlays().add(myLocationOverlay);
-				myLocationOverlay.enableMyLocation();*/
-
-				Log.i("SIZE", String.valueOf(map.getOverlays().size()));
-				parkings = DataController.unMarshallParking(response);
-				for (Parking parking : parkings)
-					showParking(map, parking);
-			
-			} catch (JSONException e) {
-				e.printStackTrace();
-			}
-		} catch (IOException e1) {
-			e1.printStackTrace();
-		}
+		new asyncTaskSearch(c, map, myLocation, range).execute();
 
 	}
 
-	private static void showParking(MapView mapView, Parking p) {
+	static void showParking(MapView mapView, Parking p) {
 		Drawable drawable;
 		Context c = mapView.getContext();
 		switch (p.getType()) {
