@@ -1,25 +1,16 @@
 package mobidev.parkingfinder;
 
-import java.io.IOException;
-import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Timer;
-
 import mobidev.parkingfinder.R;
 
-import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapActivity;
 import com.google.android.maps.MapView;
 import com.google.android.maps.MyLocationOverlay;
-import com.google.android.maps.OverlayItem;
 
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.DialogInterface.OnClickListener;
-import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
@@ -80,9 +71,7 @@ public class SearchParkingActivity extends MapActivity {
 
 		if (!Utility.isOnline(this))
 			showConnectionDialog();
-		else {
-	
-		}
+	    locationListener.restartTimer();
 	}
 	
 	@Override
@@ -190,6 +179,4 @@ public class SearchParkingActivity extends MapActivity {
 		}
 		return false;
 	}
-
-
 }

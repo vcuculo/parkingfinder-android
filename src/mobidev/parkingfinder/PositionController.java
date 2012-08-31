@@ -42,6 +42,11 @@ public class PositionController implements LocationListener {
 		t.purge();
 	}
 	
+	public void restartTimer(){
+		t = new Timer();
+		t.schedule(new MyTimer(myLocation, mapview), 5000, 5000);
+	}
+	
 	@Override
 	public void onProviderDisabled(String arg0) {
 	}

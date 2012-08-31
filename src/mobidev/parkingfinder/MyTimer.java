@@ -23,5 +23,4 @@ public class MyTimer extends TimerTask {
 		if (myLocation != null)
 			Utility.askParkings(myLocation, map);
 	}
-
 }
