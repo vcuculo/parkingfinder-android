@@ -1,6 +1,5 @@
 package mobidev.parkingfinder;
 
-import mobidev.parkingfinder.R;
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -15,6 +14,7 @@ import android.widget.ImageButton;
 public class ParkingFinderActivity extends Activity {
 	private final static String MY_PREFERENCES = "MyPref";
 	private final static String LON_KEY = "longitude";
+	private final static String PREFERENCES_SEARCH_PARK = "search";
 
 	private ImageButton searchButton, releaseButton;
 	private double longitude;
@@ -33,9 +33,12 @@ public class ParkingFinderActivity extends Activity {
 
 				SharedPreferences prefs = getSharedPreferences(MY_PREFERENCES,
 						Context.MODE_PRIVATE);
-
+				
 				longitude = (double) prefs.getFloat(LON_KEY, 181);
-
+				SharedPreferences.Editor edit=prefs.edit();
+				edit.putBoolean(PREFERENCES_SEARCH_PARK, true);
+				edit.commit();
+				
 				if (longitude < 181) { // abbiamo un parcheggio memorizzato
 					Utility.showDialog(getString(R.string.actionDisallowed), getString(R.string.releaseParkingFirst), ParkingFinderActivity.this);
 					return;

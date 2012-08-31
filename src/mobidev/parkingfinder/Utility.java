@@ -32,6 +32,7 @@ import android.util.Log;
 public class Utility {
 
 	private final static String MY_PREFERENCES = "MyPref";
+	private final static String PREFERENCES_SEARCH_PARK = "search";
 	private final static int FIVE_MINUTES = 300000;
 
 	public static String getDigest(String pw) {
@@ -129,8 +130,10 @@ public class Utility {
 		Context c = map.getContext();
 		SharedPreferences prefs = c.getSharedPreferences(MY_PREFERENCES,
 				Context.MODE_PRIVATE);
-
+		boolean search=prefs.getBoolean(PREFERENCES_SEARCH_PARK, true);
+		
 		float range = prefs.getFloat("range", (float) 10);
+		if(search)
 		new asyncTaskSearch(c, map, myLocation, range).execute();
 
 	}

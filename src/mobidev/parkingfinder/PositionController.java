@@ -5,6 +5,7 @@ import java.util.Timer;
 import com.google.android.maps.MapView;
 import com.google.android.maps.MyLocationOverlay;
 
+import android.content.SharedPreferences;
 import android.location.Location;
 import android.location.LocationListener;
 import android.os.Bundle;
