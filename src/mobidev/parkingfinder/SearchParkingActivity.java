@@ -40,6 +40,7 @@ public class SearchParkingActivity extends MapActivity {
 	private final static String ACC_KEY = "accuracy";
 
 	private MyLocationOverlay myLocationOverlay;
+	private PositionController locationListener;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -62,7 +63,7 @@ public class SearchParkingActivity extends MapActivity {
 
 		LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
 
-		PositionController locationListener = new PositionController(mapView, true);
+		locationListener = new PositionController(myLocationOverlay, mapView);
 
 		locationManager.requestLocationUpdates(
 				LocationManager.NETWORK_PROVIDER, 3000, 0, locationListener);
@@ -82,6 +83,13 @@ public class SearchParkingActivity extends MapActivity {
 		else {
 	
 		}
+	}
+	
+	@Override
+	protected void onPause() {
+	    super.onPause();
+	    myLocationOverlay.disableMyLocation();
+	    locationListener.stopTimer();
 	}
 
 	@Override

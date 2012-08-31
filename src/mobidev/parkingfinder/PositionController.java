@@ -3,6 +3,7 @@ package mobidev.parkingfinder;
 import java.util.Timer;
 
 import com.google.android.maps.MapView;
+import com.google.android.maps.MyLocationOverlay;
 
 import android.location.Location;
 import android.location.LocationListener;
@@ -13,12 +14,13 @@ public class PositionController implements LocationListener {
 	private Location bestPosition;
 	private MapView mapview;
 	private static final int HALF_MINUTE = 30 * 1000;
-	private boolean search;
 	private boolean first = true;
+	private MyLocationOverlay myLocation;
+	private Timer t;
 
-	public PositionController(MapView map, boolean search) {
+	public PositionController(MyLocationOverlay myLoc, MapView map) {
 		this.mapview = map;
-		this.search = search;
+		this.myLocation = myLoc;
 	}
 
 	@Override
@@ -26,13 +28,20 @@ public class PositionController implements LocationListener {
 		if (isBetterLocation(arg0)) {
 			bestPosition = arg0;
 			Utility.centerMap(bestPosition, mapview);
-			if (search && first){
-				Utility.askParkings(bestPosition, mapview);							
+			if (myLocation != null && first) {
+				Utility.askParkings(bestPosition, mapview);
+				t = new Timer();
+				t.schedule(new MyTimer(myLocation, mapview), 5000, 5000);
 				first = false;
 			}
 		}
 	}
 
+	public void stopTimer(){
+		t.cancel();
+		t.purge();
+	}
+	
 	@Override
 	public void onProviderDisabled(String arg0) {
 	}

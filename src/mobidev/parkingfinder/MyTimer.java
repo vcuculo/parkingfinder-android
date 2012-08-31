@@ -12,7 +12,7 @@ public class MyTimer extends TimerTask {
 	private MapView map;
 	private MyLocationOverlay myLoc;
 
-	public MyTimer(MapView map, MyLocationOverlay myLoc) {
+	public MyTimer(MyLocationOverlay myLoc, MapView map) {
 		this.map = map;
 		this.myLoc = myLoc;
 	}

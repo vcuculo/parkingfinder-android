@@ -134,7 +134,7 @@ public class Utility {
 		SharedPreferences prefs = c.getSharedPreferences(MY_PREFERENCES,
 				Context.MODE_PRIVATE);
 
-		float range = prefs.getFloat("range", (float) 0.1);
+		float range = prefs.getFloat("range", (float) 0.5);
 
 		String response;
 		try {
@@ -148,21 +148,18 @@ public class Utility {
 			try {
 
 				if (!map.getOverlays().isEmpty())
-					map.getOverlays().clear();
+					map.getOverlays().removeAll(map.getOverlays().subList(1, map.getOverlays().size()));
 
-				MyLocationOverlay myLocationOverlay = new MyLocationOverlay(
+				/*MyLocationOverlay myLocationOverlay = new MyLocationOverlay(
 						map.getContext(), map);
 				map.getOverlays().add(myLocationOverlay);
-				myLocationOverlay.enableMyLocation();
+				myLocationOverlay.enableMyLocation();*/
 
 				Log.i("SIZE", String.valueOf(map.getOverlays().size()));
 				parkings = DataController.unMarshallParking(response);
 				for (Parking parking : parkings)
 					showParking(map, parking);
-				
-				Timer t = new Timer();
-				t.schedule(new MyTimer(map, myLocationOverlay), 5000, 5000);
-				
+			
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
