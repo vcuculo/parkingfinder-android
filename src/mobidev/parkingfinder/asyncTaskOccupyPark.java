@@ -8,22 +8,23 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
-public class asyncTaskFreePark extends AsyncTask<Void, Void, Void>{
-
-	Parking p;
+public class asyncTaskOccupyPark extends AsyncTask<Void, Void, Void> {
+	
+	int idParking;
 	Context c;
 	ProgressDialog pr;
-	public asyncTaskFreePark(Context c,Parking p){
+	public asyncTaskOccupyPark(Context c,int idParking){
 		this.c=c;
-		this.p=p;
+		this.idParking=idParking;
 	}
-	
 	@Override
 	protected Void doInBackground(Void... params) {
 		// TODO Auto-generated method stub
 		publishProgress();
 		try {
-			CommunicationController.sendRequest("freePark", DataController.marshallParking(p));
+			CommunicationController.sendRequest("park", DataController.marshallOccupyParking(idParking));
+			
+			
 		} catch (IOException e) {
 			e.printStackTrace();
 			Log.i("freeParkIOException", "Exception");
