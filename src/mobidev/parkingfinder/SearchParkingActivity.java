@@ -29,10 +29,11 @@ public class SearchParkingActivity extends MapActivity {
 	private final static String LAT_KEY = "latitude";
 	private final static String LON_KEY = "longitude";
 	private final static String ACC_KEY = "accuracy";
+	private boolean paused = false;
 
 	private MyLocationOverlay myLocationOverlay;
 	private PositionController locationListener;
-	
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -52,9 +53,12 @@ public class SearchParkingActivity extends MapActivity {
 		mapView.getOverlays().add(myLocationOverlay);
 		myLocationOverlay.enableMyLocation();
 
+		MyItemizedOverlay parkingsOverlay = new MyItemizedOverlay(this);
+		mapView.getOverlays().add(parkingsOverlay);
+		
 		LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
 
-		locationListener = new PositionController(myLocationOverlay, mapView);
+		locationListener = new PositionController(parkingsOverlay, myLocationOverlay, mapView, false);
 
 		locationManager.requestLocationUpdates(
 				LocationManager.NETWORK_PROVIDER, 3000, 0, locationListener);
@@ -71,14 +75,17 @@ public class SearchParkingActivity extends MapActivity {
 
 		if (!Utility.isOnline(this))
 			showConnectionDialog();
-	    locationListener.restartTimer();
+		if (paused)
+			locationListener.restartTimer();
+		paused = false;
 	}
-	
+
 	@Override
 	protected void onPause() {
-	    super.onPause();
-	    myLocationOverlay.disableMyLocation();
-	    locationListener.stopTimer();
+		super.onPause();
+		myLocationOverlay.disableMyLocation();
+		locationListener.stopTimer();
+		paused = true;
 	}
 
 	@Override
@@ -168,7 +175,7 @@ public class SearchParkingActivity extends MapActivity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.centerMenu:
-			Utility.centerMap(myLocationOverlay.getMyLocation(), mapView);
+			Utility.centerMap(myLocationOverlay.getMyLocation(), mapView, false);
 			break;
 		case R.id.optionsMenu:
 			// TODO: Options

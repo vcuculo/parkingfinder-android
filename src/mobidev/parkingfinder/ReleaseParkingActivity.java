@@ -63,7 +63,7 @@ public class ReleaseParkingActivity extends MapActivity {
 
 		LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
 
-		PositionController locationListener = new PositionController(null , mapView);
+		PositionController locationListener = new PositionController(null, null , mapView, true);
 
 		locationManager.requestLocationUpdates(
 				LocationManager.NETWORK_PROVIDER, 3000, 0, locationListener);

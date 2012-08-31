@@ -11,12 +11,14 @@ import java.util.Locale;
 import org.json.JSONException;
 
 import com.google.android.maps.GeoPoint;
+import com.google.android.maps.ItemizedOverlay;
 import com.google.android.maps.MapController;
 import com.google.android.maps.MapView;
 import com.google.android.maps.Overlay;
 import com.google.android.maps.OverlayItem;
 
 import android.app.AlertDialog;
+import android.content.ClipData.Item;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
@@ -33,6 +35,7 @@ public class Utility {
 
 	private final static String MY_PREFERENCES = "MyPref";
 	private final static int FIVE_MINUTES = 300000;
+	private static boolean first = true;
 
 	public static String getDigest(String pw) {
 		MessageDigest digester;
@@ -81,14 +84,14 @@ public class Utility {
 				(int) (loc.getLongitude() * 1E6));
 	}
 
-	public static void centerMap(GeoPoint gp, MapView mapview) {
+	public static void centerMap(GeoPoint gp, MapView mapview, boolean release) {
 		MapController mapc = mapview.getController();
 		mapview.invalidate();
 
 		List<Overlay> overlays = mapview.getOverlays();
 
-		if (overlays.size() > 1) { // mostrare la mia posizione e quella
-									// dell'auto
+		if (release && overlays.size() > 1) { // mostrare la mia posizione e
+											  // quella dell'auto
 			MyItemizedOverlay itemizedOverlay = (MyItemizedOverlay) overlays
 					.get(1);
 			mapc.animateTo(itemizedOverlay.getItem(0).getPoint());
@@ -99,9 +102,9 @@ public class Utility {
 		}
 	}
 
-	public static void centerMap(Location loc, MapView mapview) {
+	public static void centerMap(Location loc, MapView mapview, boolean release) {
 		GeoPoint gp = location2geopoint(loc);
-		centerMap(gp, mapview);
+		centerMap(gp, mapview, release);
 	}
 
 	public static String getStreetName(Context c, double latitude,
@@ -125,12 +128,13 @@ public class Utility {
 		}
 	}
 
-	public static void askParkings(Location myLocation, MapView map) {
+	public static void askParkings(Location myLocation, MapView map,
+			MyItemizedOverlay itemizedoverlay) {
 		Context c = map.getContext();
 		SharedPreferences prefs = c.getSharedPreferences(MY_PREFERENCES,
 				Context.MODE_PRIVATE);
 
-		float range = prefs.getFloat("range", (float) 10);
+		float range = prefs.getFloat("range", (float) 0.5);
 
 		String response;
 		try {
@@ -139,23 +143,21 @@ public class Utility {
 							myLocation.getLatitude(),
 							myLocation.getLongitude(), range));
 
+			itemizedoverlay.clear();
+
 			ArrayList<Parking> parkings;
 
 			try {
 
-				if (!map.getOverlays().isEmpty())
-					map.getOverlays().removeAll(map.getOverlays().subList(1, map.getOverlays().size()));
-
-				/*MyLocationOverlay myLocationOverlay = new MyLocationOverlay(
-						map.getContext(), map);
-				map.getOverlays().add(myLocationOverlay);
-				myLocationOverlay.enableMyLocation();*/
-
 				Log.i("SIZE", String.valueOf(map.getOverlays().size()));
+
 				parkings = DataController.unMarshallParking(response);
+
 				for (Parking parking : parkings)
-					showParking(map, parking);
-			
+					showParking(map, parking, itemizedoverlay);
+
+				map.postInvalidate();
+
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
@@ -165,7 +167,8 @@ public class Utility {
 
 	}
 
-	private static void showParking(MapView mapView, Parking p) {
+	private static void showParking(MapView mapView, Parking p,
+			MyItemizedOverlay item) {
 		Drawable drawable;
 		Context c = mapView.getContext();
 		switch (p.getType()) {
@@ -192,19 +195,16 @@ public class Utility {
 		long duration = System.currentTimeMillis() - p.getDate().getTime();
 
 		if (duration > FIVE_MINUTES && duration < FIVE_MINUTES * 2)
-			drawable.setAlpha(128);
+			drawable.setAlpha(200);
 		else if (duration > FIVE_MINUTES * 2)
-			drawable.setAlpha(30);
+			drawable.setAlpha(100);
 
-		MyItemizedOverlay itemizedoverlay = new MyItemizedOverlay(drawable, c);
-		GeoPoint point = new GeoPoint((int) (p.getLatitude() * 1E6),
-				(int) (p.getLongitude() * 1E6));
+		String title = "Your car";
+		String snippet = "Lat: " + p.getLatitude() + "\nLon: "
+				+ p.getLongitude() + "\nFree: "
+				+ TimeUtils.millisToLongDHMS(duration);
 
-		OverlayItem overlayitem = new OverlayItem(point, "Your car", "Lat: "
-				+ p.getLatitude() + "\nLon: " + p.getLongitude() + "\nFree: "
-				+ TimeUtils.millisToLongDHMS(duration));
-
-		itemizedoverlay.addOverlay(overlayitem);
-		mapView.getOverlays().add(itemizedoverlay);
+		item.addOverlayItem((int) (p.getLatitude() * 1E6),
+				(int) (p.getLongitude() * 1E6), title, snippet, drawable);
 	}
 }

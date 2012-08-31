@@ -15,23 +15,26 @@ public class PositionController implements LocationListener {
 	private MapView mapview;
 	private static final int HALF_MINUTE = 30 * 1000;
 	private boolean first = true;
+	private boolean release;
 	private MyLocationOverlay myLocation;
+	private MyItemizedOverlay parkings;
 	private Timer t;
 
-	public PositionController(MyLocationOverlay myLoc, MapView map) {
+	public PositionController(MyItemizedOverlay parkings, MyLocationOverlay myLoc, MapView map, boolean release) {
+		this.parkings = parkings;
 		this.mapview = map;
 		this.myLocation = myLoc;
+		this.release = release;
 	}
 
 	@Override
 	public void onLocationChanged(Location arg0) {
 		if (isBetterLocation(arg0)) {
 			bestPosition = arg0;
-			Utility.centerMap(bestPosition, mapview);
+			Utility.centerMap(bestPosition, mapview, release);
 			if (myLocation != null && first) {
-				Utility.askParkings(bestPosition, mapview);
 				t = new Timer();
-				t.schedule(new MyTimer(myLocation, mapview), 5000, 5000);
+				t.schedule(new MyTimer(parkings, myLocation, mapview), 0, 5000);
 				first = false;
 			}
 		}
@@ -44,7 +47,7 @@ public class PositionController implements LocationListener {
 	
 	public void restartTimer(){
 		t = new Timer();
-		t.schedule(new MyTimer(myLocation, mapview), 5000, 5000);
+		t.schedule(new MyTimer(parkings, myLocation, mapview), 5000, 5000);
 	}
 	
 	@Override
