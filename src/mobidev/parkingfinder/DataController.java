@@ -20,8 +20,8 @@ public class DataController {
 			userJS.put("date", p.getDate());
 			if (p.getId() > -1)
 				userJS.put("id", p.getId());
-			if (p.getComment() != null && p.getComment().length() > 0)
-				userJS.putOpt("text", p.getComment());
+			if (p.getComments() != null && p.getComments().length > 0)
+				userJS.putOpt("text", p.getComments());
 			return userJS.toString();
 		} catch (JSONException e) {
 			e.printStackTrace();
@@ -72,7 +72,7 @@ public class DataController {
 					comments.add(text);
 				}
 			}
-			Parking p = new Parking(id, lat, lon, type, comments, date,
+			Parking p = new Parking(id, lat, lon, type, (String[])comments.toArray(), date,
 					accuracy);
 			parkingList.add(p);
 		}

@@ -1,27 +1,20 @@
 package mobidev.parkingfinder;
 
-import java.io.IOException;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 public class ParkingInfoActivity extends Activity {
 
 	private TextView latitudeText, longitudeText, addressText;
-	private EditText commentText;
 	private Spinner parkingTypeSpinner;
 	private Button cancelButton, saveButton;
-    private Intent i;
-    private double lat, lon;
-    private float accuracy;
-    
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -30,7 +23,6 @@ public class ParkingInfoActivity extends Activity {
 		latitudeText = (TextView) findViewById(R.id.latitudeValue);
 		longitudeText = (TextView) findViewById(R.id.longitudeValue);
 		addressText = (TextView) findViewById(R.id.addressValue);
-		commentText = (EditText) findViewById(R.id.commentsText);
 		parkingTypeSpinner = (Spinner) findViewById(R.id.parkingTypeSpinner);
 		cancelButton = (Button) findViewById(R.id.cancelButton);
 		saveButton = (Button) findViewById(R.id.saveButton);
@@ -38,17 +30,6 @@ public class ParkingInfoActivity extends Activity {
 		cancelButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-
-				Parking p;
-				int id = i.getIntExtra("parkingId", -1);
-				p = new Parking(id, lat, lon, accuracy);
-
-				try {
-					CommunicationController.sendRequest("freePark", DataController.marshallParking(p));
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-				
 				setResult(RESULT_OK);
 				finish();
 			}
@@ -57,30 +38,19 @@ public class ParkingInfoActivity extends Activity {
 		saveButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-
-				Parking p;
-				int id = i.getIntExtra("parkingId", -1);
-				int type = parkingTypeSpinner.getSelectedItemPosition();
-     			String comment = commentText.getText().toString();
-				p = new Parking(id, lat, lon, type, comment, accuracy);
-				
-				try {
-					CommunicationController.sendRequest("freePark", DataController.marshallParking(p));
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
+				// TODO : send info to the server
 				setResult(RESULT_OK);
 				finish();
 			}
 		});
 
-		i = getIntent();
-		lat = i.getDoubleExtra("latitude", 0);
-		lon = i.getDoubleExtra("longitude", 0);
-		accuracy = i.getFloatExtra("accuracy", 0);
-		String street = Utility.getStreetName(this, lat, lon);
-		latitudeText.setText(Double.toString(lat));
-		longitudeText.setText(Double.toString(lon));
+		Intent i = getIntent();
+		//int id = i.getIntExtra("parkingId", -1);
+		int lat = i.getIntExtra("latitude", 0);
+		int lon = i.getIntExtra("longitude", 0);
+		String street = Utility.getStreetName(this, lat / 1E6, lon / 1E6);
+		latitudeText.setText(Double.toString(lat / 1E6));
+		longitudeText.setText(Double.toString(lon / 1E6));
 		addressText.setText(street);
 		parkingTypeSpinner.setSelection(i.getIntExtra("type", 0));
 	}

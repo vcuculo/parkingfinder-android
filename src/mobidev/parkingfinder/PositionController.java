@@ -21,7 +21,6 @@ public class PositionController implements LocationListener {
 		if (isBetterLocation(arg0)) {
 			bestPosition = arg0;
 			Utility.centerMap(bestPosition, mapview);
-			Utility.askParkings(bestPosition, mapview);
 		}
 	}
 

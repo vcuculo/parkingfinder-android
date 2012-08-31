@@ -1,33 +1,18 @@
 package mobidev.parkingfinder;
 
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.Date;
 
 public class Parking {
 	private int id;
 	private double latitude;
 	private double longitude;
 	private int type;
-	private ArrayList<String> comments; //used for s2c 
-	private String comment; //used for c2s
+	private String[] comments;
 	private Timestamp date;
-	private float accuracy;
+	private int accuracy;
 
-	public Parking(int id, double latitude, double longitude, float accuracy) {
-		super();
-		this.id = id;
-		this.latitude = latitude;
-		this.longitude = longitude;
-	    Date today = new Date();
-	    Timestamp date = new Timestamp(today.getTime());
-		this.date = date;
-		this.accuracy = accuracy;
-	}
-	
-	
 	public Parking(int id, double latitude, double longitude, int type,
-			ArrayList<String> comments, Timestamp date, float accuracy) {
+			String[] comments, Timestamp date, int accuracy) {
 		super();
 		this.id = id;
 		this.latitude = latitude;
@@ -38,48 +23,6 @@ public class Parking {
 		this.accuracy = accuracy;
 	}
 
-	public Parking(double latitude, double longitude, int type,
-			ArrayList<String> comments, Timestamp date, float accuracy) {
-		super();
-		this.id = -1;
-		this.latitude = latitude;
-		this.longitude = longitude;
-		this.type = type;
-		this.comments = comments;
-		this.date = date;
-		this.accuracy = accuracy;
-	}
-	
-	public Parking(double latitude, double longitude, int type,
-			String comment, float accuracy) {
-		super();
-		this.id = -1;
-		this.latitude = latitude;
-		this.longitude = longitude;
-		this.type = type;
-		this.comment = comment;
-	    Date today = new Date();
-	    Timestamp date = new Timestamp(today.getTime());		
-		this.date = date;
-		this.accuracy = accuracy;
-	}
-	
-	
-	public Parking(int id, double latitude, double longitude, int type,
-			String comment, float accuracy) {
-		super();
-		this.id = id;
-		this.latitude = latitude;
-		this.longitude = longitude;
-		this.type = type;
-		this.comment = comment;
-	    Date today = new Date();
-	    Timestamp date = new Timestamp(today.getTime());		
-		this.date = date;
-		this.accuracy = accuracy;
-	}
-	
-	
 	public int getId() {
 		return id;
 	}
@@ -112,11 +55,11 @@ public class Parking {
 		this.type = type;
 	}
 
-	public ArrayList<String> getComments() {
+	public String[] getComments() {
 		return comments;
 	}
 
-	public void setComments(ArrayList<String> comments) {
+	public void setComments(String[] comments) {
 		this.comments = comments;
 	}
 
@@ -128,19 +71,11 @@ public class Parking {
 		this.date = date;
 	}
 
-	public float getAccuracy() {
+	public int getAccuracy() {
 		return accuracy;
 	}
 
-	public void setAccuracy(float accuracy) {
+	public void setAccuracy(int accuracy) {
 		this.accuracy = accuracy;
-	}
-
-	public String getComment() {
-		return comment;
-	}
-
-	public void setComment(String comment) {
-		this.comment = comment;
 	}
 }
