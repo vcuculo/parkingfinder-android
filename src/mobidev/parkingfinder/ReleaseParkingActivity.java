@@ -37,7 +37,8 @@ public class ReleaseParkingActivity extends MapActivity {
 	private ImageButton releaseButton;
 	private int parkingId;
 	private double latitude, longitude;
-	private int type, accuracy;
+	private float accuracy;
+	private int type;
 	private boolean parked = false;
 
 	@Override
@@ -55,14 +56,14 @@ public class ReleaseParkingActivity extends MapActivity {
 		});
 
 		mapView = (MapView) findViewById(R.id.mapview);
-
+		
 		myLocationOverlay = new MyLocationOverlay(this, mapView);
 		mapView.getOverlays().add(myLocationOverlay);
 		myLocationOverlay.enableMyLocation();
 
 		LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
 
-		PositionController locationListener = new PositionController(mapView);
+		PositionController locationListener = new PositionController(mapView, false);
 
 		locationManager.requestLocationUpdates(
 				LocationManager.NETWORK_PROVIDER, 3000, 0, locationListener);
@@ -90,7 +91,7 @@ public class ReleaseParkingActivity extends MapActivity {
 			parked = true;
 			latitude = (double) prefs.getFloat(LAT_KEY, 91);
 			parkingId = prefs.getInt(ID_KEY, -1);
-			accuracy = prefs.getInt(ACC_KEY, -1);
+			accuracy = prefs.getFloat(ACC_KEY, -1);
 			type = prefs.getInt(TYPE_KEY, 0);
 
 			Drawable drawable = this.getResources().getDrawable(

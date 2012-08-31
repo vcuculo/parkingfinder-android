@@ -1,5 +1,7 @@
 package mobidev.parkingfinder;
 
+import java.util.Timer;
+
 import com.google.android.maps.MapView;
 
 import android.location.Location;
@@ -11,9 +13,12 @@ public class PositionController implements LocationListener {
 	private Location bestPosition;
 	private MapView mapview;
 	private static final int HALF_MINUTE = 30 * 1000;
-	
-	public PositionController(MapView map) {
+	private boolean search;
+	private boolean first = true;
+
+	public PositionController(MapView map, boolean search) {
 		this.mapview = map;
+		this.search = search;
 	}
 
 	@Override
@@ -21,7 +26,10 @@ public class PositionController implements LocationListener {
 		if (isBetterLocation(arg0)) {
 			bestPosition = arg0;
 			Utility.centerMap(bestPosition, mapview);
-			Utility.askParkings(bestPosition, mapview);
+			if (search && first){
+				Utility.askParkings(bestPosition, mapview);							
+				first = false;
+			}
 		}
 	}
 
@@ -40,14 +48,14 @@ public class PositionController implements LocationListener {
 	private boolean isBetterLocation(Location loc) {
 		if (bestPosition == null)
 			return true;
-		
+
 		long timedelta = loc.getTime() - bestPosition.getTime();
-		
+
 		if (loc.getAccuracy() >= bestPosition.getAccuracy())
 			return true;
 		else if (timedelta > HALF_MINUTE)
 			return true;
 		else
 			return false;
-	}	
+	}
 }

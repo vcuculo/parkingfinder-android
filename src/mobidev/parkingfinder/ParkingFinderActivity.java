@@ -17,7 +17,7 @@ public class ParkingFinderActivity extends Activity {
 	private final static String LON_KEY = "longitude";
 
 	private ImageButton searchButton, releaseButton;
-	private int longitude;
+	private double longitude;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -34,9 +34,9 @@ public class ParkingFinderActivity extends Activity {
 				SharedPreferences prefs = getSharedPreferences(MY_PREFERENCES,
 						Context.MODE_PRIVATE);
 
-				longitude = prefs.getInt(LON_KEY, -30); // oceano
+				longitude = (double) prefs.getFloat(LON_KEY, 181);
 
-				if (longitude != -30) { // abbiamo un parcheggio memorizzato
+				if (longitude < 181) { // abbiamo un parcheggio memorizzato
 					Utility.showDialog(getString(R.string.actionDisallowed), getString(R.string.releaseParkingFirst), ParkingFinderActivity.this);
 					return;
 				}

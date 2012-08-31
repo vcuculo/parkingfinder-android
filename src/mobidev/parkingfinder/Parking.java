@@ -72,7 +72,7 @@ public class Parking {
 		this.latitude = latitude;
 		this.longitude = longitude;
 		this.type = type;
-		this.comment = comment;
+		this.comment = comment.trim();
 	    Date today = new Date();
 	    Timestamp date = new Timestamp(today.getTime());		
 		this.date = date;

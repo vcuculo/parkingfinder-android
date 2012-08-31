@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Timer;
 
 import mobidev.parkingfinder.R;
 
@@ -39,7 +40,7 @@ public class SearchParkingActivity extends MapActivity {
 	private final static String ACC_KEY = "accuracy";
 
 	private MyLocationOverlay myLocationOverlay;
-
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -61,7 +62,7 @@ public class SearchParkingActivity extends MapActivity {
 
 		LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
 
-		PositionController locationListener = new PositionController(mapView);
+		PositionController locationListener = new PositionController(mapView, true);
 
 		locationManager.requestLocationUpdates(
 				LocationManager.NETWORK_PROVIDER, 3000, 0, locationListener);
@@ -79,7 +80,7 @@ public class SearchParkingActivity extends MapActivity {
 		if (!Utility.isOnline(this))
 			showConnectionDialog();
 		else {
-
+	
 		}
 	}
 

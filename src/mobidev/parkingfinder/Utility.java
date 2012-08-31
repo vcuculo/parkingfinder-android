@@ -7,12 +7,15 @@ import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Timer;
 
 import org.json.JSONException;
 
 import com.google.android.maps.GeoPoint;
+import com.google.android.maps.ItemizedOverlay;
 import com.google.android.maps.MapController;
 import com.google.android.maps.MapView;
+import com.google.android.maps.MyLocationOverlay;
 import com.google.android.maps.Overlay;
 import com.google.android.maps.OverlayItem;
 
@@ -28,10 +31,12 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.util.Log;
 
 public class Utility {
 
 	private final static String MY_PREFERENCES = "MyPref";
+	private final static int FIVE_MINUTES = 300000;
 
 	public static String getDigest(String pw) {
 		MessageDigest digester;
@@ -129,7 +134,7 @@ public class Utility {
 		SharedPreferences prefs = c.getSharedPreferences(MY_PREFERENCES,
 				Context.MODE_PRIVATE);
 
-		int range = prefs.getInt("range", 100);
+		float range = prefs.getFloat("range", (float) 0.1);
 
 		String response;
 		try {
@@ -139,16 +144,32 @@ public class Utility {
 							myLocation.getLongitude(), range));
 
 			ArrayList<Parking> parkings;
+
 			try {
+
+				if (!map.getOverlays().isEmpty())
+					map.getOverlays().clear();
+
+				MyLocationOverlay myLocationOverlay = new MyLocationOverlay(
+						map.getContext(), map);
+				map.getOverlays().add(myLocationOverlay);
+				myLocationOverlay.enableMyLocation();
+
+				Log.i("SIZE", String.valueOf(map.getOverlays().size()));
 				parkings = DataController.unMarshallParking(response);
 				for (Parking parking : parkings)
 					showParking(map, parking);
+				
+				Timer t = new Timer();
+				t.schedule(new MyTimer(map, myLocationOverlay), 5000, 5000);
+				
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
+
 	}
 
 	private static void showParking(MapView mapView, Parking p) {
@@ -175,14 +196,21 @@ public class Utility {
 			break;
 		}
 
+		long duration = System.currentTimeMillis() - p.getDate().getTime();
+
+		if (duration > FIVE_MINUTES && duration < FIVE_MINUTES * 2)
+			drawable.setAlpha(128);
+		else if (duration > FIVE_MINUTES * 2)
+			drawable.setAlpha(30);
+
 		MyItemizedOverlay itemizedoverlay = new MyItemizedOverlay(drawable, c);
 		GeoPoint point = new GeoPoint((int) (p.getLatitude() * 1E6),
 				(int) (p.getLongitude() * 1E6));
 
-		long duration = System.currentTimeMillis() - p.getDate().getTime();
 		OverlayItem overlayitem = new OverlayItem(point, "Your car", "Lat: "
 				+ p.getLatitude() + "\nLon: " + p.getLongitude() + "\nFree: "
 				+ TimeUtils.millisToLongDHMS(duration));
+
 		itemizedoverlay.addOverlay(overlayitem);
 		mapView.getOverlays().add(itemizedoverlay);
 	}

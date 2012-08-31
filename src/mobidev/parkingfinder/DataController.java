@@ -32,7 +32,7 @@ public class DataController {
 
 	/* Used to request a list of parking */
 	public static String marshallParkingRequest(double lat, double lon,
-			int range) {
+			float range) {
 		JSONObject request = new JSONObject();
 
 		try {
