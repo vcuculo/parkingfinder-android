@@ -34,5 +34,5 @@
         <string name="exitMenu">Exit</string>
         <string name="actionDisallowed">Action not allowed</string>
         <string name="releaseParkingFirst">To search for a new parking, you have to release your current parking first.</string>
-    
+    	<string name="load">Loading. Please Wait</string>
 </resources>

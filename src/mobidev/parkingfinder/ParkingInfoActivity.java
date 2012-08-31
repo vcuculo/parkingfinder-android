@@ -12,7 +12,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-public class ParkingInfoActivity extends Activity {
+public class ParkingInfoActivity extends Activity implements OnClickListener{
 
 	private TextView latitudeText, longitudeText, addressText;
 	private EditText commentText;
@@ -35,44 +35,9 @@ public class ParkingInfoActivity extends Activity {
 		cancelButton = (Button) findViewById(R.id.cancelButton);
 		saveButton = (Button) findViewById(R.id.saveButton);
 
-		cancelButton.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
+		cancelButton.setOnClickListener(this);
 
-				Parking p;
-				int id = i.getIntExtra("parkingId", -1);
-				p = new Parking(id, lat, lon, accuracy);
-
-				try {
-					CommunicationController.sendRequest("freePark", DataController.marshallParking(p));
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-				
-				setResult(RESULT_OK);
-				finish();
-			}
-		});
-
-		saveButton.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-
-				Parking p;
-				int id = i.getIntExtra("parkingId", -1);
-				int type = parkingTypeSpinner.getSelectedItemPosition();
-     			String comment = commentText.getText().toString();
-				p = new Parking(id, lat, lon, type, comment, accuracy);
-				
-				try {
-					CommunicationController.sendRequest("freePark", DataController.marshallParking(p));
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-				setResult(RESULT_OK);
-				finish();
-			}
-		});
+		saveButton.setOnClickListener(this);
 
 		i = getIntent();
 		lat = i.getDoubleExtra("latitude", 0);
@@ -83,5 +48,49 @@ public class ParkingInfoActivity extends Activity {
 		longitudeText.setText(Double.toString(lon));
 		addressText.setText(street);
 		parkingTypeSpinner.setSelection(i.getIntExtra("type", 0));
+	}
+
+	@Override
+	public void onClick(View v) {
+		// TODO Auto-generated method stub
+		int idView=v.getId();
+		Parking p;
+		int id;
+		switch (idView) {
+		case R.id.saveButton:
+		
+			id = i.getIntExtra("parkingId", -1);
+			int type = parkingTypeSpinner.getSelectedItemPosition();
+ 			String comment = commentText.getText().toString();
+			p = new Parking(id, lat, lon, type, comment, accuracy);
+			new asyncTaskFreePark(this, p).execute();
+			/*
+			try {
+				CommunicationController.sendRequest("freePark", DataController.marshallParking(p));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			*/
+			setResult(RESULT_OK);
+			finish();
+			break;
+		case R.id.cancelButton:
+			
+			id = i.getIntExtra("parkingId", -1);
+			p = new Parking(id, lat, lon, accuracy);
+
+			try {
+				CommunicationController.sendRequest("freePark", DataController.marshallParking(p));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
+			setResult(RESULT_OK);
+			finish();
+			break;
+		default:
+			break;
+		}
+		
 	}
 }
