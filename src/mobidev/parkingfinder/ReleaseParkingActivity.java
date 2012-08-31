@@ -1,5 +1,7 @@
 package mobidev.parkingfinder;
 
+import java.io.IOException;
+
 import mobidev.parkingfinder.R;
 
 import com.google.android.maps.GeoPoint;
@@ -14,6 +16,7 @@ import android.content.Intent;
 import android.content.DialogInterface.OnClickListener;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
+import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.provider.Settings;
@@ -26,15 +29,15 @@ public class ReleaseParkingActivity extends MapActivity {
 	private final static String TYPE_KEY = "parkingType";
 	private final static String LAT_KEY = "latitude";
 	private final static String LON_KEY = "longitude";
+	private final static String ACC_KEY = "accuracy";
 	private final static int REQUEST_CODE = 2;
 
 	private MapView mapView;
 	private MyLocationOverlay myLocationOverlay;
 	private ImageButton releaseButton;
 	private int parkingId;
-	private int latitude;
-	private int longitude;
-	private int type;
+	private double latitude, longitude;
+	private int type, accuracy;
 	private boolean parked = false;
 
 	@Override
@@ -53,8 +56,7 @@ public class ReleaseParkingActivity extends MapActivity {
 
 		mapView = (MapView) findViewById(R.id.mapview);
 
-		myLocationOverlay = new MyLocationOverlay(this,
-				mapView);
+		myLocationOverlay = new MyLocationOverlay(this, mapView);
 		mapView.getOverlays().add(myLocationOverlay);
 		myLocationOverlay.enableMyLocation();
 
@@ -62,41 +64,43 @@ public class ReleaseParkingActivity extends MapActivity {
 
 		PositionController locationListener = new PositionController(mapView);
 
-        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 3000, 0, locationListener);
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 0, locationListener);
+		locationManager.requestLocationUpdates(
+				LocationManager.NETWORK_PROVIDER, 3000, 0, locationListener);
+		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
+				5000, 0, locationListener);
 
 		if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER))
 			showGPSDialog();
 
 		SharedPreferences prefs = getSharedPreferences(MY_PREFERENCES,
 				Context.MODE_PRIVATE);
-		
-		/* DEBUG ONLY
-		SharedPreferences.Editor editor = prefs.edit();
-		editor.putInt(ID_KEY, 0);
-		editor.putInt(TYPE_KEY, 3);
-		editor.putInt(LAT_KEY,
-				(int) (lastKnownLocation.getLatitude() * 1E6) + 10000);
-		editor.putInt(LON_KEY,
-				(int) (lastKnownLocation.getLongitude() * 1E6) + 1000);
-		editor.commit();
-		// DEBUG ONLY */
 
-		longitude = prefs.getInt(LON_KEY, -30); // oceano
+		/*
+		 * DEBUG ONLY SharedPreferences.Editor editor = prefs.edit();
+		 * editor.putInt(ID_KEY, 0); editor.putInt(TYPE_KEY, 3);
+		 * editor.putInt(LAT_KEY, (int) (lastKnownLocation.getLatitude() * 1E6)
+		 * + 10000); editor.putInt(LON_KEY, (int)
+		 * (lastKnownLocation.getLongitude() * 1E6) + 1000); editor.commit(); //
+		 * DEBUG ONLY
+		 */
 
-		if (longitude != -30) { // abbiamo un parcheggio memorizzato
+		longitude = (double) prefs.getFloat(LON_KEY, 181);
+
+		if (longitude < 181) { // abbiamo un parcheggio memorizzato
 			parked = true;
+			latitude = (double) prefs.getFloat(LAT_KEY, 91);
 			parkingId = prefs.getInt(ID_KEY, -1);
-			latitude = prefs.getInt(LAT_KEY, -1);
+			accuracy = prefs.getInt(ACC_KEY, -1);
 			type = prefs.getInt(TYPE_KEY, 0);
 
 			Drawable drawable = this.getResources().getDrawable(
 					R.drawable.car_icon);
 			MyItemizedOverlay itemizedoverlay = new MyItemizedOverlay(drawable,
 					this);
-			GeoPoint point = new GeoPoint(latitude, longitude);
+			GeoPoint point = new GeoPoint((int) (latitude * 1E6),
+					(int) (longitude * 1E6));
 			OverlayItem overlayitem = new OverlayItem(point, "Your car",
-					"Lat: " + latitude / 1E6 + "\nLon: " + longitude / 1E6);
+					"Lat: " + latitude + "\nLon: " + longitude);
 			itemizedoverlay.addOverlay(overlayitem);
 			mapView.getOverlays().add(itemizedoverlay);
 		}
@@ -185,16 +189,18 @@ public class ReleaseParkingActivity extends MapActivity {
 			public void onClick(DialogInterface dialog, int which) {
 				Intent i = new Intent(ReleaseParkingActivity.this,
 						ParkingInfoActivity.class);
-				
+
 				if (parked) { // considero le coordinate dell'auto
 					i.putExtra("parkingId", parkingId);
 					i.putExtra("latitude", latitude);
 					i.putExtra("longitude", longitude);
+					i.putExtra("accuracy", accuracy);
 					i.putExtra("type", type);
-				}
-				else { // considero le coordinate dell'utente
-					i.putExtra("latitude", myLocationOverlay.getMyLocation().getLatitudeE6());
-					i.putExtra("longitude", myLocationOverlay.getMyLocation().getLongitudeE6());
+				} else { // considero le coordinate dell'utente
+					Location myLocation = myLocationOverlay.getLastFix();
+					i.putExtra("latitude", myLocation.getLatitude());
+					i.putExtra("longitude", myLocation.getLongitude());
+					i.putExtra("accuracy", myLocation.getAccuracy());
 				}
 				startActivityForResult(i, REQUEST_CODE);
 			}
@@ -203,12 +209,24 @@ public class ReleaseParkingActivity extends MapActivity {
 		OnClickListener negative = new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
+				Parking p;
+
 				if (parked)
-					finish();
+					p = new Parking(parkingId, latitude, longitude, accuracy);
 				else {
-					// TODO : send latitude/longitude to the server
-					finish();
+					Location myLocation = myLocationOverlay.getLastFix();
+					double lat = myLocation.getLatitude();
+					double lon = myLocation.getLongitude();
+					float accuracy = myLocation.getAccuracy();
+					p = new Parking(-1 , lat, lon, accuracy);
 				}
+				try {
+					CommunicationController.sendRequest("freePark",
+							DataController.marshallParking(p));
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				finish();
 			}
 		};
 
@@ -225,6 +243,7 @@ public class ReleaseParkingActivity extends MapActivity {
 		editor.remove(LAT_KEY);
 		editor.remove(LON_KEY);
 		editor.remove(TYPE_KEY);
+		editor.remove(ACC_KEY);
 		editor.commit();
 	}
 

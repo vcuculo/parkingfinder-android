@@ -20,12 +20,20 @@
     <string name="filterSearch">Filter to Search</string>
 
     <string-array name="parkingTypes">
+
         <item>Undefined</item>
         <item>Free</item>
         <item>Toll</item>
         <item>Timed</item>
         <item>For Disabled</item>
         <item>Residents</item>
+
+        <item>Undefined</item><item >Free</item>
+        <item >Toll</item>
+        <item>Residents</item><item>For Disabled</item><item >Timed</item>
+        
+        
+
     </string-array>
 
     <string name="save">Save</string>
