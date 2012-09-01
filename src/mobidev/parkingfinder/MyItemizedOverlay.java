@@ -1,16 +1,13 @@
 package mobidev.parkingfinder;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import android.app.AlertDialog;
 import android.content.Context;
-import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.ItemizedOverlay;
-import com.google.android.maps.MapView;
 import com.google.android.maps.OverlayItem;
 
 public class MyItemizedOverlay extends ItemizedOverlay<OverlayItem> {
@@ -37,6 +34,7 @@ public class MyItemizedOverlay extends ItemizedOverlay<OverlayItem> {
 		GeoPoint point = new GeoPoint(lat, lon);
 		OverlayItem overlayItem = new OverlayItem(point, title, snippet);
 		addOverlayItem(overlayItem, altMarker);
+		populate();
 	}
 
 	public void addOverlayItem(OverlayItem overlayItem, Drawable altMarker) {
@@ -54,12 +52,6 @@ public class MyItemizedOverlay extends ItemizedOverlay<OverlayItem> {
 		return mOverlays.size();
 	}
 
-	public void addOverlay(OverlayItem overlay) {
-		mOverlays.add(overlay);
-        setLastFocusedIndex(-1);		
-		populate();
-	}
-
 	@Override
 	protected boolean onTap(int index) {
 		OverlayItem item = mOverlays.get(index);
@@ -68,6 +60,12 @@ public class MyItemizedOverlay extends ItemizedOverlay<OverlayItem> {
 		dialog.setMessage(item.getSnippet());
 		dialog.show();
 		return true;
+	}
+
+	public void addOverlay(OverlayItem overlay) {
+		mOverlays.add(overlay);
+        setLastFocusedIndex(-1);		
+		populate();
 	}
 	
     public void clear() {

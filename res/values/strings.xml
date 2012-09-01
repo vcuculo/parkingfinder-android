@@ -13,26 +13,36 @@
     <string name="latitude">Latitude:</string>
     <string name="longitude">Longitude:</string>
     <string name="parkingType">Type:</string>
+
     <string-array name="parkingTypes">
-        <item>Undefined</item><item >Free</item>
-        <item >Toll</item>
-        <item>Residents</item><item>For Disabled</item><item >Timed</item>
-        
-        
-        
+        <item>Undefined</item>
+        <item>Free</item>
+        <item>Toll</item>
+        <item>Residents</item>
+        <item>For Disabled</item>
+        <item>Timed</item>
     </string-array>
-        <string name="save">Save</string>
-        <string name="cancel">Cancel</string>
-        <string name="freeingParking">Freeing a Parking</string>
-        <string name="comments">Comments:</string>
-        <string name="confirmReleaseParking">Are you freeing this parking?</string>
-        <string name="address">Address:</string>
-        <string name="occupyingParking">Occupying a Parking</string>
-        <string name="confirmOccupyParking">Are you occupying a parking?</string>
-        <string name="centerMenu">Center Map</string>
-        <string name="optionsMenu">Options</string>
-        <string name="exitMenu">Exit</string>
-        <string name="actionDisallowed">Action not allowed</string>
-        <string name="releaseParkingFirst">To search for a new parking, you have to release your current parking first.</string>
-    
+
+    <string name="save">Save</string>
+    <string name="cancel">Cancel</string>
+    <string name="freeingParking">Freeing a Parking</string>
+    <string name="comments">Comments:</string>
+    <string name="confirmReleaseParking">Are you freeing this parking?</string>
+    <string name="address">Address:</string>
+    <string name="occupyingParking">Occupying a Parking</string>
+    <string name="confirmOccupyParking">Are you occupying a parking?</string>
+    <string name="centerMenu">Center Map</string>
+    <string name="optionsMenu">Options</string>
+    <string name="exitMenu">Exit</string>
+    <string name="actionDisallowed">Action not allowed</string>
+    <string name="releaseParkingFirst">To search for a new parking, you have to release your current parking first.</string>
+    <string name="filter">Filter</string>
+    <string name="rangeSearch">Distance of search (meters): </string>
+    <string name="timeRefresh">Refresh time (minutes): </string>
+    <string name="notifySound">Notification sound</string>
+    <string name="filterSearch">Type of parking</string>
+    <string name="chooseParkingType">Choose parking types: </string>
+    <string name="parkingReleased">Parking released </string>
+    <string name="thanks">Thanks for your contribution!</string>
+
 </resources>

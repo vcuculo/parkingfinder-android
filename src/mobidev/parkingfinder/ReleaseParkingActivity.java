@@ -254,6 +254,7 @@ public class ReleaseParkingActivity extends MapActivity {
 		if (requestCode == REQUEST_CODE) {
 			switch (resultCode) {
 			case RESULT_OK:
+				Utility.showDialog(getString(R.string.parkingReleased), getString(R.string.thanks), this);
 				finish();
 				break;
 			}

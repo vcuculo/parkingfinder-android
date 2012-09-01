@@ -55,10 +55,11 @@ public class SearchParkingActivity extends MapActivity {
 
 		MyItemizedOverlay parkingsOverlay = new MyItemizedOverlay(this);
 		mapView.getOverlays().add(parkingsOverlay);
-		
+
 		LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
 
-		locationListener = new PositionController(parkingsOverlay, myLocationOverlay, mapView, false);
+		locationListener = new PositionController(parkingsOverlay,
+				myLocationOverlay, mapView, false);
 
 		locationManager.requestLocationUpdates(
 				LocationManager.NETWORK_PROVIDER, 3000, 0, locationListener);
@@ -75,8 +76,10 @@ public class SearchParkingActivity extends MapActivity {
 
 		if (!Utility.isOnline(this))
 			showConnectionDialog();
-		if (paused)
+		if (paused){
+			myLocationOverlay.enableMyLocation();	
 			locationListener.restartTimer();
+		}
 		paused = false;
 	}
 
@@ -178,7 +181,8 @@ public class SearchParkingActivity extends MapActivity {
 			Utility.centerMap(myLocationOverlay.getMyLocation(), mapView, false);
 			break;
 		case R.id.optionsMenu:
-			// TODO: Options
+			Intent i = new Intent(this, SettingsActivity.class);
+			startActivity(i);
 			break;
 		case R.id.exitMenu:
 			finish();

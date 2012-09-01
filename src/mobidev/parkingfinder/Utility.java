@@ -11,14 +11,11 @@ import java.util.Locale;
 import org.json.JSONException;
 
 import com.google.android.maps.GeoPoint;
-import com.google.android.maps.ItemizedOverlay;
 import com.google.android.maps.MapController;
 import com.google.android.maps.MapView;
 import com.google.android.maps.Overlay;
-import com.google.android.maps.OverlayItem;
 
 import android.app.AlertDialog;
-import android.content.ClipData.Item;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
@@ -33,9 +30,15 @@ import android.util.Log;
 
 public class Utility {
 
-	private final static String MY_PREFERENCES = "MyPref";
-	private final static int FIVE_MINUTES = 300000;
-	private static boolean first = true;
+	private static final String MY_PREFERENCES = "MyPref";
+	private static final String PREFERENCE_RANGE = "my_range";
+	private static final int FIVE_MINUTES = 300000;
+	private static final String PREFERENCE_FILTER_UNDEFINED = "undefined";
+	private static final String PREFERENCE_FILTER_FREE = "free";
+	private static final String PREFERENCE_FILTER_TOLL = "toll";
+	private static final String PREFERENCE_FILTER_RESIDENT = "resident";
+	private static final String PREFERENCE_FILTER_DISABLED = "disabled";
+	private static final String PREFERENCE_FILTER_TIMED = "timed";
 
 	public static String getDigest(String pw) {
 		MessageDigest digester;
@@ -91,7 +94,7 @@ public class Utility {
 		List<Overlay> overlays = mapview.getOverlays();
 
 		if (release && overlays.size() > 1) { // mostrare la mia posizione e
-											  // quella dell'auto
+												// quella dell'auto
 			MyItemizedOverlay itemizedOverlay = (MyItemizedOverlay) overlays
 					.get(1);
 			mapc.animateTo(itemizedOverlay.getItem(0).getPoint());
@@ -134,14 +137,14 @@ public class Utility {
 		SharedPreferences prefs = c.getSharedPreferences(MY_PREFERENCES,
 				Context.MODE_PRIVATE);
 
-		float range = prefs.getFloat("range", (float) 0.5);
+		float range = prefs.getInt(PREFERENCE_RANGE, 3);
 
 		String response;
 		try {
 			response = CommunicationController.sendRequest("searchParking",
 					DataController.marshallParkingRequest(
 							myLocation.getLatitude(),
-							myLocation.getLongitude(), range));
+							myLocation.getLongitude(), range / 1000));
 
 			itemizedoverlay.clear();
 
@@ -171,23 +174,38 @@ public class Utility {
 			MyItemizedOverlay item) {
 		Drawable drawable;
 		Context c = mapView.getContext();
+		SharedPreferences prefs = c.getSharedPreferences(MY_PREFERENCES,
+				Context.MODE_PRIVATE);
+
 		switch (p.getType()) {
 		case 1:
+			if (!prefs.getBoolean(PREFERENCE_FILTER_FREE, true))
+				return;
 			drawable = c.getResources().getDrawable(R.drawable.free_park);
 			break;
 		case 2:
+			if (!prefs.getBoolean(PREFERENCE_FILTER_TOLL, true))
+				return;			
 			drawable = c.getResources().getDrawable(R.drawable.toll_park);
 			break;
 		case 3:
+			if (!prefs.getBoolean(PREFERENCE_FILTER_RESIDENT, true))
+				return;			
 			drawable = c.getResources().getDrawable(R.drawable.reserved_park);
 			break;
 		case 4:
+			if (!prefs.getBoolean(PREFERENCE_FILTER_DISABLED, true))
+				return;			
 			drawable = c.getResources().getDrawable(R.drawable.disabled_park);
 			break;
 		case 5:
+			if (!prefs.getBoolean(PREFERENCE_FILTER_TIMED, true))
+				return;			
 			drawable = c.getResources().getDrawable(R.drawable.timed_park);
 			break;
 		default:
+			if (!prefs.getBoolean(PREFERENCE_FILTER_UNDEFINED, true))
+				return;			
 			drawable = c.getResources().getDrawable(R.drawable.undefined_park);
 			break;
 		}
@@ -199,9 +217,9 @@ public class Utility {
 		else if (duration > FIVE_MINUTES * 2)
 			drawable.setAlpha(100);
 
-		String title = "Your car";
+		String title = "Parking #" + p.getId();
 		String snippet = "Lat: " + p.getLatitude() + "\nLon: "
-				+ p.getLongitude() + "\nFree: "
+				+ p.getLongitude() + "\nFree since: "
 				+ TimeUtils.millisToLongDHMS(duration);
 
 		item.addOverlayItem((int) (p.getLatitude() * 1E6),

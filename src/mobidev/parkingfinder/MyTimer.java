@@ -2,9 +2,7 @@ package mobidev.parkingfinder;
 
 import java.util.TimerTask;
 
-import android.graphics.drawable.Drawable;
 import android.location.Location;
-import android.os.Looper;
 
 import com.google.android.maps.MapView;
 import com.google.android.maps.MyLocationOverlay;

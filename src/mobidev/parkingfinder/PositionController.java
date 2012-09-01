@@ -5,6 +5,8 @@ import java.util.Timer;
 import com.google.android.maps.MapView;
 import com.google.android.maps.MyLocationOverlay;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.location.Location;
 import android.location.LocationListener;
 import android.os.Bundle;
@@ -13,18 +15,25 @@ public class PositionController implements LocationListener {
 
 	private Location bestPosition;
 	private MapView mapview;
-	private static final int HALF_MINUTE = 30 * 1000;
+	private final static int HALF_MINUTE = 30 * 1000;
+	private final static String MY_PREFERENCES = "MyPref";
+	private final static String PREFERENCE_REFRESH = "my_refresh";
+
 	private boolean first = true;
 	private boolean release;
 	private MyLocationOverlay myLocation;
 	private MyItemizedOverlay parkings;
 	private Timer t;
+	private SharedPreferences prefs;
 
-	public PositionController(MyItemizedOverlay parkings, MyLocationOverlay myLoc, MapView map, boolean release) {
+	public PositionController(MyItemizedOverlay parkings,
+			MyLocationOverlay myLoc, MapView map, boolean release) {
 		this.parkings = parkings;
 		this.mapview = map;
 		this.myLocation = myLoc;
 		this.release = release;
+		Context c = map.getContext();
+		prefs = c.getSharedPreferences(MY_PREFERENCES, Context.MODE_PRIVATE);
 	}
 
 	@Override
@@ -33,23 +42,27 @@ public class PositionController implements LocationListener {
 			bestPosition = arg0;
 			Utility.centerMap(bestPosition, mapview, release);
 			if (myLocation != null && first) {
+				float refresh = prefs.getFloat(PREFERENCE_REFRESH, 2);
 				t = new Timer();
-				t.schedule(new MyTimer(parkings, myLocation, mapview), 0, 5000);
+				t.schedule(new MyTimer(parkings, myLocation, mapview), 0,
+						(int) (refresh * 60000));
 				first = false;
 			}
 		}
 	}
 
-	public void stopTimer(){
+	public void stopTimer() {
 		t.cancel();
 		t.purge();
 	}
-	
-	public void restartTimer(){
+
+	public void restartTimer() {
+		float refresh = prefs.getFloat(PREFERENCE_REFRESH, 2);
 		t = new Timer();
-		t.schedule(new MyTimer(parkings, myLocation, mapview), 5000, 5000);
+		t.schedule(new MyTimer(parkings, myLocation, mapview), 0,
+				(int) (refresh * 60000));
 	}
-	
+
 	@Override
 	public void onProviderDisabled(String arg0) {
 	}
