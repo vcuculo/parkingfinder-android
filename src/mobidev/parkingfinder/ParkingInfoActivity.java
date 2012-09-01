@@ -78,12 +78,7 @@ public class ParkingInfoActivity extends Activity implements OnClickListener{
 			
 			id = i.getIntExtra("parkingId", -1);
 			p = new Parking(id, lat, lon, accuracy);
-
-			try {
-				CommunicationController.sendRequest("freePark", DataController.marshallParking(p));
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+			new asyncTaskFreePark(this, p).execute();
 			
 			setResult(RESULT_OK);
 			finish();

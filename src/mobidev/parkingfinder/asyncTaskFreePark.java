@@ -34,7 +34,7 @@ public class asyncTaskFreePark extends AsyncTask<Void, Void, Void>{
 	@Override
 	protected void onProgressUpdate(Void... params){
 		String s=c.getString(R.string.load);
-		pr = ProgressDialog.show(c, "", "Loading. Please wait...", true);
+		pr = ProgressDialog.show(c, "", s, true);
 	}
 	
 	public void onPostExecute(ArrayList<Parking> parkings){

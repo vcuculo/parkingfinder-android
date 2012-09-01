@@ -169,7 +169,7 @@ public class Utility {
 		else if (duration > FIVE_MINUTES * 2)
 			drawable.setAlpha(30);
 
-		MyItemizedOverlay itemizedoverlay = new MyItemizedOverlay(drawable, c);
+		MyItemizedOverlay itemizedoverlay = new MyItemizedOverlay(drawable, c,true);
 		GeoPoint point = new GeoPoint((int) (p.getLatitude() * 1E6),
 				(int) (p.getLongitude() * 1E6));
 
