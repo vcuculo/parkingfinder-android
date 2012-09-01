@@ -15,7 +15,7 @@ public class MyOnClickListener implements OnClickListener {
 	private final static String LAT_KEY_PARK = "latidude";
 	private final static String LON_KEY_PARK = "longitude";
 	private final static String ACC_KEY_PARK = "accuracy";
-	private final static String TYPE_KEY_PARK = "type";
+	private final static String TYPE_KEY_PARK = "parkingType";
 	private final static String ID_KEY_PARK = "parkingId";
 	//lo status è 1 occupato
 	Parking p;

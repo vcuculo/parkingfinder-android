@@ -14,7 +14,7 @@ import com.google.android.maps.OverlayItem;
 public class MyItemizedOverlay extends ItemizedOverlay<OverlayItem> {
 
 	private Context mContext;
-	
+	private boolean dialogButton;
 	public MyItemizedOverlay(Drawable defaultMarker) {
 		super(boundCenterBottom(defaultMarker));
 	}
@@ -23,6 +23,13 @@ public class MyItemizedOverlay extends ItemizedOverlay<OverlayItem> {
 		super(boundCenterBottom(defaultMarker));
 		mContext = context;
 	}
+	
+	public MyItemizedOverlay(Drawable defaultMarker, Context context,boolean dialog) {
+		super(boundCenterBottom(defaultMarker));
+		this.dialogButton=dialog;
+		mContext = context;
+	}
+
 
 	private ArrayList<OverlayItem> mOverlays = new ArrayList<OverlayItem>();
 
@@ -47,7 +54,7 @@ public class MyItemizedOverlay extends ItemizedOverlay<OverlayItem> {
 	  AlertDialog.Builder dialog = new AlertDialog.Builder(mContext);
 	  dialog.setTitle(item.getTitle());
 	  dialog.setMessage(item.getSnippet());
-	  if(mContext!=null)
+	  if(mContext!=null && dialogButton)
 	  dialog.setPositiveButton(R.string.occupyingParking, new MyOnClickListener(mContext,item.getParking()));
 	  dialog.show();
 	  return true;
