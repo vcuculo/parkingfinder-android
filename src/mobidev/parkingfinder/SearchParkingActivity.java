@@ -29,6 +29,7 @@ public class SearchParkingActivity extends MapActivity {
 	private final static String LAT_KEY = "latitude";
 	private final static String LON_KEY = "longitude";
 	private final static String ACC_KEY = "accuracy";
+	private final static String PREFERENCES_SEARCH_PARK = "search";
 
 	private MyLocationOverlay myLocationOverlay;
 	private PositionController locationListener;
@@ -106,6 +107,7 @@ public class SearchParkingActivity extends MapActivity {
 				getString(R.string.connectionRequired), this, positive,
 				negative);
 	}
+    
 
 	private void showGPSDialog() {
 		OnClickListener positive = new DialogInterface.OnClickListener() {
@@ -175,6 +177,13 @@ public class SearchParkingActivity extends MapActivity {
 			break;
 		case R.id.exitMenu:
 			finish();
+			break;
+		case R.id.refreshMenu:
+			SharedPreferences prefs=getSharedPreferences(MY_PREFERENCES,Context.MODE_PRIVATE);
+			SharedPreferences.Editor edit=prefs.edit();
+			edit.putBoolean(PREFERENCES_SEARCH_PARK, true);
+			edit.commit();
+			
 			break;
 		}
 		return false;

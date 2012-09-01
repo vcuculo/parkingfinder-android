@@ -10,6 +10,7 @@ public class ParkingOverlayItem extends OverlayItem {
 	public ParkingOverlayItem(GeoPoint point, String title, String snippet) {
 		super(point, title, snippet);
 		// TODO Auto-generated constructor stub
+		
 	}
 	
 	public ParkingOverlayItem(GeoPoint point, String title, String snippet,Parking p){

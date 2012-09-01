@@ -3,6 +3,6 @@
     <item android:id="@+id/centerMenu" android:title="@string/centerMenu"></item>
     <item android:id="@+id/optionsMenu" android:title="@string/optionsMenu"></item>
     <item android:id="@+id/exitMenu" android:title="@string/exitMenu"></item>
-    
+    <item android:id="@+id/refreshMenu" android:title="@string/exitMenu"></item>
 
 </menu>
