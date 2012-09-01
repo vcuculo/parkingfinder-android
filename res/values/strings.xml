@@ -37,4 +37,5 @@
     	<string name="load">Loading. Please Wait</string>
     	<string name="connectProblem">Problem connect to Server</string>
     	<string name="refreshMenu">Refresh</string>
+    	<string name="newParking">New Parking</string>
 </resources>

@@ -1,14 +1,28 @@
 package mobidev.parkingfinder;
 
-import java.io.IOException;
+
+
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-import org.json.JSONException;
+import android.app.AlertDialog;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapController;
@@ -16,25 +30,12 @@ import com.google.android.maps.MapView;
 import com.google.android.maps.Overlay;
 import com.google.android.maps.OverlayItem;
 
-import android.app.AlertDialog;
-import android.content.Context;
-import android.content.DialogInterface;
-import android.content.SharedPreferences;
-import android.content.DialogInterface.OnClickListener;
-import android.graphics.drawable.Drawable;
-import android.location.Address;
-import android.location.Geocoder;
-import android.location.Location;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
-import android.util.Log;
-
 public class Utility {
 
 	private final static String MY_PREFERENCES = "MyPref";
 	private final static String PREFERENCES_SEARCH_PARK = "search";
 	private final static int FIVE_MINUTES = 300000;
-
+	private static final int HELLO_ID = 1;
 	public static String getDigest(String pw) {
 		MessageDigest digester;
 		try {
@@ -181,5 +182,27 @@ public class Utility {
 		mapView.getOverlays().add(itemizedoverlay);
 	}
 	
-	
+	public static void createNotification(int icon,String tickerText,Context c,boolean sound){
+		String ns = Context.NOTIFICATION_SERVICE;
+		NotificationManager mNotificationManager = (NotificationManager) c.getSystemService(ns);
+		
+		long when = System.currentTimeMillis();         // notification time
+		Context context = c.getApplicationContext();      // application Context
+		CharSequence contentTitle = c.getString(R.string.app_name);  // message title
+		CharSequence contentText = c.getString(R.string.newParking);      // message text
+
+		Intent notificationIntent = new Intent(c, SearchParkingActivity.class);
+		PendingIntent contentIntent = PendingIntent.getActivity(c, 0, notificationIntent, 0);
+
+		// the next two lines initialize the Notification, using the configurations above
+		Notification notification = new Notification(icon, tickerText, when);
+		notification.setLatestEventInfo(context, contentTitle, contentText, contentIntent);
+		if(sound)
+		notification.defaults=notification.DEFAULT_SOUND;
+		
+		
+
+		mNotificationManager.notify(HELLO_ID, notification);
+		
+	}
 }

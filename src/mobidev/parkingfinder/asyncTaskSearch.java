@@ -24,6 +24,7 @@ public class asyncTaskSearch extends AsyncTask<Void, Void, ArrayList<Parking>> {
 	private Context context;
 	boolean error = false;
 	ProgressDialog pr = null;
+	static int lengthParkingList=Integer.MAX_VALUE;
 
 	public asyncTaskSearch(Context context, MapView map, Location myLocation,
 			float range) {
@@ -92,5 +93,11 @@ public class asyncTaskSearch extends AsyncTask<Void, Void, ArrayList<Parking>> {
 			return;
 		for (Parking parking : parkings)
 			Utility.showParking(map, parking);
+			lengthParkingList=parkings.size();
+			if(parkings.size()>lengthParkingList)
+				Utility.createNotification(R.drawable.car_icon, "New Park", context, true);
+			
+			
+
 	}
 }
