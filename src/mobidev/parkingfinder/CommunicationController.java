@@ -13,7 +13,7 @@ import android.util.Log;
 public class CommunicationController {
 	
 	private static final String PROTOCOL = "http";
-	private static final String SERVER_ADDRESS ="192.168.43.125";//"2.230.140.44";
+	private static final String SERVER_ADDRESS ="2.230.140.44";//"192.168.43.125";
 	private static final int SERVER_PORT = 8081;
 	private static final String SERVICE_NAME = "geoparking";	
 

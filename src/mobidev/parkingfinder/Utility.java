@@ -120,7 +120,7 @@ public class Utility {
 			} else {
 				return "N/A";
 			}
-		} catch (IOException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			return "N/A";
 		}
