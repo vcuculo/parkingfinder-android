@@ -1,11 +1,5 @@
 package mobidev.parkingfinder;
 
-import java.io.IOException;
-
-import android.app.AlertDialog;
-import android.content.Context;
-import android.content.DialogInterface;
-
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.OverlayItem;
 

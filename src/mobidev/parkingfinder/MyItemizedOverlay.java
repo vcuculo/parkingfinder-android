@@ -6,16 +6,13 @@ import java.util.ArrayList;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.DialogInterface.OnClickListener;
 import android.graphics.drawable.Drawable;
-import android.provider.Settings;
 import android.util.Log;
 
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.ItemizedOverlay;
-import com.google.android.maps.OverlayItem;
 
 public class MyItemizedOverlay extends ItemizedOverlay<ParkingOverlayItem> {
 	private final static String MY_PREFERENCES = "MyPref";
@@ -25,8 +22,9 @@ public class MyItemizedOverlay extends ItemizedOverlay<ParkingOverlayItem> {
 	private final static String LON_KEY = "longitude";
 	private final static String ACC_KEY = "accuracy";
 	private Context mContext;
-	private ArrayList<ParkingOverlayItem> mOverlays = new ArrayList<ParkingOverlayItem>();
-
+	private ArrayList<ParkingOverlayItem> mOverlays = new ArrayList<ParkingOverlayItem>();	
+	private int mSize;
+	
 	public MyItemizedOverlay(Context context) {
 		super(null);
 		mContext = context;
@@ -51,10 +49,12 @@ public class MyItemizedOverlay extends ItemizedOverlay<ParkingOverlayItem> {
 
 		String title = "#" + p.getId();
 
+		String [] types = mContext.getResources().getStringArray(R.array.parkingTypes);
+		
 		String snippet = "Lat: " + p.getLatitude() + "\nLon: "
 				+ p.getLongitude() + "\nFree since: "
 				+ TimeUtils.millisToLongDHMS(duration) + "\nType: "
-				+ p.getType();
+				+ types[p.getType()] +"\nComments:\n" + p.getComments();
 
 		ParkingOverlayItem overlayItem = new ParkingOverlayItem(point, title,
 				snippet, p);
@@ -83,7 +83,7 @@ public class MyItemizedOverlay extends ItemizedOverlay<ParkingOverlayItem> {
 
 	@Override
 	public int size() {
-		return mOverlays.size();
+		return mSize;
 	}
 
 	@Override
@@ -140,12 +140,14 @@ public class MyItemizedOverlay extends ItemizedOverlay<ParkingOverlayItem> {
 	public void addOverlay(ParkingOverlayItem overlay) {
 		mOverlays.add(overlay);
 		setLastFocusedIndex(-1);
+		mSize = mOverlays.size(); 		
 		populate();
 	}
 
 	public void clear() {
 		mOverlays.clear();
 		setLastFocusedIndex(-1);
+		mSize = mOverlays.size();		
 		populate();
 	}
 }
