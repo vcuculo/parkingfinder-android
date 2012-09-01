@@ -17,7 +17,7 @@ public class ParkingFinderActivity extends Activity {
 	private final static String PREFERENCES_SEARCH_PARK = "search";
 
 	private ImageButton searchButton, releaseButton;
-	private double longitude;
+	private double longitude,longPark;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {

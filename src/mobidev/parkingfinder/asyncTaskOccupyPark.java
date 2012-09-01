@@ -10,19 +10,19 @@ import android.util.Log;
 
 public class asyncTaskOccupyPark extends AsyncTask<Void, Void, Void> {
 	
-	int idParking;
+	Parking p;
 	Context c;
 	ProgressDialog pr;
-	public asyncTaskOccupyPark(Context c,int idParking){
+	public asyncTaskOccupyPark(Context c,Parking p){
 		this.c=c;
-		this.idParking=idParking;
+		this.p=p;
 	}
 	@Override
 	protected Void doInBackground(Void... params) {
 		// TODO Auto-generated method stub
 		publishProgress();
 		try {
-			CommunicationController.sendRequest("park", DataController.marshallOccupyParking(idParking));
+			CommunicationController.sendRequest("park", DataController.marshallOccupyParking(p.getId()));
 			
 			
 		} catch (IOException e) {
@@ -39,7 +39,7 @@ public class asyncTaskOccupyPark extends AsyncTask<Void, Void, Void> {
 	}
 	
 	public void onPostExecute(ArrayList<Parking> parkings){
+		pr.dismiss();
 		pr.cancel();
-		pr=null;
 	}
 }

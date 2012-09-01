@@ -38,7 +38,7 @@ public class asyncTaskFreePark extends AsyncTask<Void, Void, Void>{
 	}
 	
 	public void onPostExecute(ArrayList<Parking> parkings){
-		pr.cancel();
+		pr.dismiss();
 		pr=null;
 	}
 }

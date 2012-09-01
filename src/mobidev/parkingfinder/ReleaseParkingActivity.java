@@ -30,6 +30,11 @@ public class ReleaseParkingActivity extends MapActivity {
 	private final static String LAT_KEY = "latitude";
 	private final static String LON_KEY = "longitude";
 	private final static String ACC_KEY = "accuracy";
+	private final static String LAT_KEY_PARK = "latidude";
+	private final static String LON_KEY_PARK = "logitude";
+	private final static String ACC_KEY_PARK = "accuracy";
+	private final static String TYPE_KEY_PARK = "type";
+	private final static String ID_KEY_PARK = "parkingId";
 	private final static int REQUEST_CODE = 2;
 
 	private MapView mapView;
@@ -240,12 +245,23 @@ public class ReleaseParkingActivity extends MapActivity {
 		SharedPreferences prefs = getSharedPreferences(MY_PREFERENCES,
 				Context.MODE_PRIVATE);
 		SharedPreferences.Editor editor = prefs.edit();
+		float lon=prefs.getFloat(LON_KEY, 181);
+		float lonPark=prefs.getFloat(LON_KEY_PARK, 181);
+		if(lon<181){
 		editor.remove(ID_KEY);
 		editor.remove(LAT_KEY);
 		editor.remove(LON_KEY);
 		editor.remove(TYPE_KEY);
 		editor.remove(ACC_KEY);
+		}else if(lonPark<181){
+			editor.remove(ID_KEY_PARK);
+			editor.remove(LAT_KEY_PARK);
+			editor.remove(LON_KEY_PARK);
+			editor.remove(TYPE_KEY_PARK);
+			editor.remove(ACC_KEY_PARK);
+		}
 		editor.commit();
+
 	}
 
 	@Override

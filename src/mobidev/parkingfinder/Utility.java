@@ -173,9 +173,9 @@ public class Utility {
 		GeoPoint point = new GeoPoint((int) (p.getLatitude() * 1E6),
 				(int) (p.getLongitude() * 1E6));
 
-		OverlayItem overlayitem = new IndexOverlayItem(point, "Your car", "Lat: "
+		OverlayItem overlayitem = new ParkingOverlayItem(point, "Your car", "Lat: "
 				+ p.getLatitude() + "\nLon: " + p.getLongitude() + "\nFree: "
-				+ TimeUtils.millisToLongDHMS(duration),p.getId());
+				+ TimeUtils.millisToLongDHMS(duration),p);
 
 		itemizedoverlay.addOverlay(overlayitem);
 		mapView.getOverlays().add(itemizedoverlay);

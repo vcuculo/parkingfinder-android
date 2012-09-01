@@ -43,13 +43,12 @@ public class MyItemizedOverlay extends ItemizedOverlay<OverlayItem> {
 
 	@Override
 	protected boolean onTap(int index) {
-	  IndexOverlayItem item =(IndexOverlayItem) mOverlays.get(index);
+	  ParkingOverlayItem item =(ParkingOverlayItem) mOverlays.get(index);
 	  AlertDialog.Builder dialog = new AlertDialog.Builder(mContext);
 	  dialog.setTitle(item.getTitle());
 	  dialog.setMessage(item.getSnippet());
-	  int id=item.getIndex();
 	  if(mContext!=null)
-	  dialog.setPositiveButton(R.string.occupyingParking, new MyOnClickListener(mContext,id ));
+	  dialog.setPositiveButton(R.string.occupyingParking, new MyOnClickListener(mContext,item.getParking()));
 	  dialog.show();
 	  return true;
 	}
