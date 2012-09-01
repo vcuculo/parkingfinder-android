@@ -18,6 +18,7 @@ import com.google.android.maps.MapView;
 public class asyncTaskSearch extends AsyncTask<Void, Void, ArrayList<Parking>> {
 	private final static String MY_PREFERENCES = "MyPref";
 	private final static String PREFERENCES_SEARCH_PARK = "search";
+	private static final String PREFERENCE_AUDIO = "my_audio";
 	private MapView map;
 	private Location myLocation;
 	private float range;
@@ -93,11 +94,15 @@ public class asyncTaskSearch extends AsyncTask<Void, Void, ArrayList<Parking>> {
 			return;
 		for (Parking parking : parkings)
 			Utility.showParking(map, parking);
+			
+			if(parkings.size()>lengthParkingList){
+				String t=context.getString(R.string.newParking);
+				SharedPreferences prefs = context.getSharedPreferences(MY_PREFERENCES,
+						Context.MODE_PRIVATE);
+				boolean audio=prefs.getBoolean(PREFERENCE_AUDIO, true);
+				Utility.createNotification(R.drawable.car_icon,t, context, audio);
+			}
 			lengthParkingList=parkings.size();
-			if(parkings.size()>lengthParkingList)
-				Utility.createNotification(R.drawable.car_icon, "New Park", context, true);
-			
-			
 
 	}
 }
