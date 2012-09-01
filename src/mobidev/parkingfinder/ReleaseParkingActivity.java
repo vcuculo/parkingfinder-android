@@ -31,7 +31,7 @@ public class ReleaseParkingActivity extends MapActivity {
 	private final static String LON_KEY = "longitude";
 	private final static String ACC_KEY = "accuracy";
 	private final static String LAT_KEY_PARK = "latidude";
-	private final static String LON_KEY_PARK = "logitude";
+	private final static String LON_KEY_PARK = "longitude";
 	private final static String ACC_KEY_PARK = "accuracy";
 	private final static String TYPE_KEY_PARK = "type";
 	private final static String ID_KEY_PARK = "parkingId";

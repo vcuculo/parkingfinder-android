@@ -7,12 +7,18 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.util.Log;
+
 public class DataController {
 
 	/* Used to send a freed parking */
 	public static String marshallParking(Parking p) {
 		JSONObject userJS = new JSONObject();
 		try {
+			if(p.getId()!=-1){
+			userJS.put("id", p.getId());
+			Log.i("DataController", Integer.toString(p.getId()));
+			}
 			userJS.put("lat", p.getLatitude());
 			userJS.put("lon", p.getLongitude());
 			userJS.put("accuracy", p.getAccuracy());
