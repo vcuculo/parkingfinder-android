@@ -102,8 +102,9 @@ public class ReleaseParkingActivity extends MapActivity {
 					this,false);
 			GeoPoint point = new GeoPoint((int) (latitude * 1E6),
 					(int) (longitude * 1E6));
-			OverlayItem overlayitem = new OverlayItem(point, "Your car",
-					"Lat: " + latitude + "\nLon: " + longitude);
+			Parking p=new Parking(parkingId, latitude, longitude, accuracy);
+			OverlayItem overlayitem = new ParkingOverlayItem(point, "Your car",
+					"Lat: " + latitude + "\nLon: " + longitude,p);
 			itemizedoverlay.addOverlay(overlayitem);
 			mapView.getOverlays().add(itemizedoverlay);
 		}
