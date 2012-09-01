@@ -38,7 +38,7 @@ public class ReleaseParkingActivity extends MapActivity {
 	private int parkingId;
 	private double latitude, longitude;
 	private float accuracy;
-	private int type;
+	private int type, id;
 	private boolean parked = false;
 
 	@Override
@@ -93,6 +93,8 @@ public class ReleaseParkingActivity extends MapActivity {
 			parkingId = prefs.getInt(ID_KEY, -1);
 			accuracy = prefs.getFloat(ACC_KEY, -1);
 			type = prefs.getInt(TYPE_KEY, 0);
+			id = prefs.getInt(ID_KEY, -1);
+			
 
 			Drawable drawable = this.getResources().getDrawable(
 					R.drawable.car_icon);
@@ -100,8 +102,11 @@ public class ReleaseParkingActivity extends MapActivity {
 					this);
 			GeoPoint point = new GeoPoint((int) (latitude * 1E6),
 					(int) (longitude * 1E6));
-			OverlayItem overlayitem = new OverlayItem(point, "Your car",
-					"Lat: " + latitude + "\nLon: " + longitude);
+			
+			Parking p = new Parking(id, latitude, longitude, type, accuracy);
+			
+			ParkingOverlayItem overlayitem = new ParkingOverlayItem(point, "Your car",
+					"Lat: " + latitude + "\nLon: " + longitude , p);
 			itemizedoverlay.addOverlay(overlayitem);
 			mapView.getOverlays().add(itemizedoverlay);
 		}

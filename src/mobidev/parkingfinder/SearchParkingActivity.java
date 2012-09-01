@@ -69,15 +69,15 @@ public class SearchParkingActivity extends MapActivity {
 		if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER))
 			showGPSDialog();
 	}
-
+	
 	@Override
 	protected void onResume() {
 		super.onResume();
 
 		if (!Utility.isOnline(this))
 			showConnectionDialog();
-		if (paused){
-			myLocationOverlay.enableMyLocation();	
+		if (paused) {
+			myLocationOverlay.enableMyLocation();
 			locationListener.restartTimer();
 		}
 		paused = false;

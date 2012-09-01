@@ -44,6 +44,9 @@
     <string name="chooseParkingType">Choose parking types: </string>
     <string name="parkingReleased">Parking released </string>
     <string name="thanks">Thanks for your contribution!</string>
-    <string name="ok">Ok</string>
-    
+    <string name="ok">OK</string>
+    <string name="occupy">Occupy this</string>
+    <string name="parkingOccupied">Parking occupied</string>
+    <string name="parkedHere">Congratulations, you\'ve found a parking!\nWhen you want to go back to your car, select Release Parking from the main menu.</string>
+
 </resources>

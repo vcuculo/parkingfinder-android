@@ -1,49 +1,83 @@
 package mobidev.parkingfinder;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.DialogInterface.OnClickListener;
 import android.graphics.drawable.Drawable;
+import android.provider.Settings;
+import android.util.Log;
 
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.ItemizedOverlay;
 import com.google.android.maps.OverlayItem;
 
-public class MyItemizedOverlay extends ItemizedOverlay<OverlayItem> {
-
+public class MyItemizedOverlay extends ItemizedOverlay<ParkingOverlayItem> {
+	private final static String MY_PREFERENCES = "MyPref";
+	private final static String ID_KEY = "parkingId";
+	private final static String TYPE_KEY = "parkingType";
+	private final static String LAT_KEY = "latitude";
+	private final static String LON_KEY = "longitude";
+	private final static String ACC_KEY = "accuracy";
 	private Context mContext;
-	private ArrayList<OverlayItem> mOverlays = new ArrayList<OverlayItem>();
+	private ArrayList<ParkingOverlayItem> mOverlays = new ArrayList<ParkingOverlayItem>();
 
-	public MyItemizedOverlay(Context context){
+	public MyItemizedOverlay(Context context) {
 		super(null);
 		mContext = context;
+        populate();
 	}
-	
+
 	public MyItemizedOverlay(Drawable defaultMarker) {
 		super(boundCenterBottom(defaultMarker));
+        populate();		
 	}
 
 	public MyItemizedOverlay(Drawable defaultMarker, Context context) {
 		super(boundCenterBottom(defaultMarker));
 		mContext = context;
+        populate();
+	}
+
+	public void addOverlayItem(Parking p, Long duration, Drawable altMarker) {
+
+		GeoPoint point = new GeoPoint((int) (p.getLatitude() * 1E6),
+				(int) (p.getLongitude() * 1E6));
+
+		String title = "#" + p.getId();
+
+		String snippet = "Lat: " + p.getLatitude() + "\nLon: "
+				+ p.getLongitude() + "\nFree since: "
+				+ TimeUtils.millisToLongDHMS(duration) + "\nType: "
+				+ p.getType();
+
+		ParkingOverlayItem overlayItem = new ParkingOverlayItem(point, title,
+				snippet, p);
+		addOverlayItem(overlayItem, altMarker);
+		populate();
 	}
 
 	public void addOverlayItem(int lat, int lon, String title, String snippet,
 			Drawable altMarker) {
 		GeoPoint point = new GeoPoint(lat, lon);
-		OverlayItem overlayItem = new OverlayItem(point, title, snippet);
+		ParkingOverlayItem overlayItem = new ParkingOverlayItem(point, title,
+				snippet);
 		addOverlayItem(overlayItem, altMarker);
-		populate();
 	}
 
-	public void addOverlayItem(OverlayItem overlayItem, Drawable altMarker) {
+	public void addOverlayItem(ParkingOverlayItem overlayItem,
+			Drawable altMarker) {
 		overlayItem.setMarker(boundCenterBottom(altMarker));
 		addOverlay(overlayItem);
 	}
 
 	@Override
-	protected OverlayItem createItem(int i) {
+	protected ParkingOverlayItem createItem(int i) {
 		return mOverlays.get(i);
 	}
 
@@ -54,23 +88,64 @@ public class MyItemizedOverlay extends ItemizedOverlay<OverlayItem> {
 
 	@Override
 	protected boolean onTap(int index) {
-		OverlayItem item = mOverlays.get(index);
+		ParkingOverlayItem item = mOverlays.get(index);
+		Log.i("ID", String.valueOf(item.getId()));
+		final Parking p = item.getParking();
+
 		AlertDialog.Builder dialog = new AlertDialog.Builder(mContext);
 		dialog.setTitle(item.getTitle());
 		dialog.setMessage(item.getSnippet());
+
+		OnClickListener positive = new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int id) {
+
+				try {
+					CommunicationController.sendRequest("park",
+							DataController.marshallOccupyParking(p.getId()));
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				SharedPreferences prefs = mContext.getSharedPreferences(
+						MY_PREFERENCES, Context.MODE_PRIVATE);
+				SharedPreferences.Editor editor = prefs.edit();
+				editor.putInt(ID_KEY, p.getId());
+				editor.putFloat(LAT_KEY, (float) p.getLatitude());
+				editor.putFloat(LON_KEY, (float) p.getLongitude());
+				editor.putFloat(ACC_KEY, p.getAccuracy());
+				editor.putInt(TYPE_KEY, p.getType());
+				editor.commit();
+
+				Utility.showDialog(
+						mContext.getString(R.string.parkingOccupied),
+						mContext.getString(R.string.parkedHere), mContext);
+			}
+		};
+
+		SharedPreferences prefs = mContext.getSharedPreferences(MY_PREFERENCES,
+				Context.MODE_PRIVATE);
+		
+		if (prefs.getFloat(LAT_KEY, 91) == 91)
+			dialog.setPositiveButton(R.string.occupy, positive);
+
+		dialog.setNegativeButton(R.string.cancel,
+				new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int id) {
+						dialog.cancel();
+					}
+				});
 		dialog.show();
 		return true;
 	}
 
-	public void addOverlay(OverlayItem overlay) {
+	public void addOverlay(ParkingOverlayItem overlay) {
 		mOverlays.add(overlay);
-        setLastFocusedIndex(-1);		
+		setLastFocusedIndex(-1);
 		populate();
 	}
-	
-    public void clear() {
-    	mOverlays.clear();
-        setLastFocusedIndex(-1);        
-        populate();
-    }
+
+	public void clear() {
+		mOverlays.clear();
+		setLastFocusedIndex(-1);
+		populate();
+	}
 }

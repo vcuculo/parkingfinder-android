@@ -159,8 +159,6 @@ public class Utility {
 
 			try {
 
-				Log.i("SIZE", String.valueOf(map.getOverlays().size()));
-
 				parkings = DataController.unMarshallParking(response);
 
 				for (Parking parking : parkings)
@@ -226,12 +224,6 @@ public class Utility {
 		else if (duration > FIVE_MINUTES * 2)
 			drawable.setAlpha(100);
 		
-		String title = "Parking #" + p.getId();
-		String snippet = "Lat: " + p.getLatitude() + "\nLon: "
-				+ p.getLongitude() + "\nFree since: "
-				+ TimeUtils.millisToLongDHMS(duration);
-
-		item.addOverlayItem((int) (p.getLatitude() * 1E6),
-				(int) (p.getLongitude() * 1E6), title, snippet, drawable);
+		item.addOverlayItem(p, duration, drawable);
 	}
 }
