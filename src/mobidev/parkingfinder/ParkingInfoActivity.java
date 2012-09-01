@@ -54,7 +54,7 @@ public class ParkingInfoActivity extends Activity implements OnClickListener{
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
 		int idView=v.getId();
-		Parking p;
+		Parking p=null;
 		int id;
 		switch (idView) {
 		case R.id.saveButton:
@@ -63,7 +63,7 @@ public class ParkingInfoActivity extends Activity implements OnClickListener{
 			int type = parkingTypeSpinner.getSelectedItemPosition();
  			String comment = commentText.getText().toString();
 			p = new Parking(id, lat, lon, type, comment, accuracy);
-			new asyncTaskFreePark(this, p).execute();
+			
 			/*
 			try {
 				CommunicationController.sendRequest("freePark", DataController.marshallParking(p));
@@ -78,7 +78,6 @@ public class ParkingInfoActivity extends Activity implements OnClickListener{
 			
 			id = i.getIntExtra("parkingId", -1);
 			p = new Parking(id, lat, lon, accuracy);
-			new asyncTaskFreePark(this, p).execute();
 			
 			setResult(RESULT_OK);
 			finish();
@@ -86,6 +85,8 @@ public class ParkingInfoActivity extends Activity implements OnClickListener{
 		default:
 			break;
 		}
+		if(p!=null)
+		new asyncTaskFreePark(this, p).execute();
 		
 	}
 }

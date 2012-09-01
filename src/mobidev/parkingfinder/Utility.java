@@ -180,4 +180,6 @@ public class Utility {
 		itemizedoverlay.addOverlay(overlayitem);
 		mapView.getOverlays().add(itemizedoverlay);
 	}
+	
+	
 }

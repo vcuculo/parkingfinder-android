@@ -38,6 +38,7 @@ public class MyOnClickListener implements OnClickListener {
 		OnClickListener positive = new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
+				
 				new asyncTaskOccupyPark(c, p).execute();
 				SharedPreferences prefs = c.getSharedPreferences(MY_PREFERENCES,
 						Context.MODE_PRIVATE);
@@ -48,6 +49,7 @@ public class MyOnClickListener implements OnClickListener {
 				editor.putInt(TYPE_KEY_PARK,p.getType());
 				editor.putFloat(ACC_KEY_PARK, p.getAccuracy());
 				editor.commit();
+			
 				Activity a=(Activity)c;
 				a.finish();
 				
