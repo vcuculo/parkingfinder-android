@@ -73,11 +73,18 @@ public class Utility {
 		builder.show();
 	}
 
+	public static void showDialog(String title, String message, Context c, OnClickListener positiveAction) {
+		AlertDialog.Builder builder = new AlertDialog.Builder(c);
+		builder.setMessage(message).setCancelable(false).setTitle(title)
+				.setPositiveButton(R.string.ok, positiveAction);
+		builder.show();
+	}
+	
 	public static void showDialog(String title, String message, Context c,
 			OnClickListener positiveAction, OnClickListener negativeAction) {
 		AlertDialog.Builder builder = new AlertDialog.Builder(c);
 		builder.setMessage(message).setTitle(title)
-				.setPositiveButton("Ok", positiveAction)
+				.setPositiveButton(R.string.ok, positiveAction)
 				.setNegativeButton(R.string.cancel, negativeAction);
 		builder.show();
 	}
@@ -212,11 +219,13 @@ public class Utility {
 
 		long duration = System.currentTimeMillis() - p.getDate().getTime();
 
-		if (duration > FIVE_MINUTES && duration < FIVE_MINUTES * 2)
+		if (duration < FIVE_MINUTES)
+			drawable.setAlpha(255);
+		else if (duration > FIVE_MINUTES && duration < FIVE_MINUTES * 2)
 			drawable.setAlpha(200);
 		else if (duration > FIVE_MINUTES * 2)
 			drawable.setAlpha(100);
-
+		
 		String title = "Parking #" + p.getId();
 		String snippet = "Lat: " + p.getLatitude() + "\nLon: "
 				+ p.getLongitude() + "\nFree since: "

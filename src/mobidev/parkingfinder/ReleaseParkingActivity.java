@@ -254,8 +254,12 @@ public class ReleaseParkingActivity extends MapActivity {
 		if (requestCode == REQUEST_CODE) {
 			switch (resultCode) {
 			case RESULT_OK:
-				Utility.showDialog(getString(R.string.parkingReleased), getString(R.string.thanks), this);
-				finish();
+				OnClickListener closeAction = new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int id) {
+						finish();
+					}
+				};
+				Utility.showDialog(getString(R.string.parkingReleased), getString(R.string.thanks), this, closeAction);
 				break;
 			}
 		}

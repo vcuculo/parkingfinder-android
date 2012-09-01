@@ -44,5 +44,6 @@
     <string name="chooseParkingType">Choose parking types: </string>
     <string name="parkingReleased">Parking released </string>
     <string name="thanks">Thanks for your contribution!</string>
-
+    <string name="ok">Ok</string>
+    
 </resources>
