@@ -15,7 +15,7 @@ import android.widget.Toast;
 
 import com.google.android.maps.MapView;
 
-public class asyncTaskSearch extends AsyncTask<Void, Void, ArrayList<Parking>> {
+public class AsyncTaskSearch extends AsyncTask<Void, Void, ArrayList<Parking>> {
 	private final static String MY_PREFERENCES = "MyPref";
 	private final static String PREFERENCES_SEARCH_PARK = "search";
 	private static final String PREFERENCE_AUDIO = "my_audio";
@@ -27,7 +27,7 @@ public class asyncTaskSearch extends AsyncTask<Void, Void, ArrayList<Parking>> {
 	ProgressDialog pr = null;
 	static int lengthParkingList=Integer.MAX_VALUE;
 
-	public asyncTaskSearch(Context context, MapView map, Location myLocation,
+	public AsyncTaskSearch(Context context, MapView map, Location myLocation,
 			float range) {
 		this.map = map;
 		this.myLocation = myLocation;
@@ -40,7 +40,7 @@ public class asyncTaskSearch extends AsyncTask<Void, Void, ArrayList<Parking>> {
 		// TODO Auto-generated method stub
 		String response;
 		ArrayList<Parking> parkings = null;
-
+		publishProgress();
 		try {
 			response = CommunicationController.sendRequest("searchParking",
 					DataController.marshallParkingRequest(
@@ -77,6 +77,7 @@ public class asyncTaskSearch extends AsyncTask<Void, Void, ArrayList<Parking>> {
 		}
 		return parkings;
 	}
+	
 
 	public void onPostExecute(ArrayList<Parking> parkings) {
 		String text = context.getString(R.string.connectProblem);

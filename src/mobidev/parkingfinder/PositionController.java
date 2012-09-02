@@ -24,6 +24,7 @@ public class PositionController implements LocationListener {
 		this.myLocation = myLoc;
 	}
 
+	
 	@Override
 	public void onLocationChanged(Location arg0) {
 		if (isBetterLocation(arg0)) {

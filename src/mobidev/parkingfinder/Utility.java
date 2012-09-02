@@ -135,7 +135,7 @@ public class Utility {
 		
 		float range = prefs.getFloat("range", (float) 10);
 		if(search)
-		new asyncTaskSearch(c, map, myLocation, range).execute();
+		new AsyncTaskSearch(c, map, myLocation, range).execute();
 
 	}
 

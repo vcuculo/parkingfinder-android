@@ -8,12 +8,12 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
-public class asyncTaskOccupyPark extends AsyncTask<Void, Void, Void> {
+public class AsyncTaskOccupyPark extends AsyncTask<Void, Void, Void> {
 	
 	Parking p;
 	Context c;
 	ProgressDialog pr;
-	public asyncTaskOccupyPark(Context c,Parking p){
+	public AsyncTaskOccupyPark(Context c,Parking p){
 		this.c=c;
 		this.p=p;
 	}
@@ -35,7 +35,9 @@ public class asyncTaskOccupyPark extends AsyncTask<Void, Void, Void> {
 	@Override
 	protected void onProgressUpdate(Void... params){
 		String s=c.getString(R.string.load);
-		pr = ProgressDialog.show(c, "", "Loading. Please wait...", true);
+		pr = new ProgressDialog(c);
+		pr.setMessage(s);
+		pr.show();
 	}
 	
 	public void onPostExecute(ArrayList<Parking> parkings){

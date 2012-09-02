@@ -86,7 +86,7 @@ public class ParkingInfoActivity extends Activity implements OnClickListener{
 			break;
 		}
 		if(p!=null)
-		new asyncTaskFreePark(this, p).execute();
+		new AsyncTaskFreePark(this, p).execute();
 		
 	}
 }

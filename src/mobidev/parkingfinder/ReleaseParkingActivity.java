@@ -224,12 +224,7 @@ public class ReleaseParkingActivity extends MapActivity {
 					float accuracy = myLocation.getAccuracy();
 					p = new Parking(-1 , lat, lon, accuracy);
 				}
-				try {
-					CommunicationController.sendRequest("freePark",
-							DataController.marshallParking(p));
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
+				new AsyncTaskFreePark(ReleaseParkingActivity.this, p).execute();
 				finish();
 			}
 		};
