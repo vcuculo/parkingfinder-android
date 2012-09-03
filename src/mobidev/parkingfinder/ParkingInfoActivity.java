@@ -26,7 +26,7 @@ public class ParkingInfoActivity extends Activity implements OnClickListener{
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.parking_info);
-
+		
 		latitudeText = (TextView) findViewById(R.id.latitudeValue);
 		longitudeText = (TextView) findViewById(R.id.longitudeValue);
 		addressText = (TextView) findViewById(R.id.addressValue);
@@ -43,10 +43,11 @@ public class ParkingInfoActivity extends Activity implements OnClickListener{
 		lat = i.getDoubleExtra("latitude", 0);
 		lon = i.getDoubleExtra("longitude", 0);
 		accuracy = i.getFloatExtra("accuracy", 0);
-		String street = Utility.getStreetName(this, lat, lon);
+		new AsyncTaskStreet(this, lat, lon).execute();
+		//String street = Utility.getStreetName(this, lat, lon);
 		latitudeText.setText(Double.toString(lat));
 		longitudeText.setText(Double.toString(lon));
-		addressText.setText(street);
+		//addressText.setText(street);
 		parkingTypeSpinner.setSelection(i.getIntExtra("type", 0));
 	}
 
