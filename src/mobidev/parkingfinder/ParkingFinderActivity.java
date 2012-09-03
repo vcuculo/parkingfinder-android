@@ -1,6 +1,5 @@
 package mobidev.parkingfinder;
 
-import mobidev.parkingfinder.R;
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -10,13 +9,13 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.ImageButton;
+import android.widget.Button;
 
 public class ParkingFinderActivity extends Activity {
 	private final static String MY_PREFERENCES = "MyPref";
 	private final static String LON_KEY = "longitude";
 
-	private ImageButton searchButton, releaseButton;
+	private Button searchButton, releaseButton;
 	private double longitude;
 
 	@Override
@@ -24,8 +23,8 @@ public class ParkingFinderActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
 
-    	searchButton = (ImageButton) findViewById(R.id.searchButton);
-		releaseButton = (ImageButton) findViewById(R.id.releaseButton);
+    	searchButton = (Button) findViewById(R.id.searchButton);
+		releaseButton = (Button) findViewById(R.id.releaseButton);
 
 		searchButton.setOnClickListener(new OnClickListener() {
 			@Override
