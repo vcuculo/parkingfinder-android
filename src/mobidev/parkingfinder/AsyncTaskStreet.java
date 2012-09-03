@@ -33,9 +33,8 @@ public class AsyncTaskStreet extends AsyncTask<Void, Void, String> {
 	@Override
 	protected void onProgressUpdate(Void... params){
 		String s=c.getString(R.string.load);
-		pr = new ProgressDialog(c);
-		pr.setMessage(s);
-		pr.show();
+		String t=c.getString(R.string.app_name);
+		pr = ProgressDialog.show(c, t, s,true);
 		Log.i("ProgressUpdate", "street");
 	}
 	public void onPostExecute(String text){

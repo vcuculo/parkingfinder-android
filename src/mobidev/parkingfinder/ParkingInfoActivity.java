@@ -59,7 +59,6 @@ public class ParkingInfoActivity extends Activity implements OnClickListener{
 		int id;
 		switch (idView) {
 		case R.id.saveButton:
-		
 			id = i.getIntExtra("parkingId", -1);
 			int type = parkingTypeSpinner.getSelectedItemPosition();
  			String comment = commentText.getText().toString();
@@ -73,15 +72,11 @@ public class ParkingInfoActivity extends Activity implements OnClickListener{
 			}
 			*/
 			setResult(RESULT_OK);
-			finish();
 			break;
 		case R.id.cancelButton:
-			
 			id = i.getIntExtra("parkingId", -1);
 			p = new Parking(id, lat, lon, accuracy);
-			
 			setResult(RESULT_OK);
-			finish();
 			break;
 		default:
 			break;

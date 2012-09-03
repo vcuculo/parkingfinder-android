@@ -17,9 +17,6 @@
         <item>Undefined</item><item >Free</item>
         <item >Toll</item>
         <item>Residents</item><item>For Disabled</item><item >Timed</item>
-        
-        
-        
     </string-array>
         <string name="save">Save</string>
         <string name="cancel">Cancel</string>

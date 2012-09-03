@@ -225,7 +225,7 @@ public class ReleaseParkingActivity extends MapActivity {
 					p = new Parking(-1 , lat, lon, accuracy);
 				}
 				new AsyncTaskFreePark(ReleaseParkingActivity.this, p).execute();
-				finish();
+				
 			}
 		};
 

@@ -3,6 +3,7 @@ package mobidev.parkingfinder;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
@@ -24,6 +25,7 @@ public class AsyncTaskFreePark extends AsyncTask<Void, Void, Void>{
 		publishProgress();
 		try {
 			CommunicationController.sendRequest("freePark", DataController.marshallParking(p));
+			//Log.i("freePark", "finishrequest");
 		} catch (IOException e) {
 			e.printStackTrace();
 			Log.i("freeParkIOException", "Exception");
@@ -34,14 +36,20 @@ public class AsyncTaskFreePark extends AsyncTask<Void, Void, Void>{
 	@Override
 	protected void onProgressUpdate(Void... params){
 		String s=c.getString(R.string.load);
-		pr = new ProgressDialog(c);
-		pr.setMessage(s);
-		pr.show();
-		Log.i("ProgressUpdate", "park");
+		String t=c.getString(R.string.app_name);
+		pr = ProgressDialog.show(c, t, s,true);
+		//Log.i("ProgressUpdate", "freepark");
 	}
 	
-	public void onPostExecute(ArrayList<Parking> parkings){
+	@Override
+	protected void onPostExecute(Void params){
+	
 		pr.dismiss();
+		pr.cancel();
+		//Log.i("FreePark", "onPostExecute");
 		pr=null;
+		Activity a=(Activity)c;
+		a.finish();
 	}
+
 }

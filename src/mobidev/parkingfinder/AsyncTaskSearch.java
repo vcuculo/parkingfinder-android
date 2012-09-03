@@ -95,7 +95,8 @@ public class AsyncTaskSearch extends AsyncTask<Void, Void, ArrayList<Parking>> {
 			return;
 		for (Parking parking : parkings)
 			Utility.showParking(map, parking);
-			
+			Log.i("MAXVALUE",Integer.toString(lengthParkingList));
+			Log.i("CURRENT SIZE",Integer.toString(parkings.size()));
 			if(parkings.size()>lengthParkingList){
 				String t=context.getString(R.string.newParking);
 				SharedPreferences prefs = context.getSharedPreferences(MY_PREFERENCES,
