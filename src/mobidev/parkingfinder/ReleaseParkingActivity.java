@@ -55,14 +55,15 @@ public class ReleaseParkingActivity extends MapActivity {
 		});
 
 		mapView = (MapView) findViewById(R.id.mapview);
-		
+
 		myLocationOverlay = new MyLocationOverlay(this, mapView);
 		mapView.getOverlays().add(myLocationOverlay);
 		myLocationOverlay.enableMyLocation();
 
 		LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
 
-		PositionController locationListener = new PositionController(null, null , mapView, true);
+		PositionController locationListener = new PositionController(null,
+				null, mapView, true);
 
 		locationManager.requestLocationUpdates(
 				LocationManager.NETWORK_PROVIDER, 3000, 0, locationListener);
@@ -93,7 +94,6 @@ public class ReleaseParkingActivity extends MapActivity {
 			accuracy = prefs.getFloat(ACC_KEY, -1);
 			type = prefs.getInt(TYPE_KEY, 0);
 			id = prefs.getInt(ID_KEY, -1);
-			
 
 			Drawable drawable = this.getResources().getDrawable(
 					R.drawable.car_icon);
@@ -101,11 +101,11 @@ public class ReleaseParkingActivity extends MapActivity {
 					this);
 			GeoPoint point = new GeoPoint((int) (latitude * 1E6),
 					(int) (longitude * 1E6));
-			
+
 			Parking p = new Parking(id, latitude, longitude, type, accuracy);
-			
-			ParkingOverlayItem overlayitem = new ParkingOverlayItem(point, "Your car",
-					"Lat: " + latitude + "\nLon: " + longitude , p);
+
+			ParkingOverlayItem overlayitem = new ParkingOverlayItem(point,
+					"Your car", "Lat: " + latitude + "\nLon: " + longitude, p);
 			itemizedoverlay.addOverlay(overlayitem);
 			mapView.getOverlays().add(itemizedoverlay);
 		}
@@ -223,14 +223,9 @@ public class ReleaseParkingActivity extends MapActivity {
 					double lat = myLocation.getLatitude();
 					double lon = myLocation.getLongitude();
 					float accuracy = myLocation.getAccuracy();
-					p = new Parking(-1 , lat, lon, accuracy);
+					p = new Parking(-1, lat, lon, accuracy);
 				}
-				try {
-					CommunicationController.sendRequest("freePark",
-							DataController.marshallParking(p));
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
+				new AsyncTaskFreePark(ReleaseParkingActivity.this, p).execute();
 				finish();
 			}
 		};
@@ -263,7 +258,8 @@ public class ReleaseParkingActivity extends MapActivity {
 						finish();
 					}
 				};
-				Utility.showDialog(getString(R.string.parkingReleased), getString(R.string.thanks), this, closeAction);
+				Utility.showDialog(getString(R.string.parkingReleased),
+						getString(R.string.thanks), this, closeAction);
 				break;
 			}
 		}

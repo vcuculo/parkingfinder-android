@@ -10,22 +10,26 @@ import java.util.Locale;
 
 import org.json.JSONException;
 
-import com.google.android.maps.GeoPoint;
-import com.google.android.maps.MapController;
-import com.google.android.maps.MapView;
-import com.google.android.maps.Overlay;
-
 import android.app.AlertDialog;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.SharedPreferences;
 import android.content.DialogInterface.OnClickListener;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+
+import com.google.android.maps.GeoPoint;
+import com.google.android.maps.MapController;
+import com.google.android.maps.MapView;
+import com.google.android.maps.Overlay;
 
 public class Utility {
 
@@ -38,6 +42,7 @@ public class Utility {
 	private static final String PREFERENCE_FILTER_RESIDENT = "resident";
 	private static final String PREFERENCE_FILTER_DISABLED = "disabled";
 	private static final String PREFERENCE_FILTER_TIMED = "timed";
+	private static final int NOTIFICATION_ID = 1;
 
 	public static String getDigest(String pw) {
 		MessageDigest digester;
@@ -224,5 +229,29 @@ public class Utility {
 			drawable.setAlpha(100);
 		
 		item.addOverlayItem(p, duration, drawable);
+	}
+	
+	public static void createNotification(int icon,String tickerText,Context c,boolean sound){
+		String ns = Context.NOTIFICATION_SERVICE;
+		NotificationManager mNotificationManager = (NotificationManager) c.getSystemService(ns);
+
+		long when = System.currentTimeMillis();         // notification time
+		Context context = c.getApplicationContext();      // application Context
+		CharSequence contentTitle = c.getString(R.string.app_name);  // message title
+		CharSequence contentText = c.getString(R.string.newParking);      // message text
+
+		Intent notificationIntent = new Intent(c, SearchParkingActivity.class);
+		PendingIntent contentIntent = PendingIntent.getActivity(c, 0, notificationIntent, 0);
+
+		// the next two lines initialize the Notification, using the configurations above
+		Notification notification = new Notification(icon, tickerText, when);
+		notification.setLatestEventInfo(context, contentTitle, contentText, contentIntent);
+		if(sound)
+		notification.defaults=notification.DEFAULT_SOUND;
+
+
+
+		mNotificationManager.notify(NOTIFICATION_ID, notification);
+
 	}
 }

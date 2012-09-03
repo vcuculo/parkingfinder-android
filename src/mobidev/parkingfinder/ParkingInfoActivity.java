@@ -18,10 +18,10 @@ public class ParkingInfoActivity extends Activity {
 	private EditText commentText;
 	private Spinner parkingTypeSpinner;
 	private Button cancelButton, saveButton;
-    private Intent i;
-    private double lat, lon;
-    private float accuracy;
-    
+	private Intent i;
+	private double lat, lon;
+	private float accuracy;
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -43,14 +43,8 @@ public class ParkingInfoActivity extends Activity {
 				int id = i.getIntExtra("parkingId", -1);
 				p = new Parking(id, lat, lon, accuracy);
 
-				try {
-					CommunicationController.sendRequest("freePark", DataController.marshallParking(p));
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-				
-				setResult(RESULT_OK);
-				finish();
+				new AsyncTaskFreePark(ParkingInfoActivity.this, p).execute();
+
 			}
 		});
 
@@ -61,16 +55,11 @@ public class ParkingInfoActivity extends Activity {
 				Parking p;
 				int id = i.getIntExtra("parkingId", -1);
 				int type = parkingTypeSpinner.getSelectedItemPosition();
-     			String comment = commentText.getText().toString();
+				String comment = commentText.getText().toString();
 				p = new Parking(id, lat, lon, type, comment, accuracy);
-				
-				try {
-					CommunicationController.sendRequest("freePark", DataController.marshallParking(p));
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-				setResult(RESULT_OK);
-				finish();
+
+				new AsyncTaskFreePark(ParkingInfoActivity.this, p).execute();
+
 			}
 		});
 
@@ -78,10 +67,9 @@ public class ParkingInfoActivity extends Activity {
 		lat = i.getDoubleExtra("latitude", 0);
 		lon = i.getDoubleExtra("longitude", 0);
 		accuracy = i.getFloatExtra("accuracy", 0);
-		String street = Utility.getStreetName(this, lat, lon);
+		new AsyncTaskStreet(this, lat, lon).execute();
 		latitudeText.setText(Double.toString(lat));
 		longitudeText.setText(Double.toString(lon));
-		addressText.setText(street);
 		parkingTypeSpinner.setSelection(i.getIntExtra("type", 0));
 	}
 }

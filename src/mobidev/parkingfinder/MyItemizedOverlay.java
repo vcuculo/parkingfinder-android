@@ -99,12 +99,7 @@ public class MyItemizedOverlay extends ItemizedOverlay<ParkingOverlayItem> {
 		OnClickListener positive = new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int id) {
 
-				try {
-					CommunicationController.sendRequest("park",
-							DataController.marshallOccupyParking(p.getId()));
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
+				new AsyncTaskOccupyPark(mContext, p).execute();
 				SharedPreferences prefs = mContext.getSharedPreferences(
 						MY_PREFERENCES, Context.MODE_PRIVATE);
 				SharedPreferences.Editor editor = prefs.edit();
