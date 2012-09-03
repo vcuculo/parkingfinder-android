@@ -6,6 +6,7 @@ import com.google.android.maps.MapActivity;
 import com.google.android.maps.MapView;
 import com.google.android.maps.MyLocationOverlay;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -38,9 +39,7 @@ public class SearchParkingActivity extends MapActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.search_parking);
-
 		occupyButton = (ImageButton) findViewById(R.id.parkButton);
-
 		occupyButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {

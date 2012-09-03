@@ -46,5 +46,7 @@ public class AsyncTaskOccupyPark extends AsyncTask<Void, Void, Void> {
 		pr.dismiss();
 		pr.cancel();
 		Log.i("occupyPark", "onpost");
+		//Activity a=(Activity)c;
+		//a.finish();
 	}
 }

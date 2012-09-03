@@ -35,3 +35,72 @@
         android:src="@drawable/ic_launcher" />
 
 </LinearLayout>
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/greenBar"
+        android:gravity="left"
+        android:padding="5dip"
+        android:orientation="horizontal"
+         >
+
+        <ImageView
+            android:id="@+id/logoImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="7dip"
+            android:layout_marginTop="7dip"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="5dip"
+            android:src="@drawable/logo" />
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" >
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+             android:paddingTop="70dip"
+             >
+          <Button
+            android:id="@+id/searchButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dip"
+            android:layout_marginBottom="15dip"
+            android:alpha="0.5"
+            android:background="@drawable/buttonsearch"
+            android:contentDescription="@string/searchPark"
+            android:padding="10dip"
+            android:text="@string/searchPark"
+            android:textColor="@color/white"
+            android:textSize="24dip"
+            android:textStyle="bold"
+            />
+
+        <Button
+            android:id="@+id/releaseButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dip"
+            android:alpha="0.5"
+            android:background="@drawable/buttonrelease"
+            android:contentDescription="@string/releasePark"
+            android:padding="10dip"
+            android:text="@string/releasePark"
+            android:textColor="@color/white"
+            android:textSize="24dip"
+            android:textStyle="bold" />
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

@@ -3,6 +3,7 @@ package mobidev.parkingfinder;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -10,6 +11,8 @@ import android.content.SharedPreferences;
 import android.content.DialogInterface.OnClickListener;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
+import android.view.View;
+import android.widget.ImageButton;
 
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.ItemizedOverlay;
@@ -110,6 +113,11 @@ public class MyItemizedOverlay extends ItemizedOverlay<ParkingOverlayItem> {
 				editor.putInt(TYPE_KEY, p.getType());
 				editor.commit();
 
+				double longitude = (double) prefs.getFloat(LON_KEY, 181);
+				Activity a=(Activity)mContext;
+				View occupyButton = (ImageButton) a.findViewById(R.id.parkButton);
+				if(longitude<181)
+					occupyButton.setVisibility(View.INVISIBLE);
 				Utility.showDialog(
 						mContext.getString(R.string.parkingOccupied),
 						mContext.getString(R.string.parkedHere), mContext);

@@ -43,10 +43,8 @@ public class AsyncTaskFreePark extends AsyncTask<Void, Void, Void> {
 
 	@Override
 	protected void onPostExecute(Void params) {
-
 		pr.dismiss();
 		pr.cancel();
-		// Log.i("FreePark", "onPostExecute");
 		pr = null;
 		Activity a = (Activity) c;
 		a.setResult(Activity.RESULT_OK);
