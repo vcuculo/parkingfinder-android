@@ -57,7 +57,7 @@ public class SearchParkingActivity extends MapActivity {
 
 		LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
 
-	    Handler handler = new MyHandler(mapView, parkingsOverlay);
+	    Handler handler = new MyHandler(this,mapView, parkingsOverlay);
 
 		locationListener = new PositionController(handler,
 				myLocationOverlay, mapView, false);
