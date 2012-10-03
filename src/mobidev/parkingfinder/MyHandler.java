@@ -1,17 +1,18 @@
 package mobidev.parkingfinder;
 
 import java.util.ArrayList;
-import java.util.logging.SocketHandler;
 
 import org.json.JSONException;
 
-import android.app.Notification;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.media.MediaPlayer;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 
 import com.google.android.maps.MapView;
 
@@ -42,10 +43,13 @@ public class MyHandler extends Handler {
 						MY_PREFERENCES, Context.MODE_PRIVATE);
 				boolean audio = prefs.getBoolean(PREFERENCE_AUDIO, true);
 				// controlla se ci sono nuovi parcheggi
+				Log.i("Park",Integer.toString(nPark));
 				if (parkings.size() > nPark && nPark != -1 && audio) {
-					MediaPlayer mediaPlayer = MediaPlayer.create(c,
-							Notification.DEFAULT_SOUND);
-					mediaPlayer.start();
+					Uri notification = RingtoneManager
+							.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+					Ringtone r = RingtoneManager.getRingtone(
+							c.getApplicationContext(), notification);
+					r.play();
 				}
 				nPark = parkings.size();
 				parkingsOverlay.clear();
@@ -54,6 +58,7 @@ public class MyHandler extends Handler {
 					Utility.showParking(map, parking, parkingsOverlay);
 			} catch (JSONException e) {
 				e.printStackTrace();
+				Log.i("Handle_MessageServer", value);
 			}
 		}
 	}
