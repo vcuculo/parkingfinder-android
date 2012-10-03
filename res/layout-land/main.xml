@@ -5,24 +5,7 @@
     android:gravity="center_horizontal"
     android:orientation="vertical" >
 
-    <RelativeLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/greenBar"
-        android:gravity="left"
-        android:orientation="horizontal"
-        android:padding="5dip" >
 
-        <ImageView
-            android:id="@+id/logoImage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_marginBottom="7dip"
-            android:layout_marginLeft="5dip"
-            android:layout_marginTop="7dip"
-            android:src="@drawable/logo" />
-    </RelativeLayout>
 
     <ScrollView
         android:layout_width="fill_parent"
