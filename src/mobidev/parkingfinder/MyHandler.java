@@ -3,8 +3,6 @@ package mobidev.parkingfinder;
 import java.util.ArrayList;
 
 import org.json.JSONException;
-
-import com.google.android.maps.ItemizedOverlay;
 import com.google.android.maps.MapView;
 
 import android.os.Bundle;

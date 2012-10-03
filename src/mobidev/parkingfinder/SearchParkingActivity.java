@@ -1,7 +1,5 @@
 package mobidev.parkingfinder;
 
-import java.util.Timer;
-
 import mobidev.parkingfinder.R;
 
 import com.google.android.maps.MapActivity;

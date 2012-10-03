@@ -4,11 +4,8 @@ import java.io.IOException;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-
-import org.json.JSONException;
 
 import android.app.AlertDialog;
 import android.app.Notification;
@@ -247,7 +244,7 @@ public class Utility {
 		notification.setLatestEventInfo(context, contentTitle, contentText,
 				contentIntent);
 		if (sound)
-			notification.defaults = notification.DEFAULT_SOUND;
+			notification.defaults = Notification.DEFAULT_SOUND;
 
 		mNotificationManager.notify(NOTIFICATION_ID, notification);
 
