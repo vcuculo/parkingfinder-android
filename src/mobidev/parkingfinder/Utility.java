@@ -144,8 +144,8 @@ public class Utility {
 		}
 	}
 
-	public static void askParkings(Location myLocation, MapView map,
-			MyItemizedOverlay itemizedoverlay) {
+	public static String askParkings(Location myLocation, MapView map) {
+
 		Context c = map.getContext();
 		SharedPreferences prefs = c.getSharedPreferences(MY_PREFERENCES,
 				Context.MODE_PRIVATE);
@@ -159,32 +159,20 @@ public class Utility {
 							myLocation.getLatitude(),
 							myLocation.getLongitude(), range / 1000));
 
-			itemizedoverlay.clear();
-
-			ArrayList<Parking> parkings;
 			if (response == null || response == "") {
 				Log.i("response", "response error");
-				return;
+				return null;
 			}
-			try {
 
-				parkings = DataController.unMarshallParking(response);
+			return response;
 
-				for (Parking parking : parkings)
-					showParking(map, parking, itemizedoverlay);
-
-				map.postInvalidate();
-
-			} catch (JSONException e) {
-				e.printStackTrace();
-			}
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
-
+		return null;
 	}
 
-	private static void showParking(MapView mapView, Parking p,
+	public static void showParking(MapView mapView, Parking p,
 			MyItemizedOverlay item) {
 		Drawable drawable;
 		Context c = mapView.getContext();

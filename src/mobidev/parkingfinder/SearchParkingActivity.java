@@ -1,5 +1,7 @@
 package mobidev.parkingfinder;
 
+import java.util.Timer;
+
 import mobidev.parkingfinder.R;
 
 import com.google.android.maps.MapActivity;
@@ -14,6 +16,7 @@ import android.content.DialogInterface.OnClickListener;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.Settings;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -30,7 +33,6 @@ public class SearchParkingActivity extends MapActivity {
 	private final static String LON_KEY = "longitude";
 	private final static String ACC_KEY = "accuracy";
 	private boolean paused = false;
-	private static boolean showGPS = true;
 
 	private MyLocationOverlay myLocationOverlay;
 	private PositionController locationListener;
@@ -57,7 +59,9 @@ public class SearchParkingActivity extends MapActivity {
 
 		LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
 
-		locationListener = new PositionController(parkingsOverlay,
+	    Handler handler = new MyHandler(mapView, parkingsOverlay);
+
+		locationListener = new PositionController(handler,
 				myLocationOverlay, mapView, false);
 
 		locationManager.requestLocationUpdates(
@@ -65,11 +69,8 @@ public class SearchParkingActivity extends MapActivity {
 		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
 				5000, 0, locationListener);
 
-		if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
-				&& showGPS) {
+		if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER))
 			showGPSDialog();
-			showGPS = false;
-		}
 	}
 
 	@Override

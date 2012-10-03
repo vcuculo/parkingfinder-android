@@ -2,14 +2,15 @@ package mobidev.parkingfinder;
 
 import java.util.Timer;
 
-import com.google.android.maps.MapView;
-import com.google.android.maps.MyLocationOverlay;
-
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.location.Location;
 import android.location.LocationListener;
 import android.os.Bundle;
+import android.os.Handler;
+
+import com.google.android.maps.MapView;
+import com.google.android.maps.MyLocationOverlay;
 
 public class PositionController implements LocationListener {
 
@@ -18,17 +19,17 @@ public class PositionController implements LocationListener {
 	private final static int HALF_MINUTE = 30 * 1000;
 	private final static String MY_PREFERENCES = "MyPref";
 	private final static String PREFERENCE_REFRESH = "my_refresh";
-
-	private boolean first = true;
-	private boolean release;
-	private MyLocationOverlay myLocation;
-	private MyItemizedOverlay parkings;
-	private Timer t=null;
 	private SharedPreferences prefs;
 
-	public PositionController(MyItemizedOverlay parkings,
+	private boolean release;
+	private boolean first = true;
+	private MyLocationOverlay myLocation;
+	private Handler handler;
+	private Timer t = null;
+
+	public PositionController(Handler handler,
 			MyLocationOverlay myLoc, MapView map, boolean release) {
-		this.parkings = parkings;
+		this.handler = handler;
 		this.mapview = map;
 		this.myLocation = myLoc;
 		this.release = release;
@@ -39,12 +40,12 @@ public class PositionController implements LocationListener {
 	@Override
 	public void onLocationChanged(Location arg0) {
 		if (isBetterLocation(arg0)) {
-			bestPosition = arg0;
-			Utility.centerMap(bestPosition, mapview, release);
+			Utility.centerMap(arg0, mapview, release);
+
 			if (myLocation != null && first) {
 				float refresh = prefs.getFloat(PREFERENCE_REFRESH, 2);
 				t = new Timer();
-				t.schedule(new MyTimer(parkings, myLocation, mapview), 0,
+				t.schedule(new MyTimer(handler, myLocation, mapview), 0,
 						(int) (refresh * 60000));
 				first = false;
 			}
@@ -52,16 +53,16 @@ public class PositionController implements LocationListener {
 	}
 
 	public void stopTimer() {
-		if(t!=null){
-		t.cancel();
-		t.purge();
+		if (t != null) {
+			t.cancel();
+			t.purge();
 		}
 	}
 
 	public void restartTimer() {
 		float refresh = prefs.getFloat(PREFERENCE_REFRESH, 2);
 		t = new Timer();
-		t.schedule(new MyTimer(parkings, myLocation, mapview), 0,
+		t.schedule(new MyTimer(handler, myLocation, mapview), 0,
 				(int) (refresh * 60000));
 	}
 

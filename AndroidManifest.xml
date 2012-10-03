@@ -30,7 +30,8 @@
             android:name=".SearchParkingActivity"
             android:label="@string/app_name"
             android:theme="@android:style/Theme.NoTitleBar"
-            android:windowSoftInputMode="stateHidden" >
+            android:windowSoftInputMode="stateHidden" 
+            android:configChanges="orientation|keyboardHidden">
         </activity>
         <activity
             android:name=".ReleaseParkingActivity"
