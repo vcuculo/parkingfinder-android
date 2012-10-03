@@ -1,7 +1,5 @@
 package mobidev.parkingfinder;
 
-import java.io.IOException;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,7 +12,7 @@ import android.widget.TextView;
 
 public class ParkingInfoActivity extends Activity {
 
-	private TextView latitudeText, longitudeText, addressText;
+	private TextView latitudeText, longitudeText;
 	private EditText commentText;
 	private Spinner parkingTypeSpinner;
 	private Button cancelButton, saveButton;
@@ -29,7 +27,6 @@ public class ParkingInfoActivity extends Activity {
 
 		latitudeText = (TextView) findViewById(R.id.latitudeValue);
 		longitudeText = (TextView) findViewById(R.id.longitudeValue);
-		addressText = (TextView) findViewById(R.id.addressValue);
 		commentText = (EditText) findViewById(R.id.commentsText);
 		parkingTypeSpinner = (Spinner) findViewById(R.id.parkingTypeSpinner);
 		cancelButton = (Button) findViewById(R.id.cancelButton);

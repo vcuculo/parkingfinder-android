@@ -78,13 +78,14 @@ public class Utility {
 		builder.show();
 	}
 
-	public static void showDialog(String title, String message, Context c, OnClickListener positiveAction) {
+	public static void showDialog(String title, String message, Context c,
+			OnClickListener positiveAction) {
 		AlertDialog.Builder builder = new AlertDialog.Builder(c);
 		builder.setMessage(message).setCancelable(false).setTitle(title)
 				.setPositiveButton(R.string.ok, positiveAction);
 		builder.show();
 	}
-	
+
 	public static void showDialog(String title, String message, Context c,
 			OnClickListener positiveAction, OnClickListener negativeAction) {
 		AlertDialog.Builder builder = new AlertDialog.Builder(c);
@@ -161,10 +162,10 @@ public class Utility {
 			itemizedoverlay.clear();
 
 			ArrayList<Parking> parkings;
-			if(response==null || response==""){
-				Log.i("response","response error");
+			if (response == null || response == "") {
+				Log.i("response", "response error");
 				return;
-			}	
+			}
 			try {
 
 				parkings = DataController.unMarshallParking(response);
@@ -198,27 +199,27 @@ public class Utility {
 			break;
 		case 2:
 			if (!prefs.getBoolean(PREFERENCE_FILTER_TOLL, true))
-				return;			
+				return;
 			drawable = c.getResources().getDrawable(R.drawable.toll_park);
 			break;
 		case 3:
 			if (!prefs.getBoolean(PREFERENCE_FILTER_RESIDENT, true))
-				return;			
+				return;
 			drawable = c.getResources().getDrawable(R.drawable.reserved_park);
 			break;
 		case 4:
 			if (!prefs.getBoolean(PREFERENCE_FILTER_DISABLED, true))
-				return;			
+				return;
 			drawable = c.getResources().getDrawable(R.drawable.disabled_park);
 			break;
 		case 5:
 			if (!prefs.getBoolean(PREFERENCE_FILTER_TIMED, true))
-				return;			
+				return;
 			drawable = c.getResources().getDrawable(R.drawable.timed_park);
 			break;
 		default:
 			if (!prefs.getBoolean(PREFERENCE_FILTER_UNDEFINED, true))
-				return;			
+				return;
 			drawable = c.getResources().getDrawable(R.drawable.undefined_park);
 			break;
 		}
@@ -231,29 +232,34 @@ public class Utility {
 			drawable.setAlpha(200);
 		else if (duration > FIVE_MINUTES * 2)
 			drawable.setAlpha(100);
-		
+
 		item.addOverlayItem(p, duration, drawable);
 	}
-	
-	public static void createNotification(int icon,String tickerText,Context c,boolean sound){
-		String ns = Context.NOTIFICATION_SERVICE;
-		NotificationManager mNotificationManager = (NotificationManager) c.getSystemService(ns);
 
-		long when = System.currentTimeMillis();         // notification time
-		Context context = c.getApplicationContext();      // application Context
-		CharSequence contentTitle = c.getString(R.string.app_name);  // message title
-		CharSequence contentText = c.getString(R.string.newParking);      // message text
+	public static void createNotification(int icon, String tickerText,
+			Context c, boolean sound) {
+		String ns = Context.NOTIFICATION_SERVICE;
+		NotificationManager mNotificationManager = (NotificationManager) c
+				.getSystemService(ns);
+
+		long when = System.currentTimeMillis(); // notification time
+		Context context = c.getApplicationContext(); // application Context
+		CharSequence contentTitle = c.getString(R.string.app_name); // message
+																	// title
+		CharSequence contentText = c.getString(R.string.newParking); // message
+																		// text
 
 		Intent notificationIntent = new Intent(c, SearchParkingActivity.class);
-		PendingIntent contentIntent = PendingIntent.getActivity(c, 0, notificationIntent, 0);
+		PendingIntent contentIntent = PendingIntent.getActivity(c, 0,
+				notificationIntent, 0);
 
-		// the next two lines initialize the Notification, using the configurations above
+		// the next two lines initialize the Notification, using the
+		// configurations above
 		Notification notification = new Notification(icon, tickerText, when);
-		notification.setLatestEventInfo(context, contentTitle, contentText, contentIntent);
-		if(sound)
-		notification.defaults=notification.DEFAULT_SOUND;
-
-
+		notification.setLatestEventInfo(context, contentTitle, contentText,
+				contentIntent);
+		if (sound)
+			notification.defaults = notification.DEFAULT_SOUND;
 
 		mNotificationManager.notify(NOTIFICATION_ID, notification);
 

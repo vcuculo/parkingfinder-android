@@ -1,7 +1,5 @@
 package mobidev.parkingfinder;
 
-import java.io.IOException;
-
 import mobidev.parkingfinder.R;
 
 import com.google.android.maps.GeoPoint;
@@ -29,8 +27,8 @@ public class ReleaseParkingActivity extends MapActivity {
 	private final static String LAT_KEY = "latitude";
 	private final static String LON_KEY = "longitude";
 	private final static String ACC_KEY = "accuracy";
-	private final static String GPS_PREF = "gps";
 	private final static int REQUEST_CODE = 2;
+	private static boolean showGPS = true;
 
 	private MapView mapView;
 	private MyLocationOverlay myLocationOverlay;
@@ -71,18 +69,14 @@ public class ReleaseParkingActivity extends MapActivity {
 		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
 				5000, 0, locationListener);
 
-		SharedPreferences prefs = getSharedPreferences(MY_PREFERENCES,
-				Context.MODE_PRIVATE);
-		boolean gpsPref = prefs.getBoolean(GPS_PREF, false);
 		if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
-				&& !gpsPref) {
+				&& showGPS) {
 			showGPSDialog();
-			SharedPreferences.Editor editor = prefs.edit();
-			editor.putBoolean(GPS_PREF, true);
-			editor.commit();
+			showGPS = false;
 		}
 
-		
+		SharedPreferences prefs = getSharedPreferences(MY_PREFERENCES,
+				Context.MODE_PRIVATE);		
 
 		/*
 		 * DEBUG ONLY SharedPreferences.Editor editor = prefs.edit();
