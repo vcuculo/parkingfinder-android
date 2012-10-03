@@ -29,6 +29,7 @@ public class ReleaseParkingActivity extends MapActivity {
 	private final static String LAT_KEY = "latitude";
 	private final static String LON_KEY = "longitude";
 	private final static String ACC_KEY = "accuracy";
+	private final static String GPS_PREF = "gps";
 	private final static int REQUEST_CODE = 2;
 
 	private MapView mapView;
@@ -70,11 +71,18 @@ public class ReleaseParkingActivity extends MapActivity {
 		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
 				5000, 0, locationListener);
 
-		if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER))
-			showGPSDialog();
-
 		SharedPreferences prefs = getSharedPreferences(MY_PREFERENCES,
 				Context.MODE_PRIVATE);
+		boolean gpsPref = prefs.getBoolean(GPS_PREF, false);
+		if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
+				&& !gpsPref) {
+			showGPSDialog();
+			SharedPreferences.Editor editor = prefs.edit();
+			editor.putBoolean(GPS_PREF, true);
+			editor.commit();
+		}
+
+		
 
 		/*
 		 * DEBUG ONLY SharedPreferences.Editor editor = prefs.edit();

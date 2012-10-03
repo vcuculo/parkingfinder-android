@@ -14,7 +14,7 @@ public class CommunicationController {
 	
 	private static final String PROTOCOL = "http";
 	private static final String SERVER_ADDRESS = "parking.findu.pl";
-	private static final int SERVER_PORT = 8081;
+	private static final int SERVER_PORT = 80;
 	private static final String SERVICE_NAME = "geoparking";	
 
 	public static String sendRequest(String command,String data) throws IOException{

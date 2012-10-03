@@ -25,6 +25,7 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.util.Log;
 
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapController;
@@ -160,7 +161,10 @@ public class Utility {
 			itemizedoverlay.clear();
 
 			ArrayList<Parking> parkings;
-
+			if(response==null || response==""){
+				Log.i("response","response error");
+				return;
+			}	
 			try {
 
 				parkings = DataController.unMarshallParking(response);

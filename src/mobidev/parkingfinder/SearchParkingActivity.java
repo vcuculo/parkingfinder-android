@@ -30,6 +30,7 @@ public class SearchParkingActivity extends MapActivity {
 	private final static String LAT_KEY = "latitude";
 	private final static String LON_KEY = "longitude";
 	private final static String ACC_KEY = "accuracy";
+	private final static String GPS_PREF = "gps";
 	private boolean paused = false;
 
 	private MyLocationOverlay myLocationOverlay;
@@ -64,11 +65,18 @@ public class SearchParkingActivity extends MapActivity {
 				LocationManager.NETWORK_PROVIDER, 3000, 0, locationListener);
 		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
 				5000, 0, locationListener);
-
-		if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER))
+		SharedPreferences pref = getSharedPreferences(MY_PREFERENCES,
+				Context.MODE_PRIVATE);
+		boolean gpsPref = pref.getBoolean(GPS_PREF, false);
+		if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
+				&& !gpsPref) {
 			showGPSDialog();
+			SharedPreferences.Editor editor = pref.edit();
+			editor.putBoolean(GPS_PREF, true);
+			editor.commit();
+		}
 	}
-	
+
 	@Override
 	protected void onResume() {
 		super.onResume();

@@ -23,7 +23,7 @@ public class PositionController implements LocationListener {
 	private boolean release;
 	private MyLocationOverlay myLocation;
 	private MyItemizedOverlay parkings;
-	private Timer t;
+	private Timer t=null;
 	private SharedPreferences prefs;
 
 	public PositionController(MyItemizedOverlay parkings,
@@ -52,8 +52,10 @@ public class PositionController implements LocationListener {
 	}
 
 	public void stopTimer() {
+		if(t!=null){
 		t.cancel();
 		t.purge();
+		}
 	}
 
 	public void restartTimer() {
