@@ -28,11 +28,13 @@ public class MyTimer extends TimerTask {
 		Location myLocation = myLoc.getLastFix();
 		if (myLocation != null) {
 			JSONParkings = Utility.askParkings(myLocation, map);
-			Message msg = handler.obtainMessage();
-			Bundle b = new Bundle();
-			b.putString("refreshParkings", JSONParkings);
-			msg.setData(b);
-			handler.sendMessage(msg);
+			if (JSONParkings != null) {
+				Message msg = handler.obtainMessage();
+				Bundle b = new Bundle();
+				b.putString("refreshParkings", JSONParkings);
+				msg.setData(b);
+				handler.sendMessage(msg);
+			}
 		}
 	}
 }

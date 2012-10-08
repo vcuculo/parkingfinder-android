@@ -37,12 +37,13 @@ public class MyHandler extends Handler {
 		if (bundle.containsKey("refreshParkings")) {
 			String value = bundle.getString("refreshParkings");
 			try {
+				Log.i("Handle_MessageServer", value);
 				parkings = DataController.unMarshallParking(value);
 
 				SharedPreferences prefs = c.getSharedPreferences(
 						MY_PREFERENCES, Context.MODE_PRIVATE);
 				boolean audio = prefs.getBoolean(PREFERENCE_AUDIO, true);
-				// controlla se ci sono nuovi parcheggiG
+				// controlla se ci sono nuovi parcheggi
 				if (parkings.size() > nPark && nPark != -1 && audio) {
 					Uri notification = RingtoneManager
 							.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
@@ -57,7 +58,6 @@ public class MyHandler extends Handler {
 					Utility.showParking(map, parking, parkingsOverlay);
 			} catch (JSONException e) {
 				e.printStackTrace();
-				Log.i("Handle_MessageServer", value);
 			}
 		}
 	}

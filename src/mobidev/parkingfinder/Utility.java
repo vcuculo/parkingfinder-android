@@ -220,33 +220,4 @@ public class Utility {
 
 		item.addOverlayItem(p, duration, drawable);
 	}
-
-	public static void createNotification(int icon, String tickerText,
-			Context c, boolean sound) {
-		String ns = Context.NOTIFICATION_SERVICE;
-		NotificationManager mNotificationManager = (NotificationManager) c
-				.getSystemService(ns);
-
-		long when = System.currentTimeMillis(); // notification time
-		Context context = c.getApplicationContext(); // application Context
-		CharSequence contentTitle = c.getString(R.string.app_name); // message
-																	// title
-		CharSequence contentText = c.getString(R.string.newParking); // message
-																		// text
-
-		Intent notificationIntent = new Intent(c, SearchParkingActivity.class);
-		PendingIntent contentIntent = PendingIntent.getActivity(c, 0,
-				notificationIntent, 0);
-
-		// the next two lines initialize the Notification, using the
-		// configurations above
-		Notification notification = new Notification(icon, tickerText, when);
-		notification.setLatestEventInfo(context, contentTitle, contentText,
-				contentIntent);
-		if (sound)
-			notification.defaults = Notification.DEFAULT_SOUND;
-
-		mNotificationManager.notify(NOTIFICATION_ID, notification);
-
-	}
 }
