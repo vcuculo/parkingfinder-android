@@ -42,8 +42,7 @@ public class MyHandler extends Handler {
 				SharedPreferences prefs = c.getSharedPreferences(
 						MY_PREFERENCES, Context.MODE_PRIVATE);
 				boolean audio = prefs.getBoolean(PREFERENCE_AUDIO, true);
-				// controlla se ci sono nuovi parcheggi
-				Log.i("Park",Integer.toString(nPark));
+				// controlla se ci sono nuovi parcheggiG
 				if (parkings.size() > nPark && nPark != -1 && audio) {
 					Uri notification = RingtoneManager
 							.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);

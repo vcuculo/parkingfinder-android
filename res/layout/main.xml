@@ -1,56 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent" >
+    android:layout_height="match_parent"
+    android:background="@drawable/main_portrait"
+    android:orientation="vertical" >
 
-    <RelativeLayout
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_gravity="bottom"
-        android:background="@drawable/main_portrait"
-        android:orientation="vertical" >
->
+    <Button
+        android:id="@+id/releaseButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="5dip"
+        android:layout_marginLeft="20dip"
+        android:layout_marginRight="20dip"
+        android:layout_marginTop="5dip"
+        android:alpha="0.5"
+        android:background="@drawable/buttonrelease"
+        android:contentDescription="@string/releasePark"
+        android:padding="10dip"
+        android:text="@string/releasePark"
+        android:textColor="@color/white"
+        android:textSize="24dip"
+        android:textStyle="bold" />
 
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:gravity="bottom"
-            android:orientation="vertical" >
+    <Button
+        android:id="@+id/searchButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/releaseButton"
+        android:layout_marginBottom="5dip"
+        android:layout_marginLeft="20dip"
+        android:layout_marginRight="20dip"
+        android:alpha="0.5"
+        android:background="@drawable/buttonsearch"
+        android:contentDescription="@string/searchPark"
+        android:padding="10dip"
+        android:text="@string/searchPark"
+        android:textColor="@color/white"
+        android:textSize="24dip"
+        android:textStyle="bold" />
 
-            <Button
-                android:id="@+id/searchButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="5dip"
-                android:layout_marginLeft="20dip"
-                android:layout_marginRight="20dip"
-                android:alpha="0.5"
-                android:background="@drawable/buttonsearch"
-                android:contentDescription="@string/searchPark"
-                android:padding="10dip"
-                android:text="@string/searchPark"
-                android:textColor="@color/white"
-                android:textSize="24dip"
-                android:textStyle="bold" />
-
-            <Button
-                android:id="@+id/releaseButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="5dip"
-                android:layout_marginLeft="20dip"
-                android:layout_marginRight="20dip"
-                android:layout_marginTop="5dip"
-                android:alpha="0.5"
-                android:background="@drawable/buttonrelease"
-                android:contentDescription="@string/releasePark"
-                android:padding="10dip"
-                android:text="@string/releasePark"
-                android:textColor="@color/white"
-                android:textSize="24dip"
-                android:textStyle="bold" />
-        </LinearLayout>
-    </RelativeLayout>
-
-</ScrollView>
+</RelativeLayout>
