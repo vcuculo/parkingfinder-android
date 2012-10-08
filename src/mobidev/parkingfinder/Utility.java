@@ -209,7 +209,7 @@ public class Utility {
 			break;
 		}
 
-		long duration = System.currentTimeMillis() - p.getDate().getTime();
+		long duration = p.getTime();
 
 		if (duration < FIVE_MINUTES)
 			drawable.setAlpha(255);

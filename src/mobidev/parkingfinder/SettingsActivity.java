@@ -28,8 +28,8 @@ public class SettingsActivity extends Activity implements OnClickListener {
 	private static final String PREFERENCE_FILTER_TIMED = "timed";
 	private final int MAX_RANGE_SEEK = 9;
 	private final int MIN_RANGE_SEEK = 1;
-	private final float MAX_REFRESH_SEEK = 9.0f;
-	private final float MIN_REFRESH_SEEK = 1.0f;
+	private final float MAX_REFRESH_SEEK = 4.5f;
+	private final float MIN_REFRESH_SEEK = 0.5f;
 
 	private final int FILTER_DIALOG = 1;
 
@@ -40,8 +40,9 @@ public class SettingsActivity extends Activity implements OnClickListener {
 
 	private int currentRange;
 	private float currentTime;
+	private boolean currentAudio;
 	private boolean currentFUndefined, currentFFree, currentFToll,
-			currentFResident, currentFDisabled, currentFTimed, currentAudio;;
+			currentFResident, currentFDisabled, currentFTimed;
 
 	private int positionRangeCursor, positionTimeCursor;
 	private SharedPreferences prefs;
@@ -52,8 +53,8 @@ public class SettingsActivity extends Activity implements OnClickListener {
 		setContentView(R.layout.settings);
 
 		prefs = getSharedPreferences(MY_PREFERENCES, Context.MODE_PRIVATE);
-		currentRange = prefs.getInt(PREFERENCE_RANGE, 300);
-		currentTime = prefs.getFloat(PREFERENCE_REFRESH, 3f);
+		currentRange = prefs.getInt(PREFERENCE_RANGE, 3);
+		currentTime = prefs.getFloat(PREFERENCE_REFRESH, 2);
 		currentAudio = prefs.getBoolean(PREFERENCE_AUDIO, true);
 		currentFUndefined = prefs.getBoolean(PREFERENCE_FILTER_UNDEFINED, true);
 		currentFFree = prefs.getBoolean(PREFERENCE_FILTER_FREE, true);
@@ -71,7 +72,7 @@ public class SettingsActivity extends Activity implements OnClickListener {
 		valueRange = (TextView) findViewById(R.id.textValueRange);
 		valueRange.setText(Integer.toString(currentRange));
 		valueRefresh = (TextView) findViewById(R.id.textValueTime);
-		valueRefresh.setText(Float.toString(currentTime * 0.5f));
+		valueRefresh.setText(Float.toString(currentTime));
 		cancelButton.setOnClickListener(this);
 		saveButton.setOnClickListener(this);
 		filterButton.setOnClickListener(this);
@@ -114,7 +115,7 @@ public class SettingsActivity extends Activity implements OnClickListener {
 			@Override
 			public void onProgressChanged(SeekBar seekBar, int progress,
 					boolean fromUser) {
-				currentTime = (progress + MIN_REFRESH_SEEK) / 2 ;
+				currentTime = progress + MIN_REFRESH_SEEK;
 				valueRefresh.setText(Float.toString(currentTime));
 			}
 		});
@@ -192,7 +193,7 @@ public class SettingsActivity extends Activity implements OnClickListener {
 	private void savePreferences() {
 		SharedPreferences.Editor editor = prefs.edit();
 		editor.putInt(PREFERENCE_RANGE, currentRange);
-		editor.putFloat(PREFERENCE_REFRESH, currentTime * 2);
+		editor.putFloat(PREFERENCE_REFRESH, currentTime);
 		currentAudio = audioToggleButton.isChecked();
 		editor.putBoolean(PREFERENCE_AUDIO, currentAudio);
 		editor.putBoolean(PREFERENCE_FILTER_UNDEFINED, currentFUndefined);

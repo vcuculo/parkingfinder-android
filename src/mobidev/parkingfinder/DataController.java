@@ -17,7 +17,6 @@ public class DataController {
 			userJS.put("lon", p.getLongitude());
 			userJS.put("accuracy", p.getAccuracy());
 			userJS.put("type", p.getType());
-			userJS.put("date", p.getDate());
 			if (p.getId() > -1)
 				userJS.put("id", p.getId());
 			if (p.getComment() != null && p.getComment().length() > 0)
@@ -61,8 +60,7 @@ public class DataController {
 			double lon = park.getDouble("lon");
 			int type = park.getInt("type");
 			int accuracy = park.getInt("accuracy");
-			String dateString = park.getString("date");
-			Timestamp date = Timestamp.valueOf(dateString);
+			long  time = park.getLong("date");
 			ArrayList<String> comments = new ArrayList<String>();
 			if (park.has("comments")) {
 				JSONArray messageJson = park.getJSONArray("comments");
@@ -72,7 +70,7 @@ public class DataController {
 					comments.add(text);
 				}
 			}
-			Parking p = new Parking(id, lat, lon, type, comments, date,
+			Parking p = new Parking(id, lat, lon, type, comments, time,
 					accuracy);
 			parkingList.add(p);
 		}
