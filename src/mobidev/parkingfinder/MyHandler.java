@@ -25,10 +25,10 @@ public class MyHandler extends Handler {
 	Context c;
 	static int nPark = -1;
 
-	public MyHandler(Context c, MapView map, MyItemizedOverlay parkingsOverlay) {
+	public MyHandler(MapView map, MyItemizedOverlay parkingsOverlay) {
 		this.map = map;
 		this.parkingsOverlay = parkingsOverlay;
-		this.c = c;
+		this.c = map.getContext();
 	}
 
 	@Override
