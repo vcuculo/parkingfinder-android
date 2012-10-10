@@ -1,16 +1,11 @@
 package mobidev.parkingfinder;
 
-import mobidev.parkingfinder.R;
-
-import com.google.android.maps.MapActivity;
-import com.google.android.maps.MapView;
-import com.google.android.maps.MyLocationOverlay;
-
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.DialogInterface.OnClickListener;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
@@ -21,6 +16,10 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
+
+import com.google.android.maps.MapActivity;
+import com.google.android.maps.MapView;
+import com.google.android.maps.MyLocationOverlay;
 
 public class SearchParkingActivity extends MapActivity {
 
@@ -39,6 +38,9 @@ public class SearchParkingActivity extends MapActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.search_parking);
+		String t = getApplicationContext().getString(R.string.app_name);
+		String p = getApplicationContext().getString(R.string.loadPosition);
+		ProgressDialog pd = ProgressDialog.show(this, t, p);
 		occupyButton = (ImageButton) findViewById(R.id.parkButton);
 		occupyButton.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -57,11 +59,10 @@ public class SearchParkingActivity extends MapActivity {
 
 		LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
 
-	    Handler handler = new MyHandler(mapView, parkingsOverlay);
+		Handler handler = new MyHandler(mapView, parkingsOverlay);
 
-		locationListener = new PositionController(handler,
-				myLocationOverlay, mapView, false);
-
+		locationListener = new PositionController(handler, myLocationOverlay,
+				mapView, false, pd);
 		locationManager.requestLocationUpdates(
 				LocationManager.NETWORK_PROVIDER, 3000, 0, locationListener);
 		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,

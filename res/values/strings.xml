@@ -47,6 +47,7 @@
     <string name="parkingOccupied">Parking occupied</string>
     <string name="parkedHere">Congratulations, you\'ve found a parking!\nWhen you want to go back to your car, select Release Parking from the main menu.</string>
     <string name="load">Loading. Please Wait</string>
+    <string name="loadPosition">Loading. Acquisition Position...</string>
     <string name="connectProblem">Problem connect to Server</string>
     <string name="refreshMenu">Refresh</string>
     <string name="newParking">New Parking</string>

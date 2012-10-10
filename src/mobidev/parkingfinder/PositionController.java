@@ -2,6 +2,7 @@ package mobidev.parkingfinder;
 
 import java.util.Timer;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.location.Location;
@@ -26,23 +27,26 @@ public class PositionController implements LocationListener {
 	private MyLocationOverlay myLocation;
 	private Handler handler;
 	private Timer t = null;
+	private ProgressDialog pr;
 
-	public PositionController(Handler handler,
-			MyLocationOverlay myLoc, MapView map, boolean release) {
+	public PositionController(Handler handler, MyLocationOverlay myLoc,
+			MapView map, boolean release, ProgressDialog pr) {
 		this.handler = handler;
 		this.mapview = map;
 		this.myLocation = myLoc;
 		this.release = release;
 		Context c = map.getContext();
 		prefs = c.getSharedPreferences(MY_PREFERENCES, Context.MODE_PRIVATE);
+		this.pr=pr;
 	}
 
 	@Override
 	public void onLocationChanged(Location arg0) {
 		if (isBetterLocation(arg0)) {
 			Utility.centerMap(arg0, mapview, release);
-
 			if (myLocation != null && first) {
+				pr.dismiss();
+				pr.cancel();
 				float refresh = prefs.getFloat(PREFERENCE_REFRESH, 2);
 				t = new Timer();
 				t.schedule(new MyTimer(handler, myLocation, mapview), 0,

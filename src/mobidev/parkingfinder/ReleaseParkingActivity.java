@@ -7,6 +7,7 @@ import com.google.android.maps.MapActivity;
 import com.google.android.maps.MapView;
 import com.google.android.maps.MyLocationOverlay;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -43,7 +44,9 @@ public class ReleaseParkingActivity extends MapActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.release_parking);
-
+		String t = getApplicationContext().getString(R.string.app_name);
+		String q = getApplicationContext().getString(R.string.loadPosition);
+		ProgressDialog pd = ProgressDialog.show(this, t, q);
 		releaseButton = (ImageButton) findViewById(R.id.parkButton);
 
 		releaseButton.setOnClickListener(new View.OnClickListener() {
@@ -62,7 +65,7 @@ public class ReleaseParkingActivity extends MapActivity {
 		LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
 
 		PositionController locationListener = new PositionController(null,
-				null, mapView, true);
+				null, mapView, true, pd);
 
 		locationManager.requestLocationUpdates(
 				LocationManager.NETWORK_PROVIDER, 3000, 0, locationListener);
@@ -76,7 +79,7 @@ public class ReleaseParkingActivity extends MapActivity {
 		}
 
 		SharedPreferences prefs = getSharedPreferences(MY_PREFERENCES,
-				Context.MODE_PRIVATE);		
+				Context.MODE_PRIVATE);
 
 		/*
 		 * DEBUG ONLY SharedPreferences.Editor editor = prefs.edit();
