@@ -44,6 +44,10 @@ public class PositionController implements LocationListener {
 	public void onLocationChanged(Location arg0) {
 		if (isBetterLocation(arg0)) {
 			Utility.centerMap(arg0, mapview, release);
+			if(release){
+				pr.dismiss();
+				pr.cancel();
+			}
 			if (myLocation != null && first) {
 				pr.dismiss();
 				pr.cancel();
