@@ -38,9 +38,6 @@ public class SearchParkingActivity extends MapActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.search_parking);
-		String t = getApplicationContext().getString(R.string.app_name);
-		String p = getApplicationContext().getString(R.string.loadPosition);
-		ProgressDialog pd = ProgressDialog.show(this, t, p);
 		occupyButton = (ImageButton) findViewById(R.id.parkButton);
 		occupyButton.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -62,7 +59,7 @@ public class SearchParkingActivity extends MapActivity {
 		Handler handler = new MyHandler(mapView, parkingsOverlay);
 
 		locationListener = new PositionController(handler, myLocationOverlay,
-				mapView, false, pd);
+				mapView, false);
 		locationManager.requestLocationUpdates(
 				LocationManager.NETWORK_PROVIDER, 3000, 0, locationListener);
 		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,

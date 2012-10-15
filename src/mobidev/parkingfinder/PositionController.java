@@ -30,14 +30,17 @@ public class PositionController implements LocationListener {
 	private ProgressDialog pr;
 
 	public PositionController(Handler handler, MyLocationOverlay myLoc,
-			MapView map, boolean release, ProgressDialog pr) {
+			MapView map, boolean release) {
 		this.handler = handler;
 		this.mapview = map;
 		this.myLocation = myLoc;
 		this.release = release;
 		Context c = map.getContext();
 		prefs = c.getSharedPreferences(MY_PREFERENCES, Context.MODE_PRIVATE);
-		this.pr=pr;
+		String t = map.getContext().getString(R.string.app_name);
+		String p = map.getContext().getString(R.string.loadPosition);
+		this.pr = ProgressDialog.show(map.getContext(), t, p);
+	
 	}
 
 	@Override

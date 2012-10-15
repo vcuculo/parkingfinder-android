@@ -44,9 +44,6 @@ public class ReleaseParkingActivity extends MapActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.release_parking);
-		String t = getApplicationContext().getString(R.string.app_name);
-		String q = getApplicationContext().getString(R.string.loadPosition);
-		ProgressDialog pd = ProgressDialog.show(this, t, q);
 		releaseButton = (ImageButton) findViewById(R.id.parkButton);
 
 		releaseButton.setOnClickListener(new View.OnClickListener() {
@@ -65,7 +62,7 @@ public class ReleaseParkingActivity extends MapActivity {
 		LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
 
 		PositionController locationListener = new PositionController(null,
-				null, mapView, true, pd);
+				null, mapView, true);
 
 		locationManager.requestLocationUpdates(
 				LocationManager.NETWORK_PROVIDER, 3000, 0, locationListener);
