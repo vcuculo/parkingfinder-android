@@ -24,7 +24,6 @@ public class AsyncTaskFreePark extends AsyncTask<Void, Void, Void> {
 		try {
 			CommunicationController.sendRequest("freePark",
 					DataController.marshallParking(p));
-			// Log.i("freePark", "finishrequest");
 		} catch (IOException e) {
 			e.printStackTrace();
 			Log.i("freeParkIOException", "Exception");
@@ -37,7 +36,6 @@ public class AsyncTaskFreePark extends AsyncTask<Void, Void, Void> {
 		String s = c.getString(R.string.load);
 		String t = c.getString(R.string.app_name);
 		pr = ProgressDialog.show(c, t, s, true);
-		// Log.i("ProgressUpdate", "freepark");
 	}
 
 	@Override
@@ -47,7 +45,6 @@ public class AsyncTaskFreePark extends AsyncTask<Void, Void, Void> {
 		pr = null;
 		Activity a = (Activity) c;
 		a.setResult(Activity.RESULT_OK);
-	    a.finish();
+		a.finish();
 	}
-
 }

@@ -56,7 +56,6 @@ public class ParkingInfoActivity extends Activity {
 				p = new Parking(id, lat, lon, type, comment, accuracy);
 
 				new AsyncTaskFreePark(ParkingInfoActivity.this, p).execute();
-
 			}
 		});
 

@@ -29,7 +29,6 @@ public class AsyncTaskStreet extends AsyncTask<Void, Void, String> {
 		String s = c.getString(R.string.load);
 		String t = c.getString(R.string.app_name);
 		pr = ProgressDialog.show(c, t, s, true);
-		Log.i("ProgressUpdate", "street");
 	}
 
 	public void onPostExecute(String text) {

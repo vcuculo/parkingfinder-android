@@ -1,6 +1,7 @@
 package mobidev.parkingfinder;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -59,14 +60,16 @@ public class DataController {
 			double lon = park.getDouble("lon");
 			int type = park.getInt("type");
 			int accuracy = park.getInt("accuracy");
-			long  time = park.getLong("date");
-			ArrayList<String> comments = new ArrayList<String>();
+			long time = park.getLong("date");
+			ArrayList<Comment> comments = new ArrayList<Comment>();
 			if (park.has("comments")) {
 				JSONArray messageJson = park.getJSONArray("comments");
 				for (int y = 0; y < messageJson.length(); y++) {
 					JSONObject message = messageJson.getJSONObject(y);
+					int cId = message.getInt("comment_id");
 					String text = message.getString("text");
-					comments.add(text);
+					Comment c = new Comment(cId, text);
+					comments.add(c);
 				}
 			}
 			Parking p = new Parking(id, lat, lon, type, comments, time,

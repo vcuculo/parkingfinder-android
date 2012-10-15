@@ -9,6 +9,7 @@ import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.content.DialogInterface.OnClickListener;
 import android.graphics.drawable.Drawable;
+import android.location.Location;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
@@ -24,24 +25,24 @@ public class MyItemizedOverlay extends ItemizedOverlay<ParkingOverlayItem> {
 	private final static String LON_KEY = "longitude";
 	private final static String ACC_KEY = "accuracy";
 	private Context mContext;
-	private ArrayList<ParkingOverlayItem> mOverlays = new ArrayList<ParkingOverlayItem>();	
+	private ArrayList<ParkingOverlayItem> mOverlays = new ArrayList<ParkingOverlayItem>();
 	private int mSize;
-	
+
 	public MyItemizedOverlay(Context context) {
 		super(null);
 		mContext = context;
-        populate();
+		populate();
 	}
 
 	public MyItemizedOverlay(Drawable defaultMarker) {
 		super(boundCenterBottom(defaultMarker));
-        populate();		
+		populate();
 	}
 
 	public MyItemizedOverlay(Drawable defaultMarker, Context context) {
 		super(boundCenterBottom(defaultMarker));
 		mContext = context;
-        populate();
+		populate();
 	}
 
 	public void addOverlayItem(Parking p, Long duration, Drawable altMarker) {
@@ -51,12 +52,13 @@ public class MyItemizedOverlay extends ItemizedOverlay<ParkingOverlayItem> {
 
 		String title = "#" + p.getId();
 
-		String [] types = mContext.getResources().getStringArray(R.array.parkingTypes);
-		
-		String snippet = "Lat: " + p.getLatitude() + "\nLon: "
-				+ p.getLongitude() + "\nFree since: "
-				+ TimeUtils.millisToLongDHMS(duration) + "\nType: "
-				+ types[p.getType()] +"\nComments:\n" + p.getComments();
+		String[] types = mContext.getResources().getStringArray(
+				R.array.parkingTypes);
+
+		String snippet = "Lat:\t " + p.getLatitude() + "\nLon:\t"
+				+ p.getLongitude() + "\nFree since:\t"
+				+ TimeUtils.millisToLongDHMS(duration) + "\nType:\t"
+				+ types[p.getType()] + "\nComments:\n" + p.getComments();
 
 		ParkingOverlayItem overlayItem = new ParkingOverlayItem(point, title,
 				snippet, p);
@@ -91,7 +93,6 @@ public class MyItemizedOverlay extends ItemizedOverlay<ParkingOverlayItem> {
 	@Override
 	protected boolean onTap(int index) {
 		ParkingOverlayItem item = mOverlays.get(index);
-		Log.i("ID", String.valueOf(item.getId()));
 		final Parking p = item.getParking();
 
 		AlertDialog.Builder dialog = new AlertDialog.Builder(mContext);
@@ -111,23 +112,23 @@ public class MyItemizedOverlay extends ItemizedOverlay<ParkingOverlayItem> {
 				editor.putFloat(ACC_KEY, p.getAccuracy());
 				editor.putInt(TYPE_KEY, p.getType());
 				editor.commit();
+				
+				OnClickListener positive = new DialogInterface.OnClickListener() {
+					Activity a = (Activity) mContext;
 
-				double longitude = (double) prefs.getFloat(LON_KEY, 181);
-				Activity a=(Activity)mContext;
-				View occupyButton = (ImageButton) a.findViewById(R.id.parkButton);
-				if(longitude<181)
-					occupyButton.setVisibility(View.INVISIBLE);
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						a.finish();
+					}
+				};
+								
 				Utility.showDialog(
 						mContext.getString(R.string.parkingOccupied),
-						mContext.getString(R.string.parkedHere), mContext);
+						mContext.getString(R.string.parkedHere), mContext, positive);
 			}
 		};
 
-		SharedPreferences prefs = mContext.getSharedPreferences(MY_PREFERENCES,
-				Context.MODE_PRIVATE);
-		
-		if (prefs.getFloat(LAT_KEY, 91) == 91)
-			dialog.setPositiveButton(R.string.occupy, positive);
+		dialog.setPositiveButton(R.string.occupy, positive);
 
 		dialog.setNegativeButton(R.string.cancel,
 				new DialogInterface.OnClickListener() {
@@ -142,14 +143,14 @@ public class MyItemizedOverlay extends ItemizedOverlay<ParkingOverlayItem> {
 	public void addOverlay(ParkingOverlayItem overlay) {
 		mOverlays.add(overlay);
 		setLastFocusedIndex(-1);
-		mSize = mOverlays.size(); 		
+		mSize = mOverlays.size();
 		populate();
 	}
 
 	public void clear() {
 		mOverlays.clear();
 		setLastFocusedIndex(-1);
-		mSize = mOverlays.size();		
+		mSize = mOverlays.size();
 		populate();
 	}
 }
