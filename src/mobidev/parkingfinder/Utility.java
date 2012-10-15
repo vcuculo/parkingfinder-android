@@ -8,13 +8,9 @@ import java.util.List;
 import java.util.Locale;
 
 import android.app.AlertDialog;
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.location.Address;
@@ -40,7 +36,6 @@ public class Utility {
 	private static final String PREFERENCE_FILTER_RESIDENT = "resident";
 	private static final String PREFERENCE_FILTER_DISABLED = "disabled";
 	private static final String PREFERENCE_FILTER_TIMED = "timed";
-	private static final int NOTIFICATION_ID = 1;
 
 	public static String getDigest(String pw) {
 		MessageDigest digester;

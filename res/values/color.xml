@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="red">#DDD81616</color>
+    <color name="red">#D81616</color>
     <color name="redPressed">#700808</color>
     <color name="greenBar">#56A316</color>
-    <color name="greenBarTransparent">#DD56A316</color>
-    <color name="green">#DD07AC16</color>
+    <color name="greenBarTransparent">#56A316</color>
+    <color name="green">#07AC16</color>
     <color name="greenPressed">#07590E</color>
     <color name="white">#FFFFFF</color>
     <color name="gray">#BBCBBC</color>

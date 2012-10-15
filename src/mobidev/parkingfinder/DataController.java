@@ -1,6 +1,5 @@
 package mobidev.parkingfinder;
 
-import java.sql.Timestamp;
 import java.util.ArrayList;
 
 import org.json.JSONArray;

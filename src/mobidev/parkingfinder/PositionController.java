@@ -15,9 +15,8 @@ import com.google.android.maps.MyLocationOverlay;
 
 public class PositionController implements LocationListener {
 
-	private Location bestPosition;
 	private MapView mapview;
-	private final static int HALF_MINUTE = 30 * 1000;
+	private final static int MINUTE = 60 * 1000;
 	private final static String MY_PREFERENCES = "MyPref";
 	private final static String PREFERENCE_REFRESH = "my_refresh";
 	private SharedPreferences prefs;
@@ -37,29 +36,28 @@ public class PositionController implements LocationListener {
 		this.release = release;
 		Context c = map.getContext();
 		prefs = c.getSharedPreferences(MY_PREFERENCES, Context.MODE_PRIVATE);
-		String t = map.getContext().getString(R.string.app_name);
-		String p = map.getContext().getString(R.string.loadPosition);
-		this.pr = ProgressDialog.show(map.getContext(), t, p);
-	
+		String t = c.getString(R.string.app_name);
+		String p = c.getString(R.string.loadPosition);
+		this.pr = ProgressDialog.show(c, t, p);
 	}
 
 	@Override
 	public void onLocationChanged(Location arg0) {
-		if (isBetterLocation(arg0)) {
-			Utility.centerMap(arg0, mapview, release);
-			if(release){
-				pr.dismiss();
-				pr.cancel();
-			}
-			if (myLocation != null && first) {
-				pr.dismiss();
-				pr.cancel();
-				float refresh = prefs.getFloat(PREFERENCE_REFRESH, 2);
-				t = new Timer();
-				t.schedule(new MyTimer(handler, myLocation, mapview), 0,
-						(int) (refresh * 60000));
-				first = false;
-			}
+		Utility.centerMap(arg0, mapview, release);
+
+		pr.dismiss();
+		pr.cancel();
+
+		if (myLocation != null && first) {
+
+			// if (myLocation != null) => Search
+			// else => Release
+
+			float refresh = prefs.getFloat(PREFERENCE_REFRESH, 2);
+			t = new Timer();
+			t.schedule(new MyTimer(handler, myLocation, mapview), 0,
+					(int) (refresh * MINUTE));
+			first = false;
 		}
 	}
 
@@ -87,19 +85,5 @@ public class PositionController implements LocationListener {
 
 	@Override
 	public void onStatusChanged(String arg0, int arg1, Bundle arg2) {
-	}
-
-	private boolean isBetterLocation(Location loc) {
-		if (bestPosition == null)
-			return true;
-
-		long timedelta = loc.getTime() - bestPosition.getTime();
-
-		if (loc.getAccuracy() >= bestPosition.getAccuracy())
-			return true;
-		else if (timedelta > HALF_MINUTE)
-			return true;
-		else
-			return false;
 	}
 }
