@@ -218,7 +218,7 @@ public class ReleaseParkingActivity extends MapActivity {
 				Parking p;
 
 				if (parked)
-					p = new Parking(parkingId, latitude, longitude, accuracy);
+					p = new Parking(parkingId, latitude, longitude, type, accuracy);
 				else {
 					Location myLocation = myLocationOverlay.getLastFix();
 					double lat = myLocation.getLatitude();

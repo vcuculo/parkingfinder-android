@@ -56,7 +56,9 @@ public class MyHandler extends Handler {
 
 				for (Parking parking : parkings)
 					Utility.showParking(map, parking, parkingsOverlay);
-				
+
+				map.invalidate();
+								
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}

@@ -4,7 +4,6 @@ import java.io.IOException;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
-import android.util.Log;
 
 public class AsyncTaskOccupyPark extends AsyncTask<Void, Void, Void> {
 
@@ -25,7 +24,6 @@ public class AsyncTaskOccupyPark extends AsyncTask<Void, Void, Void> {
 
 		} catch (IOException e) {
 			e.printStackTrace();
-			Log.i("occupyParkIOException", "Exception");
 		}
 		return null;
 	}
@@ -35,15 +33,11 @@ public class AsyncTaskOccupyPark extends AsyncTask<Void, Void, Void> {
 		String s = c.getString(R.string.load);
 		String t = c.getString(R.string.app_name);
 		pr = ProgressDialog.show(c, t, s, true);
-		Log.i("occupyPark", pr.toString());
 	}
 
 	@Override
 	protected void onPostExecute(Void par) {
 		pr.dismiss();
 		pr.cancel();
-		Log.i("occupyPark", "onpost");
-		//Activity a=(Activity)c;
-		//a.finish();
 	}
 }
