@@ -9,6 +9,7 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.os.Bundle;
 import android.os.Handler;
+import android.widget.Toast;
 
 import com.google.android.maps.MapView;
 import com.google.android.maps.MyLocationOverlay;
@@ -27,6 +28,7 @@ public class PositionController implements LocationListener {
 	private Handler handler;
 	private Timer t = null;
 	private ProgressDialog pr;
+	private Context c;
 
 	public PositionController(Handler handler, MyLocationOverlay myLoc,
 			MapView map, boolean release) {
@@ -34,7 +36,7 @@ public class PositionController implements LocationListener {
 		this.mapview = map;
 		this.myLocation = myLoc;
 		this.release = release;
-		Context c = map.getContext();
+		this.c = map.getContext();
 		prefs = c.getSharedPreferences(MY_PREFERENCES, Context.MODE_PRIVATE);
 		String t = c.getString(R.string.app_name);
 		String p = c.getString(R.string.loadPosition);
