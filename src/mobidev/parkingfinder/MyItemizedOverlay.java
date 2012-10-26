@@ -26,20 +26,9 @@ public class MyItemizedOverlay extends ItemizedOverlay<ParkingOverlayItem> {
 	public MyItemizedOverlay(Context context) {
 		super(null);
 		mContext = context;
-		populate();
 	}
-
-	public MyItemizedOverlay(Drawable defaultMarker) {
-		super(boundCenterBottom(defaultMarker));
-		populate();
-	}
-
-	public MyItemizedOverlay(Drawable defaultMarker, Context context) {
-		super(boundCenterBottom(defaultMarker));
-		mContext = context;
-		populate();
-	}
-
+	
+	// create parking overlay received from server
 	public void addOverlayItem(Parking p, Long duration, Drawable altMarker) {
 
 		GeoPoint point = new GeoPoint((int) (p.getLatitude() * 1E6),
@@ -58,16 +47,17 @@ public class MyItemizedOverlay extends ItemizedOverlay<ParkingOverlayItem> {
 				+ p.getComments();
 
 		ParkingOverlayItem overlayItem = new ParkingOverlayItem(point, title,
-				snippet, p);
+				snippet, p, false);
 		addOverlayItem(overlayItem, altMarker);
-		populate();
 	}
 
-	public void addOverlayItem(int lat, int lon, String title, String snippet,
-			Drawable altMarker) {
-		GeoPoint point = new GeoPoint(lat, lon);
-		ParkingOverlayItem overlayItem = new ParkingOverlayItem(point, title,
-				snippet);
+	// create parking overlay received from client (my parking)
+	public void addOverlayItem(Parking p, Drawable altMarker) {
+		
+		GeoPoint point = new GeoPoint((int) (p.getLatitude() * 1E6),
+				(int) (p.getLongitude() * 1E6));
+		
+		ParkingOverlayItem overlayItem = new ParkingOverlayItem(point, p, true);
 		addOverlayItem(overlayItem, altMarker);
 	}
 
@@ -75,6 +65,7 @@ public class MyItemizedOverlay extends ItemizedOverlay<ParkingOverlayItem> {
 			Drawable altMarker) {
 		overlayItem.setMarker(boundCenterBottom(altMarker));
 		addOverlay(overlayItem);
+		populate();
 	}
 
 	@Override
@@ -90,8 +81,12 @@ public class MyItemizedOverlay extends ItemizedOverlay<ParkingOverlayItem> {
 	@Override
 	protected boolean onTap(int index) {
 		ParkingOverlayItem item = mOverlays.get(index);
+		
+		if (item.getRelease())
+			return true;
+		
 		final Parking p = item.getParking();
-
+		
 		AlertDialog.Builder dialog = new AlertDialog.Builder(mContext);
 		dialog.setTitle(item.getTitle());
 		dialog.setMessage(item.getSnippet());

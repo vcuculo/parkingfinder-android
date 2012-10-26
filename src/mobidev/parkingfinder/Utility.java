@@ -98,8 +98,8 @@ public class Utility {
 
 		List<Overlay> overlays = mapview.getOverlays();
 
-		if (release && overlays.size() > 1) { // mostrare la mia posizione e
-												// quella dell'auto
+		if (release && overlays.size() > 1) { // mostrare la mia posizione (overlay 0) e
+										      // quella dell'auto (overlay 1)
 			MyItemizedOverlay itemizedOverlay = (MyItemizedOverlay) overlays
 					.get(1);
 			mapc.animateTo(itemizedOverlay.getItem(0).getPoint());

@@ -8,7 +8,6 @@ import com.google.android.maps.MapView;
 import com.google.android.maps.MyLocationOverlay;
 import com.google.android.maps.OverlayItem;
 
-
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -101,19 +100,11 @@ public class ReleaseParkingActivity extends MapActivity {
 
 			Drawable drawable = this.getResources().getDrawable(
 					R.drawable.car_icon);
-			MyItemizedOverlay itemizedoverlay = new MyItemizedOverlay(drawable,
-					this);
-			GeoPoint point = new GeoPoint((int) (latitude * 1E6),
-					(int) (longitude * 1E6));
+			MyItemizedOverlay itemizedoverlay = new MyItemizedOverlay(this);
 
 			Parking p = new Parking(id, latitude, longitude, type, null, accuracy);
 
-			String lat = String.format("%.3f", latitude);
-			String lon = String.format("%.3f", longitude);
-			
-			ParkingOverlayItem overlayitem = new ParkingOverlayItem(point,
-					"Your car", "Lat: " + lat + "\nLon: " + lon, p);
-			itemizedoverlay.addOverlay(overlayitem);
+			itemizedoverlay.addOverlayItem(p, drawable);
 			mapView.getOverlays().add(itemizedoverlay);
 		}
 
@@ -224,7 +215,8 @@ public class ReleaseParkingActivity extends MapActivity {
 				Parking p;
 
 				if (parked)
-					p = new Parking(parkingId, latitude, longitude, type, null, accuracy);
+					p = new Parking(parkingId, latitude, longitude, type, null,
+							accuracy);
 				else {
 					Location myLocation = myLocationOverlay.getLastFix();
 					double lat = myLocation.getLatitude();
