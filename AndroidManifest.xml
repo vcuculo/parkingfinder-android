@@ -50,7 +50,19 @@
             android:label="@string/app_name"
             android:theme="@android:style/Theme.Dialog"
             android:windowSoftInputMode="stateHidden" >
-        </activity>        
+        </activity>   
+        <activity
+            android:name=".SocialActvity"
+            android:label="@string/app_name"
+            android:theme="@android:style/Theme.Dialog"
+            android:windowSoftInputMode="stateHidden" >
+        </activity>
+        <activity
+            android:name=".WebViewActivity"
+            android:label="@string/app_name"
+            android:theme="@android:style/Theme.Dialog"
+            android:windowSoftInputMode="stateHidden" >
+        </activity>     
     </application>
 
 </manifest>

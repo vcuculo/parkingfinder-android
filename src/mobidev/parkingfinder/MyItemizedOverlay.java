@@ -6,9 +6,13 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.SharedPreferences;
 import android.content.DialogInterface.OnClickListener;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
+import android.view.View;
+import android.widget.CheckBox;
+
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.ItemizedOverlay;
 
@@ -52,7 +56,7 @@ public class MyItemizedOverlay extends ItemizedOverlay<ParkingOverlayItem> {
 
 		String lat = String.format("%.3f", p.getLatitude());
 		String lon = String.format("%.3f", p.getLongitude());
-		
+
 		String snippet = "Lat:\t" + lat + "\nLon:\t" + lon + "\nFree since:\t"
 				+ TimeUtils.millisToLongDHMS(duration) + "\nComments:\n"
 				+ p.getComments();
@@ -95,10 +99,14 @@ public class MyItemizedOverlay extends ItemizedOverlay<ParkingOverlayItem> {
 		AlertDialog.Builder dialog = new AlertDialog.Builder(mContext);
 		dialog.setTitle(item.getTitle());
 		dialog.setMessage(item.getSnippet());
-
+		View checkBoxView = View.inflate(mContext, R.layout.checkbox, null);
+		CheckBox checkBox = (CheckBox)checkBoxView.findViewById(R.id.checkbox);
+		checkBox.setText("Checkin");
+		dialog.setView(checkBoxView);
 		OnClickListener positive = new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int id) {
 
+				
 				new AsyncTaskOccupyPark(mContext, p).execute();
 				SharedPreferences prefs = mContext.getSharedPreferences(
 						MY_PREFERENCES, Context.MODE_PRIVATE);
@@ -111,12 +119,15 @@ public class MyItemizedOverlay extends ItemizedOverlay<ParkingOverlayItem> {
 				editor.commit();
 
 				OnClickListener positive = new DialogInterface.OnClickListener() {
+					
 					Activity a = (Activity) mContext;
-
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
+						Intent i = new Intent(mContext,SocialActivity.class);
+						mContext.startActivity(i);
 						a.finish();
 					}
+					
 				};
 
 				Utility.showDialog(
@@ -125,9 +136,14 @@ public class MyItemizedOverlay extends ItemizedOverlay<ParkingOverlayItem> {
 						positive);
 			}
 		};
+		
+		
 
 		dialog.setPositiveButton(R.string.occupy, positive);
-
+		
+		
+		
+		
 		dialog.setNegativeButton(R.string.cancel,
 				new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int id) {
