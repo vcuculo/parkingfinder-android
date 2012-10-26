@@ -71,7 +71,7 @@ public class SettingsActivity extends Activity implements OnClickListener {
 		valueRange = (TextView) findViewById(R.id.textValueRange);
 		valueRange.setText(Integer.toString(currentRange));
 		valueRefresh = (TextView) findViewById(R.id.textValueTime);
-		valueRefresh.setText(Float.toString(currentTime * 0.5f));
+		valueRefresh.setText(Float.toString(currentTime));
 		cancelButton.setOnClickListener(this);
 		saveButton.setOnClickListener(this);
 		filterButton.setOnClickListener(this);
@@ -192,7 +192,7 @@ public class SettingsActivity extends Activity implements OnClickListener {
 	private void savePreferences() {
 		SharedPreferences.Editor editor = prefs.edit();
 		editor.putInt(PREFERENCE_RANGE, currentRange);
-		editor.putFloat(PREFERENCE_REFRESH, currentTime * 2);
+		editor.putFloat(PREFERENCE_REFRESH, currentTime );
 		currentAudio = audioToggleButton.isChecked();
 		editor.putBoolean(PREFERENCE_AUDIO, currentAudio);
 		editor.putBoolean(PREFERENCE_FILTER_UNDEFINED, currentFUndefined);
@@ -203,5 +203,4 @@ public class SettingsActivity extends Activity implements OnClickListener {
 		editor.putBoolean(PREFERENCE_FILTER_TIMED, currentFTimed);
 		editor.commit();
 	}
-
 }

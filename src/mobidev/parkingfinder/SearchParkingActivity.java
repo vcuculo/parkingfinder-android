@@ -1,5 +1,6 @@
 package mobidev.parkingfinder;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
@@ -28,6 +29,8 @@ public class SearchParkingActivity extends MapActivity {
 	private final static String LAT_KEY = "latitude";
 	private final static String LON_KEY = "longitude";
 	private final static String ACC_KEY = "accuracy";
+	private final static String HELP = "help";
+
 	private boolean paused = false;
 
 	private MyLocationOverlay myLocationOverlay;
@@ -36,6 +39,18 @@ public class SearchParkingActivity extends MapActivity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
+		SharedPreferences prefs = getSharedPreferences(MY_PREFERENCES,
+				Context.MODE_PRIVATE);
+		boolean help = prefs.getBoolean(HELP, true);
+
+		if (help)
+			showHelp();
+
+		SharedPreferences.Editor editor = prefs.edit();
+		editor.putBoolean(HELP, false);
+		editor.commit();
+
 		setContentView(R.layout.search_parking);
 		occupyButton = (ImageButton) findViewById(R.id.parkButton);
 		occupyButton.setOnClickListener(new View.OnClickListener() {
@@ -135,6 +150,13 @@ public class SearchParkingActivity extends MapActivity {
 				this, positive, negative);
 	}
 
+	private void showHelp() {
+		Dialog dialog = new Dialog(this);
+		dialog.setContentView(R.layout.help);
+		dialog.setTitle(getString(R.string.welcome));
+		dialog.show();
+	}
+
 	private void showConfirmationDialog() {
 		OnClickListener positive = new DialogInterface.OnClickListener() {
 			@Override
@@ -181,7 +203,10 @@ public class SearchParkingActivity extends MapActivity {
 			Intent i = new Intent(this, SettingsActivity.class);
 			startActivity(i);
 			break;
-		case R.id.exitMenu:
+		case R.id.helpMenu:
+			showHelp();
+			break;
+		case R.id.homeMenu:
 			finish();
 			break;
 		}

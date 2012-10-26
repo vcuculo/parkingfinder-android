@@ -259,11 +259,12 @@ public class Utility {
 		long duration = p.getTime();
 
 		if (duration < FIVE_MINUTES)
-			drawable.setAlpha(255);
+			// mutate() needed because http://www.curious-creature.org/2009/05/02/drawable-mutations/
+			drawable.mutate().setAlpha(255);
 		else if (duration > FIVE_MINUTES && duration < FIVE_MINUTES * 2)
-			drawable.setAlpha(200);
+			drawable.mutate().setAlpha(200);
 		else if (duration > FIVE_MINUTES * 2)
-			drawable.setAlpha(100);
+			drawable.mutate().setAlpha(100);
 
 		item.addOverlayItem(p, duration, drawable);
 	}
