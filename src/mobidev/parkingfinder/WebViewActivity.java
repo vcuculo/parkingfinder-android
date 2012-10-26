@@ -1,6 +1,8 @@
 package mobidev.parkingfinder;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,18 +15,16 @@ public class WebViewActivity extends Activity
 {
     private static final String TAG = "ActivityWebView";
 	
-    /**
-     * Get these values after registering your oauth app at: https://foursquare.com/oauth/
-     */
     public static final String CALLBACK_URL = "http://myapp.com";
     public static final String CLIENT_ID = "AEAEBVBXOPC0IQNS4K1THAGNC5RFTE2V4GADSD3DQQUS5UAF";
-	
+    private final static String MY_PREFERENCES = "MyPref";
+    private final static String TOKEN="token";
+    
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.weblogin);
-        
         String url =
             "https://foursquare.com/oauth2/authenticate" + 
                 "?client_id=" + CLIENT_ID + 
@@ -45,10 +45,15 @@ public class WebViewActivity extends Activity
                 if (start > -1) {
                     // You can use the accessToken for api calls now.
                     String accessToken = url.substring(start + fragment.length(), url.length());
-        			
+                    SharedPreferences prefs = getSharedPreferences(MY_PREFERENCES,
+    						Context.MODE_PRIVATE);
+                    SharedPreferences.Editor edit=prefs.edit();
+                    edit.putString(TOKEN, accessToken);
+                    edit.commit();
                     Log.v(TAG, "OAuth complete, token: [" + accessToken + "].");
                 	
-                    Toast.makeText(WebViewActivity.this, "Token: " + accessToken, Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(WebViewActivity.this, "Token: " + accessToken, Toast.LENGTH_SHORT).show();
+                    finish();
                 }
             }
         });

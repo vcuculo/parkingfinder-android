@@ -1,18 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/main_portrait"
+    android:orientation="vertical"
+    android:padding="10dip" >
 
-<LinearLayout 
-  xmlns:android="http://schemas.android.com/apk/res/android"
-  android:orientation="vertical"
-  android:layout_width="fill_parent"
-  android:layout_height="fill_parent"
-  android:padding="10dip"
-  >
+    <Button
+        android:id="@+id/sociallogin"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/buttonsearch"
+        android:padding="5dip"
+        android:text="Log"
+        android:layout_alignParentBottom="true"
+        android:textSize="20dip"
+        android:textStyle="bold"
+        android:textColor="@color/white" />
 
-  <Button  
-    android:id="@+id/sociallogin"
-    android:layout_width="fill_parent" 
-    android:layout_height="wrap_content" 
-    android:text="Log"
-    />
- 
-</LinearLayout>
+    <TextView
+        android:id="@+id/labelFour"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/forsquare"
+        android:textSize="20dip"
+        android:textColor="@color/white"
+        android:textStyle="bold" />
+
+</RelativeLayout>
