@@ -9,10 +9,8 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.os.Bundle;
 import android.os.Handler;
-import android.widget.Toast;
 
 import com.google.android.maps.MapView;
-import com.google.android.maps.MyLocationOverlay;
 
 public class PositionController implements LocationListener {
 
@@ -23,18 +21,15 @@ public class PositionController implements LocationListener {
 	private SharedPreferences prefs;
 
 	private boolean release;
-	private boolean first = true;
-	private MyLocationOverlay myLocation;
+	private boolean firstSearch = true;
 	private Handler handler;
 	private Timer t = null;
 	private ProgressDialog pr;
 	private Context c;
 
-	public PositionController(Handler handler, MyLocationOverlay myLoc,
-			MapView map, boolean release) {
+	public PositionController(Handler handler, MapView map, boolean release) {
 		this.handler = handler;
 		this.mapview = map;
-		this.myLocation = myLoc;
 		this.release = release;
 		this.c = map.getContext();
 		prefs = c.getSharedPreferences(MY_PREFERENCES, Context.MODE_PRIVATE);
@@ -45,21 +40,18 @@ public class PositionController implements LocationListener {
 
 	@Override
 	public void onLocationChanged(Location arg0) {
-		Utility.centerMap(arg0, mapview, release);
+
+		Utility.centerMap(mapview, release);
 
 		pr.dismiss();
 		pr.cancel();
 
-		if (myLocation != null && first) {
-
-			// if (myLocation != null) => Search
-			// else => Release
-
+		if (!release && firstSearch) {
 			float refresh = prefs.getFloat(PREFERENCE_REFRESH, 2);
 			t = new Timer();
-			t.schedule(new MyTimer(handler, myLocation, mapview), 0,
+			t.schedule(new MyTimer(handler, mapview), 0,
 					(int) (refresh * MINUTE));
-			first = false;
+			firstSearch = false;
 		}
 	}
 
@@ -73,8 +65,7 @@ public class PositionController implements LocationListener {
 	public void restartTimer() {
 		float refresh = prefs.getFloat(PREFERENCE_REFRESH, 2);
 		t = new Timer();
-		t.schedule(new MyTimer(handler, myLocation, mapview), 0,
-				(int) (refresh * 60000));
+		t.schedule(new MyTimer(handler, mapview), 0, (int) (refresh * 60000));
 	}
 
 	@Override

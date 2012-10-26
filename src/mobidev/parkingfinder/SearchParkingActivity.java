@@ -57,8 +57,7 @@ public class SearchParkingActivity extends MapActivity {
 
 		Handler handler = new MyHandler(mapView, parkingsOverlay);
 
-		locationListener = new PositionController(handler, myLocationOverlay,
-				mapView, false);
+		locationListener = new PositionController(handler, mapView, false);
 		locationManager.requestLocationUpdates(
 				LocationManager.NETWORK_PROVIDER, 3000, 0, locationListener);
 		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
@@ -176,7 +175,7 @@ public class SearchParkingActivity extends MapActivity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.centerMenu:
-			Utility.centerMap(myLocationOverlay.getMyLocation(), mapView, false);
+			Utility.centerMap(mapView, false);
 			break;
 		case R.id.optionsMenu:
 			Intent i = new Intent(this, SettingsActivity.class);

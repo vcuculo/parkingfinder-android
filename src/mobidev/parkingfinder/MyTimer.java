@@ -1,5 +1,6 @@
 package mobidev.parkingfinder;
 
+import java.util.List;
 import java.util.TimerTask;
 
 import android.location.Location;
@@ -9,6 +10,7 @@ import android.os.Message;
 
 import com.google.android.maps.MapView;
 import com.google.android.maps.MyLocationOverlay;
+import com.google.android.maps.Overlay;
 
 public class MyTimer extends TimerTask {
 
@@ -17,9 +19,10 @@ public class MyTimer extends TimerTask {
 	private Handler handler;
 	private String JSONParkings;
 
-	public MyTimer(Handler handler, MyLocationOverlay myLoc, MapView map) {
+	public MyTimer(Handler handler, MapView map) {
 		this.map = map;
-		this.myLoc = myLoc;
+		List<Overlay> overlays = map.getOverlays();
+		this.myLoc = (MyLocationOverlay) overlays.get(0);
 		this.handler = handler;
 	}
 

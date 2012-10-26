@@ -2,11 +2,9 @@ package mobidev.parkingfinder;
 
 import mobidev.parkingfinder.R;
 
-import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapActivity;
 import com.google.android.maps.MapView;
 import com.google.android.maps.MyLocationOverlay;
-import com.google.android.maps.OverlayItem;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -62,7 +60,7 @@ public class ReleaseParkingActivity extends MapActivity {
 		LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
 
 		PositionController locationListener = new PositionController(null,
-				null, mapView, true);
+				mapView, true);
 
 		locationManager.requestLocationUpdates(
 				LocationManager.NETWORK_PROVIDER, 3000, 0, locationListener);
@@ -92,7 +90,7 @@ public class ReleaseParkingActivity extends MapActivity {
 		if (longitude < 181) { // abbiamo un parcheggio memorizzato
 			parked = true;
 			latitude = (double) prefs.getFloat(LAT_KEY, 91);
-			
+
 			parkingId = prefs.getInt(ID_KEY, -1);
 			accuracy = prefs.getFloat(ACC_KEY, -1);
 			type = prefs.getInt(TYPE_KEY, 0);
@@ -102,7 +100,8 @@ public class ReleaseParkingActivity extends MapActivity {
 					R.drawable.car_icon);
 			MyItemizedOverlay itemizedoverlay = new MyItemizedOverlay(this);
 
-			Parking p = new Parking(id, latitude, longitude, type, null, accuracy);
+			Parking p = new Parking(id, latitude, longitude, type, null,
+					accuracy);
 
 			itemizedoverlay.addOverlayItem(p, drawable);
 			mapView.getOverlays().add(itemizedoverlay);

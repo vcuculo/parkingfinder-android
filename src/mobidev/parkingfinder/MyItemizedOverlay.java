@@ -139,6 +139,10 @@ public class MyItemizedOverlay extends ItemizedOverlay<ParkingOverlayItem> {
 		mSize = mOverlays.size();
 		populate();
 	}
+	
+	public ArrayList<ParkingOverlayItem> getAll() {
+		return mOverlays;
+	}
 
 	public void clear() {
 		mOverlays.clear();
