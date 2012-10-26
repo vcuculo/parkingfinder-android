@@ -6,6 +6,8 @@ import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapActivity;
 import com.google.android.maps.MapView;
 import com.google.android.maps.MyLocationOverlay;
+import com.google.android.maps.OverlayItem;
+
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -91,6 +93,7 @@ public class ReleaseParkingActivity extends MapActivity {
 		if (longitude < 181) { // abbiamo un parcheggio memorizzato
 			parked = true;
 			latitude = (double) prefs.getFloat(LAT_KEY, 91);
+			
 			parkingId = prefs.getInt(ID_KEY, -1);
 			accuracy = prefs.getFloat(ACC_KEY, -1);
 			type = prefs.getInt(TYPE_KEY, 0);
@@ -103,10 +106,13 @@ public class ReleaseParkingActivity extends MapActivity {
 			GeoPoint point = new GeoPoint((int) (latitude * 1E6),
 					(int) (longitude * 1E6));
 
-			Parking p = new Parking(id, latitude, longitude, type, accuracy);
+			Parking p = new Parking(id, latitude, longitude, type, null, accuracy);
 
+			String lat = String.format("%.3f", latitude);
+			String lon = String.format("%.3f", longitude);
+			
 			ParkingOverlayItem overlayitem = new ParkingOverlayItem(point,
-					"Your car", "Lat: " + latitude + "\nLon: " + longitude, p);
+					"Your car", "Lat: " + lat + "\nLon: " + lon, p);
 			itemizedoverlay.addOverlay(overlayitem);
 			mapView.getOverlays().add(itemizedoverlay);
 		}
@@ -218,7 +224,7 @@ public class ReleaseParkingActivity extends MapActivity {
 				Parking p;
 
 				if (parked)
-					p = new Parking(parkingId, latitude, longitude, type, accuracy);
+					p = new Parking(parkingId, latitude, longitude, type, null, accuracy);
 				else {
 					Location myLocation = myLocationOverlay.getLastFix();
 					double lat = myLocation.getLatitude();

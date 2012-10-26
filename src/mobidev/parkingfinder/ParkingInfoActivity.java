@@ -53,6 +53,13 @@ public class ParkingInfoActivity extends Activity {
 				int id = i.getIntExtra("parkingId", -1);
 				int type = parkingTypeSpinner.getSelectedItemPosition();
 				String comment = commentText.getText().toString();
+
+				comment = comment.replaceAll("\n", " ");
+				comment = comment.trim();
+				
+				if (comment.length() <= 0)
+					comment = null;
+				
 				p = new Parking(id, lat, lon, type, comment, accuracy);
 
 				new AsyncTaskFreePark(ParkingInfoActivity.this, p).execute();
@@ -64,8 +71,8 @@ public class ParkingInfoActivity extends Activity {
 		lon = i.getDoubleExtra("longitude", 0);
 		accuracy = i.getFloatExtra("accuracy", 0);
 		new AsyncTaskStreet(this, lat, lon).execute();
-		latitudeText.setText(Double.toString(lat));
-		longitudeText.setText(Double.toString(lon));
+		latitudeText.setText(String.format("%.3f", lat));
+		longitudeText.setText(String.format("%.3f", lon));
 		parkingTypeSpinner.setSelection(i.getIntExtra("type", 0));
 	}
 }

@@ -18,6 +18,6 @@ public class Comment {
 	}
 
 	public String toString() {
-		return "#" + id + " - " + text;
+		return "• " + text;
 	}
 }

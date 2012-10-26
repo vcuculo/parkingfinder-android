@@ -31,7 +31,11 @@ public class MyTimer extends TimerTask {
 			if (JSONParkings != null) {
 				Message msg = handler.obtainMessage();
 				Bundle b = new Bundle();
-				b.putString("refreshParkings", JSONParkings);
+				if (JSONParkings == "ServerError") {
+					b.putString("error", JSONParkings);
+				} else {
+					b.putString("refreshParkings", JSONParkings);
+				}
 				msg.setData(b);
 				handler.sendMessage(msg);
 			}

@@ -19,7 +19,7 @@ public class DataController {
 			userJS.put("type", p.getType());
 			if (p.getId() > -1)
 				userJS.put("id", p.getId());
-			if (p.getComment() != null && p.getComment().length() > 0)
+			if (p.getComment() != null)
 				userJS.putOpt("text", p.getComment());
 			return userJS.toString();
 		} catch (JSONException e) {

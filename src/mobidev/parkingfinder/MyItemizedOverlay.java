@@ -9,11 +9,6 @@ import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.content.DialogInterface.OnClickListener;
 import android.graphics.drawable.Drawable;
-import android.location.Location;
-import android.util.Log;
-import android.view.View;
-import android.widget.ImageButton;
-
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.ItemizedOverlay;
 
@@ -50,15 +45,17 @@ public class MyItemizedOverlay extends ItemizedOverlay<ParkingOverlayItem> {
 		GeoPoint point = new GeoPoint((int) (p.getLatitude() * 1E6),
 				(int) (p.getLongitude() * 1E6));
 
-		String title = "#" + p.getId();
-
 		String[] types = mContext.getResources().getStringArray(
 				R.array.parkingTypes);
 
-		String snippet = "Lat:\t " + p.getLatitude() + "\nLon:\t"
-				+ p.getLongitude() + "\nFree since:\t"
-				+ TimeUtils.millisToLongDHMS(duration) + "\nType:\t"
-				+ types[p.getType()] + "\nComments:\n" + p.getComments();
+		String title = types[p.getType()] + " parking";
+
+		String lat = String.format("%.3f", p.getLatitude());
+		String lon = String.format("%.3f", p.getLongitude());
+		
+		String snippet = "Lat:\t" + lat + "\nLon:\t" + lon + "\nFree since:\t"
+				+ TimeUtils.millisToLongDHMS(duration) + "\nComments:\n"
+				+ p.getComments();
 
 		ParkingOverlayItem overlayItem = new ParkingOverlayItem(point, title,
 				snippet, p);
@@ -112,7 +109,7 @@ public class MyItemizedOverlay extends ItemizedOverlay<ParkingOverlayItem> {
 				editor.putFloat(ACC_KEY, p.getAccuracy());
 				editor.putInt(TYPE_KEY, p.getType());
 				editor.commit();
-				
+
 				OnClickListener positive = new DialogInterface.OnClickListener() {
 					Activity a = (Activity) mContext;
 
@@ -121,10 +118,11 @@ public class MyItemizedOverlay extends ItemizedOverlay<ParkingOverlayItem> {
 						a.finish();
 					}
 				};
-								
+
 				Utility.showDialog(
 						mContext.getString(R.string.parkingOccupied),
-						mContext.getString(R.string.parkedHere), mContext, positive);
+						mContext.getString(R.string.parkedHere), mContext,
+						positive);
 			}
 		};
 

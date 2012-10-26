@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.google.android.maps.MapView;
 
@@ -34,6 +35,12 @@ public class MyHandler extends Handler {
 	@Override
 	public void handleMessage(Message msg) {
 		Bundle bundle = msg.getData();
+		if (bundle.containsKey("error")) {
+			String value = bundle.getString("error");
+			if (value == "ServerError")
+				Toast.makeText(c, "Server unreachable. Try again later.",
+						Toast.LENGTH_LONG).show();
+		}
 		if (bundle.containsKey("refreshParkings")) {
 			String value = bundle.getString("refreshParkings");
 			try {
@@ -58,7 +65,7 @@ public class MyHandler extends Handler {
 					Utility.showParking(map, parking, parkingsOverlay);
 
 				map.invalidate();
-								
+
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}

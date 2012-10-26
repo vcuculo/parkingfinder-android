@@ -55,15 +55,7 @@ public class Parking {
 		this.accuracy = accuracy;
 	}
 
-	public Parking(int id, double latitude, double longitude, int type,
-			float accuracy) {
-		super();
-		this.id = id;
-		this.latitude = latitude;
-		this.longitude = longitude;
-		this.type = type;
-		this.accuracy = accuracy;
-	}
+
 
 	public Parking(int id, double latitude, double longitude, int type,
 			String comment, float accuracy) {
@@ -72,7 +64,7 @@ public class Parking {
 		this.latitude = latitude;
 		this.longitude = longitude;
 		this.type = type;
-		this.comment = comment.trim();
+		this.comment = comment;
 		this.accuracy = accuracy;
 	}
 
