@@ -7,6 +7,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.graphics.Point;
+import android.util.Log;
+
 public class DataController {
 
 	/* Used to send a freed parking */
@@ -90,4 +93,31 @@ public class DataController {
 			return null;
 		}
 	}
+
+	public static HashMap<String, String> unMarshallSocial(String s)
+			throws JSONException {
+		JSONObject social = new JSONObject(s);
+		JSONObject response = social.getJSONObject("response");
+		JSONArray groups = response.getJSONArray("groups");
+		JSONObject group = groups.getJSONObject(0);
+		JSONArray items = group.getJSONArray("items");
+		HashMap<String, String> hm = new HashMap<String, String>();
+
+		int len = items.length();
+		for (int i = 0; i < len; i++) {
+			JSONObject point = items.getJSONObject(i);
+			String id = point.getString("id");
+			String name = point.getString("name");
+			hm.put(name, id);
+
+		}
+		return hm;
+	}
+	public static String marshallCheckin(String id, String token) throws JSONException{
+		JSONObject checkin = new JSONObject();
+		checkin.put("oauth_token", token);
+		checkin.put("venueId", id);
+		return checkin.toString();
+	}
+	
 }

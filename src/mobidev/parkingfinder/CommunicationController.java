@@ -55,7 +55,7 @@ public class CommunicationController {
 		return result;
 	}
 
-	private static String readAll(InputStream is) throws IOException {
+	public static String readAll(InputStream is) throws IOException {
 		BufferedReader rd = new BufferedReader(new InputStreamReader(is));
 		StringBuffer result;
 		String line;
