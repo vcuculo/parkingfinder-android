@@ -79,28 +79,15 @@ public class SocialActivity extends Activity {
 						int arg2, long arg3) {
 					String name = (String) list.getItemAtPosition(arg2);
 					String venueId = hm.get(name);
-					try {
+					//try {
 						String command = "checkins/add";
-						// String data =
-						// "venueId="+venueId+"&oauth_token="+token;
-						String data = DataController.marshallCheckin(venueId,
-								token);
-						String result = CommunicationController
-								.sendFourSquareRequest(command, true, data);
-						Log.i("Checkin", result);
-					} catch (MalformedURLException e) {
-						// TODO Auto-generated catch block
+						 String data = "venueId="+venueId+"&oauth_token="+token;
+						//String data = DataController.marshallCheckin(venueId,token);
+						new AsyncTaskCheckin(SocialActivity.this, command, true, data).execute();
+					/*} catch (JSONException e) {
 						e.printStackTrace();
-					} catch (IOException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					} catch (JSONException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-
+					}*/
 				}
-
 			});
 		} catch (JSONException e2) {
 			Toast.makeText(this, "Connection error", Toast.LENGTH_LONG).show();
