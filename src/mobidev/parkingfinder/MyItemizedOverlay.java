@@ -101,13 +101,18 @@ public class MyItemizedOverlay extends ItemizedOverlay<ParkingOverlayItem> {
 		dialog.setTitle(item.getTitle());
 		dialog.setMessage(item.getSnippet());
 		View checkBoxView = View.inflate(mContext, R.layout.checkbox, null);
-		final CheckBox checkBox = (CheckBox) checkBoxView.findViewById(R.id.checkbox);
+		final CheckBox checkBox = (CheckBox) checkBoxView
+				.findViewById(R.id.checkbox);
 		checkBox.setText("Checkin");
 		dialog.setView(checkBoxView);
 		OnClickListener positive = new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int id) {
 
-				new AsyncTaskOccupyPark(mContext, p).execute();
+				if (checkBox.isChecked())
+				new AsyncTaskOccupyPark(mContext, p, true).execute();
+				else 
+					new AsyncTaskOccupyPark(mContext, p, false).execute();
+
 				SharedPreferences prefs = mContext.getSharedPreferences(
 						MY_PREFERENCES, Context.MODE_PRIVATE);
 				SharedPreferences.Editor editor = prefs.edit();
@@ -117,31 +122,8 @@ public class MyItemizedOverlay extends ItemizedOverlay<ParkingOverlayItem> {
 				editor.putFloat(ACC_KEY, p.getAccuracy());
 				editor.putInt(TYPE_KEY, p.getType());
 				editor.commit();
-
-				OnClickListener positive = new DialogInterface.OnClickListener() {
-
-					Activity a = (Activity) mContext;
-
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						
-						
-						a.finish();
-					}
-
-				};
-
-				Utility.showDialog(
-						mContext.getString(R.string.parkingOccupied),
-						mContext.getString(R.string.parkedHere), mContext,
-						positive);
-				if (checkBox.isChecked()) {
-					Intent i = new Intent(mContext,
-							SocialActivity.class);
-					mContext.startActivity(i);
-				}
 			}
-			
+
 		};
 
 		dialog.setPositiveButton(R.string.occupy, positive);

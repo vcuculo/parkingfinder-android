@@ -31,7 +31,7 @@ public class CommunicationController {
 			conn = (HttpURLConnection) requestURL.openConnection();
 			Log.i("REQUEST", data);
 			conn.setRequestMethod("POST");
-		    conn.setConnectTimeout(120 * 1000);
+			conn.setConnectTimeout(120 * 1000);
 			conn.setDoOutput(true);
 			conn.setDoInput(true);
 			// send request
@@ -52,6 +52,42 @@ public class CommunicationController {
 			e1.printStackTrace();
 			return "ServerError";
 		}
+		return result;
+	}
+
+	public static String sendFourSquareRequest(String command, boolean post,
+			String data) throws IOException {
+		String url = "https://api.foursquare.com/v2/" + command;
+		if (!post)
+			url += data;
+
+		URL requestURL = new URL(url);
+
+		HttpURLConnection conn;
+		String result = "";
+		conn = (HttpURLConnection) requestURL.openConnection();
+		conn.setConnectTimeout(120 * 1000);
+		conn.setDoOutput(true);
+		conn.setDoInput(true);
+		if (!post)
+			conn.setRequestMethod("GET");
+		else {
+			conn.setRequestMethod("POST");
+			conn.setRequestProperty("Content-Type",
+					"application/x-www-form-urlencoded");
+			DataOutputStream out = new DataOutputStream(conn.getOutputStream());
+			out.writeBytes(data);
+			out.flush();
+			out.close();
+		}
+
+		// get response
+		try {
+			result = readAll(conn.getInputStream());
+		} catch (IOException e) {
+			result = readAll(conn.getErrorStream());
+		}
+		conn.disconnect();
 		return result;
 	}
 

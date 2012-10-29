@@ -109,7 +109,6 @@ public class DataController {
 			String id = point.getString("id");
 			String name = point.getString("name");
 			hm.put(name, id);
-
 		}
 		return hm;
 	}

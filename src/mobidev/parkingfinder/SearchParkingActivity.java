@@ -1,5 +1,7 @@
 package mobidev.parkingfinder;
 
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
@@ -14,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.ImageButton;
 
 import com.google.android.maps.MapActivity;
@@ -137,6 +140,15 @@ public class SearchParkingActivity extends MapActivity {
 	}
 
 	private void showConfirmationDialog() {
+		AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+		View checkBoxView = View.inflate(this, R.layout.checkbox, null);
+		final CheckBox checkBox = (CheckBox) checkBoxView
+				.findViewById(R.id.checkbox);
+		final Context mContext = this;
+		checkBox.setText("Checkin");
+		dialog.setTitle(getString(R.string.occupyingParking));
+		dialog.setMessage(getString(R.string.confirmOccupyParking));
+		dialog.setView(checkBoxView);
 		OnClickListener positive = new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
@@ -149,6 +161,28 @@ public class SearchParkingActivity extends MapActivity {
 				editor.putFloat(ACC_KEY, myLocation.getAccuracy());
 				editor.commit();
 				finish();
+				
+				OnClickListener positive = new DialogInterface.OnClickListener() {
+
+					Activity a = (Activity) mContext;
+
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+
+						a.finish();
+					}
+
+				};
+				
+				if (checkBox.isChecked()) {
+					Intent i = new Intent(mContext, SocialActivity.class);
+					startActivity(i);
+				} else {
+					Utility.showDialog(
+							getString(R.string.parkingOccupied),
+							getString(R.string.parkedHere), mContext,
+							positive);
+				}
 			}
 		};
 
@@ -158,10 +192,12 @@ public class SearchParkingActivity extends MapActivity {
 				dialog.cancel();
 			}
 		};
+        
 
-		Utility.showDialog(getString(R.string.occupyingParking),
-				getString(R.string.confirmOccupyParking), this, positive,
-				negative);
+		
+		dialog.setPositiveButton(R.string.occupy, positive);
+		dialog.setNegativeButton(R.string.cancel, negative);
+		dialog.show();
 	}
 
 	@Override

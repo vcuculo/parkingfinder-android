@@ -1,8 +1,11 @@
 package mobidev.parkingfinder;
 
 import java.io.IOException;
+
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 
 public class AsyncTaskOccupyPark extends AsyncTask<Void, Void, Void> {
@@ -10,10 +13,12 @@ public class AsyncTaskOccupyPark extends AsyncTask<Void, Void, Void> {
 	Parking p;
 	Context c;
 	ProgressDialog pr;
+	boolean checkin;
 
-	public AsyncTaskOccupyPark(Context c, Parking p) {
+	public AsyncTaskOccupyPark(Context c, Parking p, boolean checkin) {
 		this.c = c;
 		this.p = p;
+		this.checkin = checkin;
 	}
 
 	@Override
@@ -39,5 +44,11 @@ public class AsyncTaskOccupyPark extends AsyncTask<Void, Void, Void> {
 	protected void onPostExecute(Void par) {
 		pr.dismiss();
 		pr.cancel();
+		Activity a = (Activity) c;
+		a.finish();
+		if (checkin) {
+			Intent i = new Intent(c, SocialActivity.class);
+			c.startActivity(i);
+		}
 	}
 }
