@@ -1,7 +1,5 @@
 package mobidev.parkingfinder;
 
-import java.io.IOException;
-import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -11,8 +9,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -28,14 +26,14 @@ public class SocialActivity extends Activity {
 	private final static String LON_KEY = "longitude";
 	private final static String LAT_KEY = "latitude";
 	private String token;
+	private SharedPreferences prefs;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activitylogsocial);
 		Button btn = (Button) findViewById(R.id.sociallogin);
-		SharedPreferences prefs = getSharedPreferences(MY_PREFERENCES,
-				Context.MODE_PRIVATE);
+		prefs = getSharedPreferences(MY_PREFERENCES, Context.MODE_PRIVATE);
 		token = prefs.getString(TOKEN, null);
 		if (token == null) {
 			btn.setOnClickListener(new OnClickListener() {
@@ -43,19 +41,20 @@ public class SocialActivity extends Activity {
 					Intent intent = new Intent(SocialActivity.this,
 							WebViewActivity.class);
 					startActivity(intent);
+					finish();
 				}
 			});
 		} else {
 			btn.setVisibility(View.INVISIBLE);
+
+			float lon = prefs.getFloat(LON_KEY, -1);
+			float lat = prefs.getFloat(LAT_KEY, -1);
+			token = prefs.getString(TOKEN, null);
+
+			String command = "venues/search";
+			String data = "?ll=" + lat + "," + lon + "&oauth_token=" + token;
+			new AsyncTaskFoursquare(this, command, false, data).execute();
 		}
-		
-		float lon = prefs.getFloat(LON_KEY, -1);
-		float lat = prefs.getFloat(LAT_KEY, -1);
-		token = prefs.getString(TOKEN, null);
-		
-		String command = "venues/search";
-		String data = "?ll=" + lat + "," + lon + "&oauth_token=" + token;
-		new AsyncTaskFoursquare(this, command, false, data).execute();
 	}
 
 	public void addVenues(String result) {
@@ -79,18 +78,24 @@ public class SocialActivity extends Activity {
 						int arg2, long arg3) {
 					String name = (String) list.getItemAtPosition(arg2);
 					String venueId = hm.get(name);
-					//try {
-						String command = "checkins/add";
-						 String data = "venueId="+venueId+"&oauth_token="+token;
-						//String data = DataController.marshallCheckin(venueId,token);
-						new AsyncTaskCheckin(SocialActivity.this, command, true, data).execute();
-					/*} catch (JSONException e) {
-						e.printStackTrace();
-					}*/
+					// try {
+					String command = "checkins/add";
+					String data = "venueId=" + venueId + "&oauth_token="
+							+ token;
+					// String data =
+					// DataController.marshallCheckin(venueId,token);
+					new AsyncTaskCheckin(SocialActivity.this, command, true,
+							data).execute();
+					/*
+					 * } catch (JSONException e) { e.printStackTrace(); }
+					 */
 				}
 			});
 		} catch (JSONException e2) {
 			Toast.makeText(this, "Connection error", Toast.LENGTH_LONG).show();
+			Editor editor = prefs.edit();
+			editor.remove(TOKEN);
+			editor.commit();
 		}
 	}
 }

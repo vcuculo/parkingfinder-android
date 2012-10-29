@@ -6,6 +6,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -26,6 +27,7 @@ public class SettingsActivity extends Activity implements OnClickListener {
 	private static final String PREFERENCE_FILTER_RESIDENT = "resident";
 	private static final String PREFERENCE_FILTER_DISABLED = "disabled";
 	private static final String PREFERENCE_FILTER_TIMED = "timed";
+	private final static String TOKEN = "token";
 	private final int MAX_RANGE_SEEK = 9;
 	private final int MIN_RANGE_SEEK = 1;
 	private final float MAX_REFRESH_SEEK = 9.0f;
@@ -35,7 +37,7 @@ public class SettingsActivity extends Activity implements OnClickListener {
 
 	private ToggleButton audioToggleButton;
 	private SeekBar rangeSeekBar, timeSeekBar;
-	private Button saveButton, cancelButton, filterButton;
+	private Button saveButton, cancelButton, filterButton, deleteFoursquare;
 	private TextView valueRange, valueRefresh;
 
 	private int currentRange;
@@ -45,7 +47,7 @@ public class SettingsActivity extends Activity implements OnClickListener {
 
 	private int positionRangeCursor, positionTimeCursor;
 	private SharedPreferences prefs;
-
+    private String token;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -61,13 +63,29 @@ public class SettingsActivity extends Activity implements OnClickListener {
 		currentFResident = prefs.getBoolean(PREFERENCE_FILTER_RESIDENT, true);
 		currentFDisabled = prefs.getBoolean(PREFERENCE_FILTER_DISABLED, true);
 		currentFTimed = prefs.getBoolean(PREFERENCE_FILTER_TIMED, true);
-
+		
 		audioToggleButton = (ToggleButton) findViewById(R.id.toggleNotify);
 		rangeSeekBar = (SeekBar) findViewById(R.id.seekBarRange);
 		timeSeekBar = (SeekBar) findViewById(R.id.seekBarTime);
 		cancelButton = (Button) findViewById(R.id.buttonCancel);
 		saveButton = (Button) findViewById(R.id.buttonPositive);
 		filterButton = (Button) findViewById(R.id.buttonFilter);
+		deleteFoursquare = (Button) findViewById(R.id.buttonDeleteFourSquare);
+		
+		if (!prefs.contains(TOKEN))
+			deleteFoursquare.setEnabled(false);
+		
+		deleteFoursquare.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Editor editor = prefs.edit();
+				editor.remove(TOKEN);
+				editor.commit();
+				deleteFoursquare.setEnabled(false);
+			}
+		});
+		
 		valueRange = (TextView) findViewById(R.id.textValueRange);
 		valueRange.setText(Integer.toString(currentRange));
 		valueRefresh = (TextView) findViewById(R.id.textValueTime);

@@ -2,6 +2,7 @@ package mobidev.parkingfinder;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -52,8 +53,10 @@ public class WebViewActivity extends Activity
                     edit.commit();
                     Log.v(TAG, "OAuth complete, token: [" + accessToken + "].");
                 	
-                    //Toast.makeText(WebViewActivity.this, "Token: " + accessToken, Toast.LENGTH_SHORT).show();
-                    finish();
+					Intent intent = new Intent(WebViewActivity.this,
+							SocialActivity.class);
+					startActivity(intent);
+					finish();
                 }
             }
         });

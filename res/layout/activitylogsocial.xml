@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/buttonsearch"
         android:padding="5dip"
-        android:text="Log"
+        android:text="@string/login"
         android:layout_alignParentBottom="true"
         android:textSize="20dip"
         android:textStyle="bold"
@@ -22,7 +22,7 @@
         android:id="@+id/labelFour"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/forsquare"
+        android:text="@string/foursquare"
         android:textSize="20dip"
         android:textColor="@color/white"
         android:textStyle="bold" />

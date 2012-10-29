@@ -106,6 +106,12 @@
         </RelativeLayout>
 
         <Button
+            android:id="@+id/buttonDeleteFourSquare"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/deleteFourSquare"/>
+
+        <Button
             android:id="@+id/buttonPositive"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

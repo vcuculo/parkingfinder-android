@@ -41,6 +41,7 @@ public class AsyncTaskCheckin extends AsyncTask<Void, Void, String> {
 	public void onPostExecute(String result) {
 		pr.dismiss();
 		pr.cancel();
-		Utility.showDialog("Foursquare", c.getString(R.string.ok), c);
+		Utility.showDialog("Foursquare", c.getString(R.string.checkedin), c);
+		c.finish();
 	}
 }

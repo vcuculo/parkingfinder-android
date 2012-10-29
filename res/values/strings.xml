@@ -51,6 +51,9 @@
     <string name="connectProblem">Problem connect to Server</string>
     <string name="refreshMenu">Refresh</string>
     <string name="newParking">New Parking</string>
-    <string name="forsquare">"Checkin on Foursquare"</string>
-
+    <string name="foursquare">"Checkin on Foursquare"</string>
+    <string name="checkedin">"Checkin done"</string>
+    <string name="login">"Login"</string>
+    <string name="deleteFourSquare">"Disconnect Foursquare"</string>
+    
 </resources>
