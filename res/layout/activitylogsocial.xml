@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="@drawable/main_portrait"
+    android:background="@drawable/share_portrait"
+    android:gravity="center"
+    android:layout_gravity="center"
     android:orientation="vertical"
     android:padding="10dip" >
 
@@ -13,10 +15,9 @@
         android:background="@drawable/buttonsearch"
         android:padding="5dip"
         android:text="@string/login"
-        android:layout_alignParentBottom="true"
+        android:textColor="@color/white"
         android:textSize="20dip"
-        android:textStyle="bold"
-        android:textColor="@color/white" />
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/labelFour"
@@ -36,4 +37,4 @@
         android:layout_marginTop="10dp" >
     </ListView>
 
-</RelativeLayout>
+</LinearLayout>

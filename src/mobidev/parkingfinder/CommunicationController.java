@@ -66,14 +66,13 @@ public class CommunicationController {
 		String result = "";
 		conn = (HttpURLConnection) requestURL.openConnection();
 		conn.setConnectTimeout(120 * 1000);
-		conn.setDoOutput(true);
-		conn.setDoInput(true);
 		if (!post)
 			conn.setRequestMethod("GET");
 		else {
+			// remember : http://webdiary.com/2011/12/14/ics-get-post/
+			conn.setDoOutput(true);
 			conn.setRequestMethod("POST");
-			conn.setRequestProperty("Content-Type",
-					"application/x-www-form-urlencoded");
+			conn.setRequestProperty("Content-Type",	"application/x-www-form-urlencoded");
 			DataOutputStream out = new DataOutputStream(conn.getOutputStream());
 			out.writeBytes(data);
 			out.flush();

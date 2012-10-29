@@ -1,5 +1,7 @@
 package mobidev.parkingfinder;
 
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -40,14 +42,11 @@ public class SearchParkingActivity extends MapActivity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
+		
 		SharedPreferences prefs = getSharedPreferences(MY_PREFERENCES,
 				Context.MODE_PRIVATE);
 		boolean help = prefs.getBoolean(HELP, true);
-
-		if (help)
-			showHelp();
-
+		
 		SharedPreferences.Editor editor = prefs.edit();
 		editor.putBoolean(HELP, false);
 		editor.commit();
@@ -81,6 +80,10 @@ public class SearchParkingActivity extends MapActivity {
 
 		if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER))
 			showGPSDialog();
+
+		if (help)
+			showHelp();
+		
 	}
 
 	@Override

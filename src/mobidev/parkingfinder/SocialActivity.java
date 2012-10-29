@@ -35,13 +35,14 @@ public class SocialActivity extends Activity {
 		Button btn = (Button) findViewById(R.id.sociallogin);
 		prefs = getSharedPreferences(MY_PREFERENCES, Context.MODE_PRIVATE);
 		token = prefs.getString(TOKEN, null);
+		
 		if (token == null) {
 			btn.setOnClickListener(new OnClickListener() {
 				public void onClick(View v) {
+					finish();
 					Intent intent = new Intent(SocialActivity.this,
 							WebViewActivity.class);
 					startActivity(intent);
-					finish();
 				}
 			});
 		} else {
@@ -78,17 +79,11 @@ public class SocialActivity extends Activity {
 						int arg2, long arg3) {
 					String name = (String) list.getItemAtPosition(arg2);
 					String venueId = hm.get(name);
-					// try {
 					String command = "checkins/add";
-					String data = "venueId=" + venueId + "&oauth_token="
-							+ token;
-					// String data =
-					// DataController.marshallCheckin(venueId,token);
+					String data = "venueId=" + venueId + "&oauth_token=" + token;
+
 					new AsyncTaskCheckin(SocialActivity.this, command, true,
 							data).execute();
-					/*
-					 * } catch (JSONException e) { e.printStackTrace(); }
-					 */
 				}
 			});
 		} catch (JSONException e2) {
