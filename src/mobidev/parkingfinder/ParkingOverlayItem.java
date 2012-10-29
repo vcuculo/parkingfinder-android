@@ -5,17 +5,20 @@ import com.google.android.maps.OverlayItem;
 
 public class ParkingOverlayItem extends OverlayItem {
 
-	Parking p;
-
-	public ParkingOverlayItem(GeoPoint point, String title, String snippet) {
-		super(point, title, snippet);
-
-	}
+	private Parking p;
+	private boolean release;
 
 	public ParkingOverlayItem(GeoPoint point, String title, String snippet,
-			Parking p) {
+			Parking p, boolean release) {
 		super(point, title, snippet);
 		this.p = p;
+		this.release = release;
+	}
+
+	public ParkingOverlayItem(GeoPoint point, Parking p, boolean release) {
+		super(point, null, null);
+		this.p = p;
+		this.release = release;
 	}
 
 	public Parking getParking() {
@@ -24,5 +27,9 @@ public class ParkingOverlayItem extends OverlayItem {
 
 	public int getId() {
 		return p.getId();
+	}
+	
+	public boolean getRelease() {
+		return release;
 	}
 }

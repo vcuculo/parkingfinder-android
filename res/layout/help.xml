@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp" >
+
+        <TextView
+            android:id="@+id/helpText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:paddingBottom="10dp"
+            android:text="@string/helpText" />
+
+        <TextView
+            android:id="@+id/undefinedText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/undefined_park"
+            android:drawablePadding="5dp"
+            android:text="@string/undefinedParking" />
+
+        <TextView
+            android:id="@+id/freeText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/free_park"
+            android:drawablePadding="5dp"
+            android:text="@string/freeParking" />
+
+        <TextView
+            android:id="@+id/tollText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/toll_park"
+            android:drawablePadding="5dp"
+            android:text="@string/tollParking" />
+
+        <TextView
+            android:id="@+id/residentsText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/reserved_park"
+            android:drawablePadding="5dp"
+            android:text="@string/residentsParking" />
+
+        <TextView
+            android:id="@+id/disabledText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/disabled_park"
+            android:drawablePadding="5dp"
+            android:text="@string/disabledParking" />
+
+        <TextView
+            android:id="@+id/timedText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/timed_park"
+            android:drawablePadding="5dp"
+            android:text="@string/timedParking" />
+
+        <TextView
+            android:id="@+id/helpText2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
+            android:text="@string/helpText2" />
+
+        <TextView
+            android:id="@+id/zerominsText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/undefined_park"
+            android:drawablePadding="5dp"
+            android:text="@string/zeroMinsParking" />
+
+        <TextView
+            android:id="@+id/fiveminsText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/fivemins_park"
+            android:drawablePadding="5dp"
+            android:text="@string/fiveMinsParking" />
+
+        <TextView
+            android:id="@+id/tenminsText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/tenmins_park"
+            android:drawablePadding="5dp"
+            android:text="@string/tenMinsParking" />
+
+    </LinearLayout>
+
+</ScrollView>

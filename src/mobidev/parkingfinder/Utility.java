@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -23,6 +24,7 @@ import android.util.Log;
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapController;
 import com.google.android.maps.MapView;
+import com.google.android.maps.MyLocationOverlay;
 import com.google.android.maps.Overlay;
 
 public class Utility {
@@ -92,27 +94,77 @@ public class Utility {
 				(int) (loc.getLongitude() * 1E6));
 	}
 
-	public static void centerMap(GeoPoint gp, MapView mapview, boolean release) {
+	public static void centerMap(MapView mapview, boolean release) {
 		MapController mapc = mapview.getController();
-		mapview.invalidate();
 
 		List<Overlay> overlays = mapview.getOverlays();
+		MyLocationOverlay myPosition = (MyLocationOverlay) overlays.get(0);
 
-		if (release && overlays.size() > 1) { // mostrare la mia posizione e
-												// quella dell'auto
-			MyItemizedOverlay itemizedOverlay = (MyItemizedOverlay) overlays
+		if (release) {
+			if (overlays.size() > 1) {
+				// mostrare la mia posizione (overlay 0) e
+				// quella dell'auto (overlay 1)
+
+				MyItemizedOverlay carPosition = (MyItemizedOverlay) overlays
+						.get(1);
+
+				GeoPoint p1 = myPosition.getMyLocation();
+				GeoPoint p2 = carPosition.getItem(0).getPoint();
+
+				int lat1 = p1.getLatitudeE6();
+				int lon1 = p1.getLongitudeE6();
+
+				int lat2 = p2.getLatitudeE6();
+				int lon2 = p2.getLongitudeE6();
+
+				int maxLon = (lon1 > lon2) ? lon1 : lon2;
+				int minLon = (lon1 > lon2) ? lon2 : lon1;
+
+				int maxLat = (lat1 > lat2) ? lat1 : lat2;
+				int minLat = (lat1 > lat2) ? lat2 : lat1;
+
+				mapc.zoomToSpan(Math.abs(maxLat - minLat),
+						Math.abs(maxLon - minLon));
+
+				mapc.animateTo(new GeoPoint((maxLat + minLat) / 2,
+						(maxLon + minLon) / 2));
+
+			} else {
+				// mostrare la mia posizione (overlay 0)
+				mapc.setZoom(21);
+				mapc.animateTo(myPosition.getMyLocation());
+			}
+		} else { // sto cercando un parcheggio, mostro tutti quelli liberi
+			GeoPoint myP = myPosition.getMyLocation();
+
+			int minLat = myP.getLatitudeE6();
+			int maxLat = myP.getLatitudeE6();
+			int minLon = myP.getLongitudeE6();
+			int maxLon = myP.getLongitudeE6();
+
+			MyItemizedOverlay parkingPositions = (MyItemizedOverlay) overlays
 					.get(1);
-			mapc.animateTo(itemizedOverlay.getItem(0).getPoint());
-			mapc.setZoom(17);
-		} else {
-			mapc.animateTo(gp);
-			mapc.setZoom(18);
-		}
-	}
+			ArrayList<ParkingOverlayItem> items = parkingPositions.getAll();
 
-	public static void centerMap(Location loc, MapView mapview, boolean release) {
-		GeoPoint gp = location2geopoint(loc);
-		centerMap(gp, mapview, release);
+			for (ParkingOverlayItem item : items) {
+
+				GeoPoint p = item.getPoint();
+
+				int lat = p.getLatitudeE6();
+				int lon = p.getLongitudeE6();
+
+				maxLat = Math.max(lat, maxLat);
+				minLat = Math.min(lat, minLat);
+				maxLon = Math.max(lon, maxLon);
+				minLon = Math.min(lon, minLon);
+			}
+
+			mapc.zoomToSpan(Math.abs(maxLat - minLat),
+					Math.abs(maxLon - minLon));
+			mapc.animateTo(new GeoPoint((maxLat + minLat) / 2,
+					(maxLon + minLon) / 2));
+		}
+
 	}
 
 	public static String getStreetName(Context c, double latitude,
@@ -207,11 +259,12 @@ public class Utility {
 		long duration = p.getTime();
 
 		if (duration < FIVE_MINUTES)
-			drawable.setAlpha(255);
+			// mutate() needed because http://www.curious-creature.org/2009/05/02/drawable-mutations/
+			drawable.mutate().setAlpha(255);
 		else if (duration > FIVE_MINUTES && duration < FIVE_MINUTES * 2)
-			drawable.setAlpha(200);
+			drawable.mutate().setAlpha(200);
 		else if (duration > FIVE_MINUTES * 2)
-			drawable.setAlpha(100);
+			drawable.mutate().setAlpha(100);
 
 		item.addOverlayItem(p, duration, drawable);
 	}

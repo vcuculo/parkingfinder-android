@@ -3,7 +3,6 @@ package mobidev.parkingfinder;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
-import android.util.Log;
 import android.widget.TextView;
 
 public class AsyncTaskStreet extends AsyncTask<Void, Void, String> {

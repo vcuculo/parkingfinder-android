@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <string name="app_name">Parking Finder</string>
     <string name="searchPark">Need parking</string>
     <string name="releasePark">Release parking</string>
@@ -11,14 +12,20 @@
     <string name="latitude">Latitude:</string>
     <string name="longitude">Longitude:</string>
     <string name="parkingType">Type:</string>
+    <string name="undefinedParking">Undefined</string>
+    <string name="freeParking">Free</string>
+    <string name="tollParking">Toll</string>
+    <string name="residentsParking">Residents</string>
+    <string name="disabledParking">For disabled</string>
+    <string name="timedParking">Timed</string>
 
     <string-array name="parkingTypes">
-        <item>Undefined</item>
-        <item>Free</item>
-        <item>Toll</item>
-        <item>Residents</item>
-        <item>For Disabled</item>
-        <item>Timed</item>
+        <item>@string/undefinedParking</item>
+        <item>@string/freeParking</item>
+        <item>@string/tollParking</item>
+        <item>@string/residentsParking</item>
+        <item>@string/disabledParking</item>
+        <item>@string/timedParking</item>
     </string-array>
 
     <string name="save">Save</string>
@@ -31,7 +38,7 @@
     <string name="confirmOccupyParking">Are you occupying a parking?</string>
     <string name="centerMenu">Center Map</string>
     <string name="optionsMenu">Options</string>
-    <string name="exitMenu">Exit</string>
+    <string name="homeMenu">Home</string>
     <string name="actionDisallowed">Action not allowed</string>
     <string name="releaseParkingFirst">To search for a new parking, you have to release your current parking first.</string>
     <string name="filter">Filter</string>
@@ -47,7 +54,7 @@
     <string name="parkingOccupied">Parking occupied</string>
     <string name="parkedHere">Congratulations, you\'ve found a parking!\nWhen you want to go back to your car, select Release Parking from the main menu.</string>
     <string name="load">Loading. Please Wait</string>
-    <string name="loadPosition">Loading. Acquiring the position...</string>
+    <string name="loadPosition">Loading. Acquiring the position&#8230;</string>
     <string name="connectProblem">Problem connect to Server</string>
     <string name="refreshMenu">Refresh</string>
     <string name="newParking">New Parking</string>
@@ -55,5 +62,12 @@
     <string name="checkedin">"Checkin done"</string>
     <string name="login">"Login"</string>
     <string name="deleteFourSquare">"Disconnect Foursquare"</string>
+    <string name="helpText">This help message will appear only this time, but you can open it again in the Menu, and it is useful to understand what means the markers on the map.\n\nThese are the colours to identify different types of parking:</string>
+    <string name="helpText2">Based on the alpha of the marker, you can fastly check the newly freed parkings:</string>
+    <string name="zeroMinsParking">Parking freed &lt; 5 minutes</string>
+    <string name="fiveMinsParking">Parking freed &lt; 10 minutes</string>
+    <string name="tenMinsParking">Parking freed > 10 minutes</string>
+    <string name="welcome">Welcome to ParkingFinder!</string>
+    <string name="helpMenu">Help</string>
     
 </resources>

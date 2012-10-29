@@ -2,7 +2,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
     <item android:id="@+id/centerMenu" android:title="@string/centerMenu"></item>
     <item android:id="@+id/optionsMenu" android:title="@string/optionsMenu"></item>
-    <item android:id="@+id/exitMenu" android:title="@string/exitMenu"></item>
-    
-
+    <item android:id="@+id/helpMenu" android:title="@string/helpMenu"></item>   
+    <item android:id="@+id/homeMenu" android:title="@string/homeMenu"></item>
 </menu>
