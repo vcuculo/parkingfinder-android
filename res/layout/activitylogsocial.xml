@@ -7,7 +7,14 @@
     android:layout_gravity="center"
     android:orientation="vertical"
     android:padding="10dip" >
-
+<TextView
+        android:id="@+id/labelFour"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/foursquare"
+        android:textSize="20dip"
+        android:textColor="@color/white"
+        android:textStyle="bold" />
     <Button
         android:id="@+id/sociallogin"
         android:layout_width="fill_parent"
@@ -19,14 +26,6 @@
         android:textSize="20dip"
         android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/labelFour"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/foursquare"
-        android:textSize="20dip"
-        android:textColor="@color/white"
-        android:textStyle="bold" />
 
     <ListView
         android:id="@+id/listView1"
@@ -34,7 +33,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/labelFour"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp" >
+        android:layout_marginTop="5dp" >
     </ListView>
 
 </LinearLayout>

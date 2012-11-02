@@ -8,4 +8,5 @@
     <color name="greenPressed">#07590E</color>
     <color name="white">#FFFFFF</color>
     <color name="gray">#BBCBBC</color>
+    <color name="black">#000000</color>
 </resources>

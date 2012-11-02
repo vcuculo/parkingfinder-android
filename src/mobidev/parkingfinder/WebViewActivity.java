@@ -13,7 +13,7 @@ import android.webkit.WebViewClient;
 public class WebViewActivity extends Activity {
 	private static final String TAG = "ActivityWebView";
 
-	public static final String CALLBACK_URL = "http://myapp.com";
+	public static final String CALLBACK_URL = "http://pastehtml.com/view/c53430xl8.html";
 	public static final String CLIENT_ID = "AEAEBVBXOPC0IQNS4K1THAGNC5RFTE2V4GADSD3DQQUS5UAF";
 	private final static String MY_PREFERENCES = "MyPref";
 	private final static String TOKEN = "token";
