@@ -31,6 +31,7 @@ public class MyItemizedOverlay extends ItemizedOverlay<ParkingOverlayItem> {
 	public MyItemizedOverlay(Context context) {
 		super(null);
 		mContext = context;
+		this.populate();
 	}
 	
 	// create parking overlay received from server
