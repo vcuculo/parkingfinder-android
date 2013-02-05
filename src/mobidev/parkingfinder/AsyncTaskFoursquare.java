@@ -2,11 +2,8 @@ package mobidev.parkingfinder;
 
 import java.io.IOException;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
-import android.util.Log;
-import android.widget.TextView;
 
 public class AsyncTaskFoursquare extends AsyncTask<Void, Void, String> {
 

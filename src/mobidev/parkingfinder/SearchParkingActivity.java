@@ -128,7 +128,7 @@ public class SearchParkingActivity extends MapActivity {
 			}
 		};
 
-		Utility.showDialog("Connection failed",
+		Utility.showDialog(getString(R.string.networkProblem),
 				getString(R.string.connectionRequired), this, positive,
 				negative);
 	}
@@ -150,7 +150,7 @@ public class SearchParkingActivity extends MapActivity {
 			}
 		};
 
-		Utility.showDialog("GPS disabled", getString(R.string.gpsDisabled),
+		Utility.showDialog(getString(R.string.gpsProblem), getString(R.string.gpsDisabled),
 				this, positive, negative);
 	}
 
@@ -167,7 +167,7 @@ public class SearchParkingActivity extends MapActivity {
 		final CheckBox checkBox = (CheckBox) checkBoxView
 				.findViewById(R.id.checkbox);
 		final Context mContext = this;
-		checkBox.setText("Checkin");
+		checkBox.setText(getString(R.string.foursquare));
 		dialog.setTitle(getString(R.string.occupyingParking));
 		dialog.setMessage(getString(R.string.confirmOccupyParking));
 		dialog.setView(checkBoxView);

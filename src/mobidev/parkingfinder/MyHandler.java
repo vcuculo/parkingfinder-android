@@ -38,7 +38,7 @@ public class MyHandler extends Handler {
 		if (bundle.containsKey("error")) {
 			String value = bundle.getString("error");
 			if (value == "ServerError")
-				Toast.makeText(c, "Server unreachable. Try again later.",
+				Toast.makeText(c, c.getString(R.string.connectProblem),
 						Toast.LENGTH_LONG).show();
 		}
 		if (bundle.containsKey("refreshParkings")) {

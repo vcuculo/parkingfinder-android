@@ -87,7 +87,7 @@ public class SocialActivity extends Activity {
 				}
 			});
 		} catch (JSONException e2) {
-			Toast.makeText(this, "Connection error", Toast.LENGTH_LONG).show();
+			Toast.makeText(this, getString(R.string.networkProblem), Toast.LENGTH_LONG).show();
 			Editor editor = prefs.edit();
 			editor.remove(TOKEN);
 			editor.commit();

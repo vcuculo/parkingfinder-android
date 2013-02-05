@@ -2,15 +2,12 @@ package mobidev.parkingfinder;
 
 import java.util.ArrayList;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.CheckBox;
 
@@ -33,7 +30,7 @@ public class MyItemizedOverlay extends ItemizedOverlay<ParkingOverlayItem> {
 		mContext = context;
 		this.populate();
 	}
-	
+
 	// create parking overlay received from server
 	public void addOverlayItem(Parking p, Long duration, Drawable altMarker) {
 
@@ -43,13 +40,16 @@ public class MyItemizedOverlay extends ItemizedOverlay<ParkingOverlayItem> {
 		String[] types = mContext.getResources().getStringArray(
 				R.array.parkingTypes);
 
-		String title = types[p.getType()] + " parking";
+		String title = types[p.getType()];
 
 		String lat = String.format("%.3f", p.getLatitude());
 		String lon = String.format("%.3f", p.getLongitude());
 
-		String snippet = "Lat:\t" + lat + "\nLon:\t" + lon + "\nFree since:\t"
-				+ TimeUtils.millisToLongDHMS(duration) + "\nComments:\n"
+		String snippet = mContext.getString(R.string.latitude) + "\t" + lat
+				+ "\n" + mContext.getString(R.string.longitude) + "\t" + lon
+				+ "\n" + mContext.getString(R.string.freesince) + "\t"
+				+ TimeUtils.millisToLongDHMS(duration) + "\n"
+				+ mContext.getString(R.string.comments) + "\n"
 				+ p.getComments();
 
 		ParkingOverlayItem overlayItem = new ParkingOverlayItem(point, title,
@@ -59,10 +59,10 @@ public class MyItemizedOverlay extends ItemizedOverlay<ParkingOverlayItem> {
 
 	// create parking overlay received from client (my parking)
 	public void addOverlayItem(Parking p, Drawable altMarker) {
-		
+
 		GeoPoint point = new GeoPoint((int) (p.getLatitude() * 1E6),
 				(int) (p.getLongitude() * 1E6));
-		
+
 		ParkingOverlayItem overlayItem = new ParkingOverlayItem(point, p, true);
 		addOverlayItem(overlayItem, altMarker);
 	}
@@ -87,26 +87,26 @@ public class MyItemizedOverlay extends ItemizedOverlay<ParkingOverlayItem> {
 	@Override
 	protected boolean onTap(int index) {
 		ParkingOverlayItem item = mOverlays.get(index);
-		
+
 		if (item.getRelease())
 			return true;
-		
+
 		final Parking p = item.getParking();
-		
+
 		AlertDialog.Builder dialog = new AlertDialog.Builder(mContext);
 		dialog.setTitle(item.getTitle());
 		dialog.setMessage(item.getSnippet());
 		View checkBoxView = View.inflate(mContext, R.layout.checkbox, null);
 		final CheckBox checkBox = (CheckBox) checkBoxView
 				.findViewById(R.id.checkbox);
-		checkBox.setText("Checkin");
+		checkBox.setText(mContext.getString(R.string.foursquare));
 		dialog.setView(checkBoxView);
 		OnClickListener positive = new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int id) {
 
 				if (checkBox.isChecked())
-				new AsyncTaskOccupyPark(mContext, p, true).execute();
-				else 
+					new AsyncTaskOccupyPark(mContext, p, true).execute();
+				else
 					new AsyncTaskOccupyPark(mContext, p, false).execute();
 
 				SharedPreferences prefs = mContext.getSharedPreferences(
@@ -140,7 +140,7 @@ public class MyItemizedOverlay extends ItemizedOverlay<ParkingOverlayItem> {
 		mSize = mOverlays.size();
 		populate();
 	}
-	
+
 	public ArrayList<ParkingOverlayItem> getAll() {
 		return mOverlays;
 	}

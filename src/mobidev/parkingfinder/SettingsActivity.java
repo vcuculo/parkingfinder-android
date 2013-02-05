@@ -47,7 +47,6 @@ public class SettingsActivity extends Activity implements OnClickListener {
 
 	private int positionRangeCursor, positionTimeCursor;
 	private SharedPreferences prefs;
-    private String token;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

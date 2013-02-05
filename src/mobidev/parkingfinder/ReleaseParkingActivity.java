@@ -138,7 +138,7 @@ public class ReleaseParkingActivity extends MapActivity {
 			}
 		};
 
-		Utility.showDialog("Connection failed",
+		Utility.showDialog(getString(R.string.networkProblem),
 				getString(R.string.connectionRequired), this, positive,
 				negative);
 	}
@@ -160,7 +160,7 @@ public class ReleaseParkingActivity extends MapActivity {
 			}
 		};
 
-		Utility.showDialog("GPS disabled", getString(R.string.gpsDisabled),
+		Utility.showDialog(getString(R.string.gpsProblem), getString(R.string.gpsDisabled),
 				this, positive, negative);
 	}
 
