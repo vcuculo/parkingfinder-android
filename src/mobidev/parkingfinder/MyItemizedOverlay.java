@@ -48,7 +48,7 @@ public class MyItemizedOverlay extends ItemizedOverlay<ParkingOverlayItem> {
 		String snippet = mContext.getString(R.string.latitude) + "\t" + lat
 				+ "\n" + mContext.getString(R.string.longitude) + "\t" + lon
 				+ "\n" + mContext.getString(R.string.freesince) + "\t"
-				+ TimeUtils.millisToLongDHMS(duration) + "\n"
+				+ TimeUtils.millisToLongDHMS(duration, mContext) + "\n"
 				+ mContext.getString(R.string.comments) + "\n"
 				+ p.getComments();
 

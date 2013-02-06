@@ -8,31 +8,27 @@
     android:orientation="vertical"
     android:padding="10dip" >
 <TextView
-        android:id="@+id/labelFour"
+        android:id="@+id/checkinlabel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/foursquare"
         android:textSize="20dip"
         android:textColor="@color/white"
         android:textStyle="bold" />
-    <Button
-        android:id="@+id/sociallogin"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/buttonsearch"
-        android:padding="5dip"
-        android:text="@string/login"
-        android:textColor="@color/white"
-        android:textSize="20dip"
-        android:textStyle="bold" />
 
+    <ImageButton
+        android:id="@+id/sociallogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#00ffffff"
+        android:contentDescription="@string/foursquare"
+        android:scaleType="center"
+        android:src="@drawable/foursquare_sign_in" />
 
     <ListView
         android:id="@+id/listView1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/labelFour"
-        android:layout_centerHorizontal="true"
         android:layout_marginTop="5dp" >
     </ListView>
 

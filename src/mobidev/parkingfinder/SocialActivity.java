@@ -16,8 +16,9 @@ import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class SocialActivity extends Activity {
@@ -32,11 +33,13 @@ public class SocialActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activitylogsocial);
-		Button btn = (Button) findViewById(R.id.sociallogin);
+		ImageButton btn = (ImageButton) findViewById(R.id.sociallogin);
+		TextView title = (TextView) findViewById(R.id.checkinlabel);
 		prefs = getSharedPreferences(MY_PREFERENCES, Context.MODE_PRIVATE);
 		token = prefs.getString(TOKEN, null);
 		
 		if (token == null) {
+			title.setVisibility(View.INVISIBLE);
 			btn.setOnClickListener(new OnClickListener() {
 				public void onClick(View v) {
 					finish();
