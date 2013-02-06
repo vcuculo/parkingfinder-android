@@ -131,16 +131,17 @@ public class Utility {
 
 			} else {
 				// mostrare la mia posizione (overlay 0)
-				mapc.setZoom(21);
+				mapc.setZoom(20);
 				mapc.animateTo(myPosition.getMyLocation());
 			}
 		} else { // sto cercando un parcheggio, mostro tutti quelli liberi
 			GeoPoint myP = myPosition.getMyLocation();
 
 			int minLat = myP.getLatitudeE6();
-			int maxLat = myP.getLatitudeE6();
 			int minLon = myP.getLongitudeE6();
-			int maxLon = myP.getLongitudeE6();
+			int maxLat = minLat;
+			int maxLon = minLon;
+			double fitFactor = 1.5;
 
 			MyItemizedOverlay parkingPositions = (MyItemizedOverlay) overlays
 					.get(1);
@@ -159,8 +160,9 @@ public class Utility {
 				minLon = Math.min(lon, minLon);
 			}
 
-			mapc.zoomToSpan(Math.abs(maxLat - minLat),
-					Math.abs(maxLon - minLon));
+			mapc.zoomToSpan((int) (Math.abs(maxLat - minLat) * fitFactor),
+					(int) (Math.abs(maxLon - minLon) * fitFactor));
+
 			mapc.animateTo(new GeoPoint((maxLat + minLat) / 2,
 					(maxLon + minLon) / 2));
 		}
@@ -259,7 +261,8 @@ public class Utility {
 		long duration = p.getTime();
 
 		if (duration <= FIVE_MINUTES)
-			// mutate() needed because http://www.curious-creature.org/2009/05/02/drawable-mutations/
+			// mutate() needed because
+			// http://www.curious-creature.org/2009/05/02/drawable-mutations/
 			drawable.mutate().setAlpha(255);
 		else if (duration > FIVE_MINUTES && duration <= FIVE_MINUTES * 2)
 			drawable.mutate().setAlpha(200);

@@ -11,9 +11,9 @@
     <string name="parkHere">Parcheggia qui</string>
     <string name="addParkInformation">Vuoi inserire delle informazioni sul parcheggio che stai liberando?</string>
     <string name="parkingInfo">Informazioni sul parcheggio</string>
-    <string name="latitude">Latitudine:</string>
-    <string name="longitude">Longitudine:</string>
-    <string name="freesince">Libero da:</string>    
+    <string name="latitude">Latitudine: </string>
+    <string name="longitude">Longitudine: </string>
+    <string name="freesince">Libero da: </string>    
     <string name="parkingType">Tipo:</string>
     <string name="undefinedParking">Non definito</string>
     <string name="freeParking">Libero</string>
@@ -46,7 +46,7 @@
     <string name="releaseParkingFirst">Per cercare nuovi parcheggi devi rilasciare il parcheggio che hai precedentemente occupato.</string>
     <string name="filter">Filtro</string>
     <string name="rangeSearch">Distanza di ricerca (metri): </string>
-    <string name="timeRefresh">Tempo di aggiornamento (minuti): </string>
+    <string name="timeRefresh">Tempo di ricerca (minuti): </string>
     <string name="notifySound">Suono notifiche</string>
     <string name="filterSearch">Tipo di parcheggio</string>
     <string name="chooseParkingType">Scegli i tipi di parcheggio da mostrare:</string>
@@ -69,8 +69,12 @@
     <string name="helpText2">Basandoti sulla trasparenza del simbolo, puoi controllare gli ultimi parcheggi liberati:</string>
     <string name="zeroMinsParking">Parcheggio liberato da &lt; 5 minuti</string>
     <string name="fiveMinsParking">Parcheggio liberato da &lt; 10 minuti</string>
-    <string name="tenMinsParking">Parcheggio liberato da > 10 minuti</string>
+    <string name="tenMinsParking">Parcheggio liberato da &gt; 10 minuti</string>
     <string name="welcome">Benvenuto in ParkingFinder!</string>
     <string name="helpMenu">Aiuto</string>
-    
+    <string name="days">" giorni"</string>
+    <string name="hours">" ore"</string>
+    <string name="minutes">" minuti"</string>
+    <string name="seconds">" secondi"</string>
+    <string name="and">" e "</string>    
 </resources>
