@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Parking Finder</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<link href="font/stylesheet.css" rel="stylesheet" type="text/css">
+<link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">
+<link href="css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css">
+<link href="css/styles.css" rel="stylesheet" type="text/css">
+<link href="css/media-queries.css" rel="stylesheet" type="text/css">
+<link href="fancybox/jquery.fancybox-1.3.4.css" rel="stylesheet" type="text/css" media="screen">
+<link href="img/favicon.ico" rel="shortcut icon" type="image/x-icon">
+<!--[if lt IE 9]>
+<script src="js/css3-mediaqueries.js"></script>
+<script src="js/html5.js"></script>
+<![endif]-->
+</head>
+<body data-spy="scroll">
+<!-- TOP MENU NAVIGATION -->
+<div class="navbar navbar-fixed-top">
+  <div class="navbar-inner">
+    <div class="container"> <a class="brand pull-left" href="#"> Parking Finder </a> <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </a>
+      <div class="nav-collapse collapse">
+        <ul id="nav-list" class="nav pull-right">
+          <li><a href="#home">Home</a></li>
+          <li><a href="#updates">Video</a></li>
+          <li><a href="#screenshots">Screenshots</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- MAIN CONTENT -->
+<div class="container content container-fluid" id="home">
+  <!-- HOME -->
+  <div class="row-fluid">
+    <!-- PHONES IMAGE FOR DESKTOP MEDIA QUERY -->
+    <div class="span5 visible-desktop"> <img src="img/phones.png" alt=""> </div>
+    <!-- APP DETAILS -->
+    <div class="span7">
+      <!-- ICON -->
+      <div class="visible-desktop" id="icon"> <img src="img/app_icon.png" alt=""> <img src="img/title.png" alt=""> </div>
+      <!-- TAGLINE -->
+      <div id="tagline"> <b>Parking Finder</b> è la soluzione alla ricerca di un parcheggio auto sfruttando le potenzialità del <b>crowdsourcing</b>. </div>
+      <!-- PHONES IMAGE FOR TABLET MEDIA QUERY -->
+      <div class="hidden-desktop" id="phones"> <img src="img/phones.png" alt=""> </div>
+      <!-- DESCRIPTION -->
+      <div id="description"> Tramite <b>Parking Finder</b> è possibile:</div>
+      <!-- FEATURES -->
+      <ul id="features">
+        <li><b>Cercare</b> un parcheggio libero nelle immediate vicinanze o <b>segnalarne</b> il rilascio</li>
+        <li><b>Memorizzare</b> la posizione del parcheggio</li>
+        <li><b>Condividere</b> la posizione del parcheggio su <img src="img/foursquare-logo.png"></li>
+      </ul>
+      <!-- DOWNLOAD & REQUIREMENT BOX -->
+      <div class="download-box"> <a href="https://github.com/vcuculo/parkingfinder-ios" target="_blank"><img src="img/available-on-the-app-store.png" alt=""></a> </div>
+      <div class="download-box"> <a href="https://github.com/vcuculo/parkingfinder-android" target="_blank"><img src="img/android_app_on_play_logo_large.png" alt=""></a> </div>
+      <div class="download-box"> <strong>Requisiti:</strong><br>
+        Compatibile con iPhone e iPod touch. Connesione WiFi, Edge, o rete 3G necessaria. </div>
+      <div class="download-box"> <strong>Requisiti:</strong><br>
+        Richiede Android 2.3 o superiori. Connesione WiFi, Edge, o rete 3G necessaria. </div>
+    </div>
+  </div>
+  <!-- ABOUT & UPDATES -->
+  <div class="row-fluid" id="about">
+    <!--<div class="span6 updates" id="updates">-->
+      <h2 class="page-title" id="scroll_up"> Video <a href="#home" class="arrow-top"> <img src="img/arrow-top.png" alt=""> </a> </h2>
+      <!-- UPDATES & RELEASE NOTES -->
+      <center>
+      <iframe src="http://player.vimeo.com/video/59165985?title=0&amp;byline=0&amp;portrait=0" width="720" height="405" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
+      </center>
+    <!--</div>-->
+  </div>
+  <!-- SCREENSHOTS -->
+  <div class="row-fluid" id="screenshots">
+    <h2 class="page-title" id="scroll_up"> Screenshots <a href="#home" class="arrow-top"> <img src="img/arrow-top.png" alt=""> </a> </h2>
+    <h3> Android </h3>
+    <!-- SCREENSHOT IMAGES ROW 1-->
+    <ul class="thumbnails">
+      <li class="span3"> <a href="img/android_screen2.png" rel="gallery" class="thumbnail"> <img src="img/android_screen2.png" alt=""> </a> </li>
+      <li class="span3"> <a href="img/android_screen3.png" rel="gallery" class="thumbnail"> <img src="img/android_screen3.png" alt=""> </a> </li>
+      <li class="span3"> <a href="img/android_screen4.png" rel="gallery" class="thumbnail"> <img src="img/android_screen4.png" alt=""> </a> </li>
+      <li class="span3"> <a href="img/android_screen5.png" rel="gallery" class="thumbnail"> <img src="img/android_screen5.png" alt=""> </a> </li>
+    </ul>
+    <h3> iOS </h3>
+    <!-- SCREENSHOT IMAGES ROW 2-->
+    <ul class="thumbnails">
+      <li class="span3"> <a href="img/iOS_screen2.png" rel="gallery" class="thumbnail"> <img src="img/iOS_screen2.png" alt=""> </a> </li>
+      <li class="span3"> <a href="img/iOS_screen3.png" rel="gallery" class="thumbnail"> <img src="img/iOS_screen3.png" alt=""> </a> </li>
+      <li class="span3"> <a href="img/iOS_screen4.png" rel="gallery" class="thumbnail"> <img src="img/iOS_screen4.png" alt=""> </a> </li>
+      <li class="span3"> <a href="img/iOS_screen5.png" rel="gallery" class="thumbnail"> <img src="img/iOS_screen5.png" alt=""> </a> </li>
+    </ul>
+  </div>
+  <!-- CONTACT -->
+  <div class="row-fluid" id="contact">
+    <h2 class="page-title" id="scroll_up"> Contact <a href="#home" class="arrow-top"> <img src="img/arrow-top.png" alt=""> </a> </h2>
+    <!-- CONTACT INFO -->
+    <!--<div class="span4" id="contact-info">-->
+      <h3>Contact Us</h3>
+      <p>Parking Finder è nato come progetto del corso di MobiDev dell'Università degli Studi di Milano</p>
+      <p>ed è stato sviluppato da Vittorio Cuculo & Antonio Luca<p>
+      <p><a href="#">parkingfinderapp@gmail.com</a></p>
+    <!--</div>-->
+  </div>
+</div>
+<!-- FOOTER -->
+<div class="footer container container-fluid">
+  <!-- COPYRIGHT - EDIT HOWEVER YOU WANT! -->
+  <div id="copyright">&copy; Copyright 2013 <a href="#">Parking Finder</a>. All Rights Reserved</div>
+  <!-- CREDIT - PLEASE LEAVE THIS LINK! -->
+  <div id="credits">Website Template by <a target="_blank" href="http://www.trippoinc.com">Trippo</a></div>
+</div>
+<script src="js/jquery-1.7.2.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/bootstrap-collapse.js"></script>
+<script src="js/bootstrap-scrollspy.js"></script>
+<script src="fancybox/jquery.mousewheel-3.0.4.pack.js"></script>
+<script src="fancybox/jquery.fancybox-1.3.4.pack.js"></script>
+<script src="js/init.js"></script>
+</body>
+</html>
