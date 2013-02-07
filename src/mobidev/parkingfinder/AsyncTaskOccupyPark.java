@@ -5,7 +5,9 @@ import java.io.IOException;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.DialogInterface.OnClickListener;
 import android.os.AsyncTask;
 
 public class AsyncTaskOccupyPark extends AsyncTask<Void, Void, Void> {
@@ -44,11 +46,22 @@ public class AsyncTaskOccupyPark extends AsyncTask<Void, Void, Void> {
 	protected void onPostExecute(Void par) {
 		pr.dismiss();
 		pr.cancel();
-		Activity a = (Activity) c;
-		a.finish();
+		OnClickListener positive = new DialogInterface.OnClickListener() {
+			Activity a = (Activity) c;
+
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				a.finish();
+			}
+		};
+
 		if (checkin) {
+			Activity a = (Activity) c;
+			a.finish();
 			Intent i = new Intent(c, SocialActivity.class);
 			c.startActivity(i);
-		}
+		} else
+			Utility.showDialog(c.getString(R.string.parkingOccupied),
+					c.getString(R.string.parkedHere), c, positive);
 	}
 }

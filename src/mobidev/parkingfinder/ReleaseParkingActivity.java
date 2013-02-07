@@ -76,15 +76,6 @@ public class ReleaseParkingActivity extends MapActivity {
 		SharedPreferences prefs = getSharedPreferences(MY_PREFERENCES,
 				Context.MODE_PRIVATE);
 
-		/*
-		 * DEBUG ONLY SharedPreferences.Editor editor = prefs.edit();
-		 * editor.putInt(ID_KEY, 0); editor.putInt(TYPE_KEY, 3);
-		 * editor.putInt(LAT_KEY, (int) (lastKnownLocation.getLatitude() * 1E6)
-		 * + 10000); editor.putInt(LON_KEY, (int)
-		 * (lastKnownLocation.getLongitude() * 1E6) + 1000); editor.commit(); //
-		 * DEBUG ONLY
-		 */
-
 		longitude = (double) prefs.getFloat(LON_KEY, 181);
 
 		if (longitude < 181) { // abbiamo un parcheggio memorizzato

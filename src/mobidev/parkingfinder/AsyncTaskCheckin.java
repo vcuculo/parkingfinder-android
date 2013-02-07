@@ -52,6 +52,6 @@ public class AsyncTaskCheckin extends AsyncTask<Void, Void, String> {
 				c.finish();
 			}
 		};
-		Utility.showDialog("Foursquare", c.getString(R.string.checkedin), c, positive);
-	}
+		Utility.showDialog(c.getString(R.string.checkedin),
+				c.getString(R.string.parkedHere), c, positive);	}
 }

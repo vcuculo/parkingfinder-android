@@ -182,7 +182,6 @@ public class SearchParkingActivity extends MapActivity {
 				editor.putFloat(LON_KEY, (float) myLocation.getLongitude());
 				editor.putFloat(ACC_KEY, myLocation.getAccuracy());
 				editor.commit();
-				finish();
 				
 				OnClickListener positive = new DialogInterface.OnClickListener() {
 
@@ -198,6 +197,7 @@ public class SearchParkingActivity extends MapActivity {
 				
 				if (checkBox.isChecked()) {
 					Intent i = new Intent(mContext, SocialActivity.class);
+					finish();
 					startActivity(i);
 				} else {
 					Utility.showDialog(

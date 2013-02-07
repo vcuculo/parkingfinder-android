@@ -5,6 +5,8 @@ import java.io.IOException;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -44,7 +46,19 @@ public class AsyncTaskFreePark extends AsyncTask<Void, Void, Void> {
 		pr.cancel();
 		pr = null;
 		Activity a = (Activity) c;
-		a.setResult(Activity.RESULT_OK);
-		a.finish();
+		if (a instanceof ParkingInfoActivity) {
+			a.setResult(Activity.RESULT_OK);
+			a.finish();
+		} else {
+			OnClickListener closeAction = new DialogInterface.OnClickListener() {
+				Activity a = (Activity) c;
+
+				public void onClick(DialogInterface dialog, int id) {
+					a.finish();
+				}
+			};
+			Utility.showDialog(c.getString(R.string.parkingReleased),
+					c.getString(R.string.thanks), c, closeAction);
+		}
 	}
 }

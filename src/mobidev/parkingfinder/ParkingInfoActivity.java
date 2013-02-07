@@ -24,7 +24,7 @@ public class ParkingInfoActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.parking_info);
-
+		
 		latitudeText = (TextView) findViewById(R.id.latitudeValue);
 		longitudeText = (TextView) findViewById(R.id.longitudeValue);
 		commentText = (EditText) findViewById(R.id.commentsText);
@@ -39,7 +39,6 @@ public class ParkingInfoActivity extends Activity {
 				Parking p;
 				int id = i.getIntExtra("parkingId", -1);
 				p = new Parking(id, lat, lon, accuracy);
-
 				new AsyncTaskFreePark(ParkingInfoActivity.this, p).execute();
 
 			}
@@ -61,7 +60,6 @@ public class ParkingInfoActivity extends Activity {
 					comment = null;
 				
 				p = new Parking(id, lat, lon, type, comment, accuracy);
-
 				new AsyncTaskFreePark(ParkingInfoActivity.this, p).execute();
 			}
 		});
